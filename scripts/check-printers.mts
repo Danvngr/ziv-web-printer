@@ -12,7 +12,23 @@ assert.equal(byModel[0]?.id, "laser-tr4520");
 
 assert.equal(filterPrinters(printers, "epson").length, 0);
 
+const printersOnly = filterPrinters(printers, "  ", "printer");
+assert.equal(printersOnly.length, 3);
+assert.ok(printersOnly.every((item) => item.category === "printer"));
+
+const copiersOnly = filterPrinters(printers, "", "copier");
+assert.equal(copiersOnly.length, 2);
+assert.deepEqual(
+  copiersOnly.map((item) => item.id),
+  ["copydesk-office-220", "docstation-biz-410"],
+);
+
+const searchIgnoresCategory = filterPrinters(printers, "copydesk", "printer");
+assert.equal(searchIgnoresCategory.length, 1);
+assert.equal(searchIgnoresCategory[0]?.category, "copier");
+
 const inkjet = getPrinter(printers, "inkjet-pixma-tr4520");
+assert.equal(inkjet?.category, "printer");
 assert.equal(inkjet?.brand, "Inkjet");
 assert.equal(inkjet?.guides.length, 2);
 

@@ -1,6 +1,6 @@
-// שמות המדפסות כאן הם מצייני מקום בלבד, לא הקטלוג הסופי.
-// להוספת מדפסת: הוסיפו אובייקט ל-printers.
-// להוספת מדריך: הוסיפו אובייקט ל-guides של המדפסת.
+// שמות המדפסות ומכונות הצילום כאן הם מצייני מקום בלבד, לא הקטלוג הסופי.
+// להוספת פריט: הוסיפו אובייקט ל-printers עם category של "printer" או "copier".
+// להוספת מדריך: הוסיפו אובייקט ל-guides של הפריט.
 
 export interface GuideStep {
   title: string;
@@ -14,8 +14,11 @@ export interface Guide {
   steps: GuideStep[];
 }
 
+export type DeviceCategory = "printer" | "copier";
+
 export interface Printer {
   id: string;
+  category: DeviceCategory;
   brand: string;
   model: string;
   image: string;
@@ -26,6 +29,7 @@ export interface Printer {
 export const printers: Printer[] = [
   {
     id: "inkjet-pixma-tr4520",
+    category: "printer",
     brand: "Inkjet",
     model: "Pixma TR4520",
     image: "/printers/inkjet.svg",
@@ -83,6 +87,7 @@ export const printers: Printer[] = [
   },
   {
     id: "canon-pixma-tr4520",
+    category: "printer",
     brand: "Canon",
     model: "Pixma TR4520",
     image: "/printers/canon.svg",
@@ -140,6 +145,7 @@ export const printers: Printer[] = [
   },
   {
     id: "laser-tr4520",
+    category: "printer",
     brand: "Laser",
     model: "Laser TR4520",
     image: "/printers/laser.svg",
@@ -195,15 +201,99 @@ export const printers: Printer[] = [
       },
     ],
   },
+  {
+    id: "copydesk-office-220",
+    category: "copier",
+    brand: "CopyDesk",
+    model: "Office 220",
+    image: "/printers/copier.svg",
+    intro:
+      "בחרו מדריך ל-CopyDesk Office 220. השם הוא מציין מקום, והשלבים מדגימים את מבנה המדריך.",
+    guides: [
+      {
+        id: "installation",
+        title: "התקנה ראשונית",
+        description: "הצבה, חיבור והעתקת דף בדיקה.",
+        steps: [
+          {
+            title: "הצבה במקום",
+            description:
+              "הניחו את CopyDesk Office 220 על משטח ישר עם מרווח לאוורור מאחור. הסירו את סרטי ההובלה ממגש הנייר ומכסה המזין.",
+          },
+          {
+            title: "חיבור חשמל",
+            description:
+              "חברו את כבל החשמל לשקע מאחורי המכונה ולקיר. אל תדליקו לפני שהסרתם את כל מגיני ההובלה.",
+          },
+          {
+            title: "הפעלה ומילוי נייר",
+            description:
+              "לחצו על כפתור ההפעלה והמתינו שמסך הבית יופיע. מלאו מגש A4, יישרו את הדפים והחזירו את המגש עד לקליק.",
+          },
+          {
+            title: "דף בדיקה",
+            description:
+              "הניחו דף על הזכוכית, סגרו את המכסה ובחרו העתקה. הפלט צריך להיות חד ובלי פסים כהים בשוליים.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "docstation-biz-410",
+    category: "copier",
+    brand: "DocStation",
+    model: "Biz 410",
+    image: "/printers/copier.svg",
+    intro:
+      "מדריך ל-DocStation Biz 410. גם השם הזה הוא מציין מקום, לא דגם מהקטלוג.",
+    guides: [
+      {
+        id: "paper-jam",
+        title: "שחרור נייר תקוע",
+        description: "פתיחת המכסים ושליפת דף תקוע בלי לקרוע אותו.",
+        steps: [
+          {
+            title: "כיבוי והמתנה",
+            description:
+              "כבו את DocStation Biz 410 והמתינו שהמנוע ייעצר. אל תמשכו נייר בזמן שהגלגלים עדיין זזים.",
+          },
+          {
+            title: "פתיחת המכסה",
+            description:
+              "פתחו את המכסה הקדמי ואת מגש היציאה. אתרו את קצה הדף התקוע — בדרך כלל ליד גלגלי ההזנה.",
+          },
+          {
+            title: "שליפה איטית",
+            description:
+              "משכו את הדף בשתי ידיים בכיוון מסלול הנייר, לאט ובקו ישר. אם הוא נקרע, הוציאו גם את השאריות.",
+          },
+          {
+            title: "סגירה ובדיקה",
+            description:
+              "סגרו את כל המכסים עד לקליק, הדליקו את המכונה והעתיקו דף אחד כדי לוודא שהמסלול פנוי.",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
-export function filterPrinters(list: readonly Printer[], query: string): Printer[] {
+export function filterPrinters(
+  list: readonly Printer[],
+  query: string,
+  category?: DeviceCategory,
+): Printer[] {
   const q = query.trim().slice(0, 80).toLowerCase();
-  if (!q) return [...list];
-  return list.filter(
-    (printer) =>
-      printer.brand.toLowerCase().includes(q) || printer.model.toLowerCase().includes(q),
-  );
+  // חיפוש לא ריק מתעלם מהקטגוריה ומתאים מותג או דגם בכל הרשימה.
+  if (q) {
+    return list.filter(
+      (printer) =>
+        printer.brand.toLowerCase().includes(q) || printer.model.toLowerCase().includes(q),
+    );
+  }
+  if (category) return list.filter((printer) => printer.category === category);
+  return [...list];
 }
 
 export function getPrinter(list: readonly Printer[], id: string): Printer | undefined {
