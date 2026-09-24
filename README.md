@@ -18,4 +18,11 @@ npm run check
 npm run build
 ```
 
-Optional: set `NEXT_PUBLIC_SITE_ORIGIN` (for example `https://example.com`) if a guide QR code should encode an absolute URL. When it is unset, the code encodes only the path `/printers/{id}`.
+## Add content
+
+Edit `data/printers.ts`:
+
+- **New printer:** add an object to the `printers` array.
+- **New guide:** add an object to that printer's `guides` array (`id`, `title`, `description`, `steps`).
+
+Routes: `/printers/{id}` (guide list) → `/printers/{id}/{guideId}` (steps).
