@@ -7,7 +7,7 @@ export default function NotFound() {
       <p className="mt-4 text-slate-600">הכתובת שביקשתם אינה קיימת במדריכים.</p>
       <Link
         href="/"
-        className="mt-8 inline-block rounded-full bg-teal-500 px-6 py-2.5 font-medium text-white hover:bg-teal-400"
+        className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-500 px-6 font-medium text-white hover:bg-teal-400"
       >
         חזרה לדף הבית
       </Link>

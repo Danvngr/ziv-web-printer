@@ -1,38 +1,33 @@
 import Link from "next/link";
 
-const columns = [
-  {
-    href: "/about",
-    title: "אודותינו",
-    body: "מדריכי התקנה בעברית, צעד אחר צעד, למי שמחבר מדפסת חדשה בבית או במשרד קטן.",
-  },
-  {
-    href: "/contact",
-    title: "יצירת קשר",
-    body: "רחוב הדפוס 18, תל אביב-יפו. טלפון 03-555-0142. hello@printerguides.example",
-  },
-  {
-    href: "/terms",
-    title: "תנאי שירות",
-    body: "המדריכים הם הסבר כללי. הדגמים באתר הם דוגמאות בלבד ואינם מחייבים את היצרן.",
-  },
+const links = [
+  { href: "/about", label: "אודותינו" },
+  { href: "/contact", label: "יצירת קשר" },
+  { href: "/terms", label: "תנאי שימוש" },
+  { href: "/privacy", label: "מדיניות פרטיות" },
+  { href: "/accessibility", label: "הצהרת נגישות" },
 ] as const;
 
-export function SiteFooter() {
+export function SiteFooter({ pathname }: { pathname: string }) {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="mt-auto bg-slate-950 text-slate-200">
-      <div className="mx-auto grid max-w-5xl gap-10 px-6 py-12 md:grid-cols-3">
-        {columns.map((column) => (
-          <div key={column.href}>
-            <Link href={column.href} className="text-lg font-semibold text-white hover:text-teal-300">
-              {column.title}
-            </Link>
-            <p className="mt-3 text-sm leading-7 text-slate-300">{column.body}</p>
-          </div>
+      <nav aria-label="מידע על האתר" className="mx-auto flex max-w-5xl flex-wrap gap-x-4 gap-y-1 px-6 py-8">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            aria-current={pathname === link.href ? "page" : undefined}
+            className="inline-flex min-h-11 items-center text-sm font-semibold text-white hover:text-teal-300"
+          >
+            {link.label}
+          </Link>
         ))}
-      </div>
-      <p className="border-t border-white/10 px-4 py-4 text-center text-sm text-slate-400">
-        © PrinterGuides 2024. כל הזכויות שמורות.
+      </nav>
+      <p className="border-t border-white/10 px-4 py-4 text-center text-sm leading-6 text-slate-400">
+        שמות וסימני מסחר שייכים לבעליהם. האתר אינו קשור ליצרנים.
+        <span className="mt-1 block">© {year}</span>
       </p>
     </footer>
   );

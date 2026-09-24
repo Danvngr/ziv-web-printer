@@ -25,18 +25,30 @@ export function SiteHeader({ pathname }: { pathname: string }) {
             : "mx-auto mt-6 grid max-w-5xl grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-full border border-white/15 bg-teal-950/80 px-4 py-3 text-sm text-white shadow-lg backdrop-blur sm:px-8 sm:py-4 sm:text-base"
         }
       >
-        <Link href="/contact" className={`justify-self-start ${navClass(contactActive)}`}>
+        <Link
+          href="/contact"
+          aria-current={contactActive ? "page" : undefined}
+          className={`inline-flex min-h-11 items-center justify-self-start ${navClass(contactActive)}`}
+        >
           יצירת קשר
         </Link>
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
+        <Link href="/" className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight">
           <Printer className="h-5 w-5 shrink-0" aria-hidden="true" />
           <span>PrinterGuides</span>
         </Link>
-        <nav className="flex items-center justify-self-end gap-4 sm:gap-6">
-          <Link href="/#guides" className={navClass(guidesActive)}>
+        <nav aria-label="ניווט ראשי" className="flex items-center justify-self-end gap-4 sm:gap-6">
+          <Link
+            href="/#guides"
+            aria-current={guidesActive ? "page" : undefined}
+            className={`inline-flex min-h-11 items-center ${navClass(guidesActive)}`}
+          >
             מדריכים
           </Link>
-          <Link href="/" className={navClass(homeActive)}>
+          <Link
+            href="/"
+            aria-current={homeActive ? "page" : undefined}
+            className={`inline-flex min-h-11 items-center ${navClass(homeActive)}`}
+          >
             דף הבית
           </Link>
         </nav>

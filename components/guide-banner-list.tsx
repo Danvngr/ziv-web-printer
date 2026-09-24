@@ -29,13 +29,13 @@ export function GuideBannerList({
                   className="absolute -top-12 left-1/2 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full bg-white text-teal-600 shadow-xl ring-4 ring-white"
                   aria-label={guide.title}
                 >
-                  <Icon className="h-10 w-10" strokeWidth={1.75} />
+                  <Icon className="h-10 w-10" strokeWidth={1.75} aria-hidden="true" />
                 </Link>
                 <h3 className="text-xl font-semibold">{guide.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-white/75">{guide.description}</p>
                 <Link
                   href={`/printers/${printerId}/${guide.id}`}
-                  className="mt-5 inline-block rounded-full bg-teal-500 px-6 py-2 text-sm font-medium text-white hover:bg-teal-400"
+                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-500 px-6 text-sm font-medium text-white hover:bg-teal-400"
                 >
                   למדריך
                 </Link>

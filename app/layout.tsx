@@ -6,6 +6,7 @@ import "./globals.css";
 const heebo = Heebo({
   subsets: ["hebrew", "latin"],
   weight: ["400", "500", "600", "700"],
+  variable: "--font-heebo",
 });
 
 export const metadata: Metadata = {
@@ -18,8 +19,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.className} h-full antialiased`}>
+    <html lang="he" dir="rtl" className={`${heebo.className} ${heebo.variable} h-full antialiased`}>
       <body className="min-h-full">
+        <a href="#main-content" className="skip-link">
+          דלגו לתוכן הראשי
+        </a>
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

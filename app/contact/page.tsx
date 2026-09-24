@@ -8,19 +8,18 @@ export default function ContactPage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-16 text-slate-800">
       <h1 className="text-3xl font-bold text-slate-900">יצירת קשר</h1>
-      <p className="mt-6 leading-8">
-        לשאלות על המדריכים אפשר לפנות בשעות הפעילות, ראשון עד חמישי, בין 9:00 ל-17:00.
-        אין באתר טופס. הפנייה היא בטלפון או בדוא״ל בלבד.
-      </p>
-      <address className="mt-6 space-y-2 not-italic leading-8">
-        <p>כתובת: רחוב הדפוס 18, תל אביב-יפו</p>
+      <div className="mt-6 space-y-4 leading-8">
         <p>
-          טלפון: <a href="tel:+97235550142">03-555-0142</a>
+          מפעיל האתר: [שם העוסק]. מספר עוסק: [מספר עוסק]. האתר עצמאי ואינו קשור ליצרני
+          המדפסות, לרבות HP, Canon, Brother ו-Epson, אלא אם צוין אחרת במפורש.
         </p>
-        <p>
-          דוא״ל: <a href="mailto:hello@printerguides.example">hello@printerguides.example</a>
-        </p>
-      </address>
+        <p>אין באתר טופס. אפשר לפנות בפרטים האלה:</p>
+        <ul className="space-y-2">
+          <li>אימייל: [אימייל]</li>
+          <li>טלפון: [טלפון]</li>
+          <li>כתובת: [כתובת]</li>
+        </ul>
+      </div>
     </article>
   );
 }

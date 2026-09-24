@@ -27,11 +27,11 @@ export function HomeGuides({ printers }: { printers: Printer[] }) {
           onChange={(event) => setQuery(event.target.value.slice(0, 80))}
           placeholder="הקלידו את דגם המדפסת (למשל: HP, Canon, Brother)"
           autoComplete="off"
-          className="w-full rounded-full border border-white/25 bg-white/10 px-6 py-3.5 text-white shadow-inner backdrop-blur placeholder:text-white/70 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-teal-200/50"
+          className="min-h-11 w-full rounded-full border border-white/25 bg-white/10 px-6 py-3.5 text-white shadow-inner backdrop-blur placeholder:text-white/70"
         />
       </form>
-      <p className="sr-only" aria-live="polite">
-        {query}
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {matches.length === 1 ? "נמצאה תוצאה אחת" : `נמצאו ${matches.length} תוצאות`}
       </p>
       {matches.length === 0 ? (
         <p className="px-4 pt-16 text-lg">לא נמצאו מדפסות תואמות</p>
@@ -47,7 +47,7 @@ export function HomeGuides({ printers }: { printers: Printer[] }) {
                 >
                   <Image
                     src={printer.image}
-                    alt=""
+                    alt={`${printer.brand} ${printer.model}`}
                     width={96}
                     height={96}
                     unoptimized
@@ -58,7 +58,7 @@ export function HomeGuides({ printers }: { printers: Printer[] }) {
                 <h2 className="mt-1 text-xl font-semibold">{printer.model}</h2>
                 <Link
                   href={`/printers/${printer.id}`}
-                  className="mt-5 inline-block rounded-full bg-teal-500 px-6 py-2 text-sm font-medium text-white hover:bg-teal-400"
+                  className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-teal-500 px-6 text-sm font-medium text-white hover:bg-teal-400"
                 >
                   למדריך
                 </Link>

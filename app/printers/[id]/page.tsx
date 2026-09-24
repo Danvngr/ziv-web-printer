@@ -28,11 +28,11 @@ export default async function PrinterPage({ params }: PrinterPageProps) {
   return (
     <article className="mx-auto max-w-5xl px-4 py-12">
       <nav aria-label="פירורי לחם" className="text-sm text-slate-500">
-        <Link href="/" className="hover:text-teal-700">
+        <Link href="/" className="inline-flex min-h-11 items-center hover:text-teal-700">
           דף הבית
         </Link>
         <span aria-hidden="true"> › </span>
-        <Link href="/#guides" className="hover:text-teal-700">
+        <Link href="/#guides" className="inline-flex min-h-11 items-center hover:text-teal-700">
           מדריכים
         </Link>
         <span aria-hidden="true"> › </span>
@@ -58,7 +58,7 @@ export default async function PrinterPage({ params }: PrinterPageProps) {
       <GuideBannerList printerId={printer.id} guides={printer.guides} />
       <Link
         href="/"
-        className="mt-10 inline-block rounded-full border border-slate-300 bg-white px-6 py-2.5 font-medium text-slate-800 hover:bg-slate-100"
+        className="mt-10 inline-flex min-h-11 items-center justify-center rounded-full border border-slate-300 bg-white px-6 font-medium text-slate-800 hover:bg-slate-100"
       >
         חזרה לכל המדפסות
       </Link>
