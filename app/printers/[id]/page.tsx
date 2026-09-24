@@ -26,7 +26,7 @@ export default async function PrinterPage({ params }: PrinterPageProps) {
   if (!printer) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12">
+    <article className="mx-auto max-w-5xl px-4 py-12">
       <nav aria-label="פירורי לחם" className="text-sm text-slate-500">
         <Link href="/" className="hover:text-teal-700">
           דף הבית
@@ -55,7 +55,6 @@ export default async function PrinterPage({ params }: PrinterPageProps) {
           className="mx-auto h-48 w-48 object-contain"
         />
       </figure>
-      <h2 className="mt-12 text-xl font-bold text-slate-900">בחרו מדריך</h2>
       <GuideBannerList printerId={printer.id} guides={printer.guides} />
       <Link
         href="/"
