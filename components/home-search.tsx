@@ -86,20 +86,22 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
                 {items.map((machine) => (
                   <li key={machine.id} className="min-w-0">
                     <article className="lift relative w-full min-w-0 max-w-full rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
-                      <Link
-                        href={`/printers/${machine.id}`}
-                        className="absolute -top-12 left-1/2 block h-24 w-24 -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-card ring-4 ring-wash"
-                        aria-label={`לדגם ${machine.brand} ${machine.model}`}
-                      >
-                        <Image
-                          src={machine.image ?? placeholderImage}
-                          alt={`${machine.brand} ${machine.model}`}
-                          width={96}
-                          height={96}
-                          unoptimized
-                          className="h-full w-full object-cover"
-                        />
-                      </Link>
+                      <span className="logo-halo absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full">
+                        <Link
+                          href={`/printers/${machine.id}`}
+                          className="block h-full w-full overflow-hidden rounded-full bg-white shadow-card ring-4 ring-white"
+                          aria-label={`לדגם ${machine.brand} ${machine.model}`}
+                        >
+                          <Image
+                            src={machine.image ?? placeholderImage}
+                            alt={`${machine.brand} ${machine.model}`}
+                            width={96}
+                            height={96}
+                            unoptimized
+                            className="h-full w-full object-cover"
+                          />
+                        </Link>
+                      </span>
                       <h4 className="text-xl font-bold text-ink">{machine.model}</h4>
                       <Link
                         href={`/printers/${machine.id}`}

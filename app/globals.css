@@ -153,6 +153,25 @@ html {
   animation: 2.4s ease-in-out infinite pulse-glow;
 }
 
+/* Glow sits outside the circle so it never paints over the logo. */
+@keyframes logo-halo {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px #fff,
+      0 0 0 6px color-mix(in oklab, #63c000 50%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px #fff,
+      0 0 0 14px transparent;
+  }
+}
+
+.logo-halo {
+  animation: 2.4s ease-in-out infinite logo-halo;
+}
+
 /* Soft lift plus a light highlight so cards sit off the wash. */
 .lift {
   box-shadow:

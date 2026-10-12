@@ -20,11 +20,14 @@ export function SiteFooter({ pathname }: { pathname: string }) {
 
   return (
     <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent text-ink">
-      {/* dir=ltr pins the circle to the visual left, not the RTL start. */}
-      <div dir="ltr" className="flex w-full min-w-0 items-center gap-0.5 px-1.5 py-2 sm:gap-4 sm:px-5 sm:py-3">
+      {/* dir=ltr keeps the circle on the visual left. Phone wraps and centers; desktop stays one row. */}
+      <div
+        dir="ltr"
+        className="flex w-full min-w-0 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap sm:justify-start sm:px-5"
+      >
         <WhatsAppLink
           label="וואטסאפ לשירות"
-          className="wa-pulse inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#1ebe5a] sm:h-14 sm:w-14"
+          className="wa-pulse inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#1ebe5a]"
         >
           <WhatsAppMark />
         </WhatsAppLink>
@@ -32,7 +35,7 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           href={site.instagramHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
           aria-label={`אינסטגרם ${site.instagram}`}
         >
           <InstagramIcon />
@@ -40,7 +43,7 @@ export function SiteFooter({ pathname }: { pathname: string }) {
         </a>
         <a
           href={`tel:${site.whatsappDisplay.replace(/-/g, "")}`}
-          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
         >
           <PhoneIcon />
           {site.whatsappDisplay}
@@ -49,18 +52,15 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           type="button"
           aria-pressed={stopped}
           onClick={() => writeA11yPrefs({ ...readA11ySnapshot(), motion: !stopped })}
-          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
         >
           <ZapIcon />
           {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
         </button>
-        <p className="ms-auto hidden shrink-0 text-sm leading-6 text-ink sm:block">
+        <p className="w-full text-center text-sm leading-6 text-ink sm:ms-auto sm:w-auto sm:text-left">
           © 2026 YAIR Smart Office. מרחבי למידה חכמים.
         </p>
       </div>
-      <p className="px-3 text-right text-[11px] leading-5 text-ink sm:hidden">
-        © 2026 YAIR Smart Office. מרחבי למידה חכמים.
-      </p>
       <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pb-2">
         {links.map((link) => (
           <Link
