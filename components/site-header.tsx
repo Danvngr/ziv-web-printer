@@ -5,25 +5,20 @@ import { Printer } from "lucide-react";
 
 function navClass(active: boolean) {
   return active
-    ? "underline decoration-2 underline-offset-4"
-    : "hover:text-white";
+    ? "text-accent underline decoration-2 underline-offset-8"
+    : "text-ink hover:text-accent";
 }
 
 export function SiteHeader({ pathname }: { pathname: string }) {
-  const home = pathname === "/";
   const homeActive = pathname === "/";
   const guidesActive = pathname.startsWith("/printers");
   const contactActive = pathname === "/contact";
 
   return (
-    <header className="px-3 sm:px-4">
+    <header className="sticky top-0 z-30 border-b border-mist bg-white">
       <div
         dir="ltr"
-        className={
-          home
-            ? "mx-auto mt-6 grid max-w-5xl grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-full border border-white/20 bg-white/15 px-4 py-3 text-sm text-white shadow-lg backdrop-blur sm:px-8 sm:py-4 sm:text-base"
-            : "mx-auto mt-6 grid max-w-5xl grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-full border border-white/15 bg-teal-950/80 px-4 py-3 text-sm text-white shadow-lg backdrop-blur sm:px-8 sm:py-4 sm:text-base"
-        }
+        className="mx-auto grid max-w-5xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 py-2 text-sm text-ink sm:gap-3 sm:px-6 sm:py-3 sm:text-base"
       >
         <Link
           href="/contact"
@@ -32,11 +27,11 @@ export function SiteHeader({ pathname }: { pathname: string }) {
         >
           יצירת קשר
         </Link>
-        <Link href="/" className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight">
-          <Printer className="h-5 w-5 shrink-0" aria-hidden="true" />
+        <Link href="/" className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight text-ink">
+          <Printer className="h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
           <span>PrinterGuides</span>
         </Link>
-        <nav aria-label="ניווט ראשי" className="flex items-center justify-self-end gap-4 sm:gap-6">
+        <nav aria-label="ניווט ראשי" className="flex items-center justify-self-end gap-3 sm:gap-6">
           <Link
             href="/#guides"
             aria-current={guidesActive ? "page" : undefined}

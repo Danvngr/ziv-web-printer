@@ -6,8 +6,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16 text-slate-800">
-      <h1 className="text-3xl font-bold text-slate-900">אודותינו</h1>
+    <article className="mx-auto my-10 max-w-3xl rounded-3xl bg-white px-6 py-14 text-muted shadow-card sm:px-10 md:my-16">
+      <h1 className="text-4xl font-bold text-ink md:text-5xl">אודותינו</h1>
       <div className="mt-6 space-y-4 leading-8">
         <p>
           האתר מרכז מדריכי התקנה בעברית למדפסות בית ולמשרד קטן. כל מדריך בנוי כציר שלבים:

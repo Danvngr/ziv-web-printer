@@ -97,7 +97,7 @@ export function AccessibilityMenu() {
       <button
         ref={buttonRef}
         type="button"
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-s-2xl bg-slate-950 px-2 py-3 text-sm font-semibold text-white shadow-lg [writing-mode:vertical-rl]"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-s-2xl bg-ink px-2 py-3 text-sm font-semibold text-white shadow-lg [writing-mode:vertical-rl]"
         aria-expanded={open}
         aria-controls="a11y-panel"
         onClick={() => setOpen((value) => !value)}
@@ -109,12 +109,12 @@ export function AccessibilityMenu() {
         role="region"
         aria-labelledby={panelTitleId}
         hidden={!open}
-        className="absolute end-[calc(100%+0.5rem)] top-1/2 max-h-[min(32rem,80vh)] w-[min(18rem,calc(100vw-4.5rem))] -translate-y-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3 text-start text-slate-900 shadow-2xl"
+        className="absolute end-[calc(100%+0.5rem)] top-1/2 max-h-[min(32rem,80vh)] w-[min(18rem,calc(100vw-4.5rem))] -translate-y-1/2 overflow-y-auto rounded-2xl border border-mist bg-white p-3 text-start text-ink shadow-card"
       >
-        <h2 id={panelTitleId} className="px-1 text-base font-bold">
+        <h2 id={panelTitleId} className="px-1 text-base font-bold text-ink">
           התאמות נגישות
         </h2>
-        <p className="px-1 pt-1 text-xs leading-5 text-slate-600">גודל טקסט</p>
+        <p className="px-1 pt-1 text-xs leading-5 text-muted">גודל טקסט</p>
         <div role="group" aria-label="גודל טקסט" className="mt-1 grid grid-cols-3 gap-2">
           {textSizes.map((size) => (
             <button
@@ -124,8 +124,8 @@ export function AccessibilityMenu() {
               onClick={() => writePrefs({ ...readSnapshot(), text: size.value })}
               className={`inline-flex min-h-11 items-center justify-center rounded-xl border px-2 text-sm font-medium ${
                 prefs.text === size.value
-                  ? "border-slate-900 bg-slate-900 text-white"
-                  : "border-slate-300 bg-white"
+                  ? "border-action bg-action text-ink"
+                  : "border-mist bg-white text-ink"
               }`}
             >
               {size.label}
@@ -151,14 +151,14 @@ export function AccessibilityMenu() {
           <button
             type="button"
             onClick={() => writePrefs(defaultA11yPrefs)}
-            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 px-3 text-sm font-medium"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-mist px-3 text-sm font-medium text-ink"
           >
             איפוס
           </button>
           <Link
             href="/accessibility"
             onClick={() => setOpen(false)}
-            className="inline-flex min-h-11 items-center justify-center rounded-xl px-3 text-sm font-semibold text-teal-800 underline"
+            className="inline-flex min-h-11 items-center justify-center rounded-xl px-3 text-sm font-semibold text-accent underline"
           >
             הצהרת נגישות
           </Link>
@@ -183,7 +183,7 @@ function Toggle({
       aria-pressed={pressed}
       onClick={onClick}
       className={`inline-flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border px-3 text-start text-sm font-medium ${
-        pressed ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white"
+        pressed ? "border-action bg-action text-ink" : "border-mist bg-white text-ink"
       }`}
     >
       <span>{children}</span>
