@@ -93,11 +93,11 @@ export function AccessibilityMenu() {
   }
 
   return (
-    <div className="fixed end-4 top-1/2 z-40 -translate-y-1/2">
+    <div className="fixed end-0 top-1/2 z-40 -translate-y-1/2">
       <button
         ref={buttonRef}
         type="button"
-        className="inline-flex min-h-11 items-center justify-center rounded-full bg-page px-4 text-sm font-semibold text-ink shadow-card"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-s-2xl border border-mist bg-wash px-2 py-3 text-sm font-semibold text-ink shadow-card [writing-mode:vertical-rl]"
         aria-expanded={open}
         aria-controls="a11y-panel"
         onClick={() => setOpen((value) => !value)}
