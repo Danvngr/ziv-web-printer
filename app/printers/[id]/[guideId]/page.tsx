@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MachineName } from "@/components/machine-name";
 import { WhatsAppLink } from "@/components/whatsapp-link";
 import { getMachine, guideLabel, isGuideKind, machineGuideLinks, machines, readyGuide } from "@/data/printers";
 import { counterWhatsappText } from "@/data/site";
@@ -34,16 +35,28 @@ export default async function GuidePage({ params }: GuidePageProps) {
   return (
     <article className="lift mx-auto my-8 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-10 pe-8 sm:px-8">
       <nav aria-label="פירורי לחם" className="text-sm text-muted">
-        <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
-          חיפוש דגם
-        </Link>
-        <span aria-hidden="true"> › </span>
-        <Link
-          href={`/printers/${machine.id}`}
-          className="inline-flex min-h-11 items-center text-accent hover:underline"
-        >
-          {machine.brand} {machine.model}
-        </Link>
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <li>
+            <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
+              דף הבית
+            </Link>
+          </li>
+          <li aria-hidden="true">‹</li>
+          <li>
+            <Link href="/#search" className="inline-flex min-h-11 items-center text-accent hover:underline">
+              חיפוש דגם
+            </Link>
+          </li>
+          <li aria-hidden="true">‹</li>
+          <li>
+            <Link
+              href={`/printers/${machine.id}`}
+              className="inline-flex min-h-11 items-center text-accent hover:underline"
+            >
+              <MachineName brand={machine.brand} model={machine.model} />
+            </Link>
+          </li>
+        </ol>
       </nav>
       <h1 className="mt-4 text-3xl font-bold text-ink sm:text-4xl md:text-5xl">
         <span className="block">{label.title}</span>

@@ -1,4 +1,3 @@
-// תוכן לדוגמה בלבד. אין כאן הוראות מאומתות.
 // דגם חדש: אובייקט ב-machines. מזהה קבוע, כינויים לחיפוש, תמונה אופציונלית.
 // מדריך: guides.counter, guides.meter (הוצאת מונה) או guides.toner. בלי steps המדריך מוצג כ״יעלה בקרוב״.
 
@@ -27,48 +26,6 @@ export interface Machine {
   category: DeviceCategory;
   guides: Partial<Record<GuideKind, Guide>>;
 }
-
-const sampleCounter: Guide = {
-  intro: "תוכן לדוגמה. זה אינו הסבר מאומת להוצאת מונה.",
-  steps: [
-    {
-      title: "פתיחת המסך",
-      text: "תוכן לדוגמה. כאן יופיע הסבר קצר, והתמונה תסמן את הכפתור.",
-      image: "/guides/sample-counter-1.svg",
-      alt: "תוכן לדוגמה. איור של מסך מכונה עם עיגול על הכפתור.",
-    },
-    {
-      title: "בחירת מונה",
-      text: "תוכן לדוגמה. כאן יופיע לאן ללחוץ כדי להציג את המונה.",
-      image: "/guides/sample-counter-2.svg",
-      alt: "תוכן לדוגמה. איור עם חץ לעבר סימון המונה.",
-    },
-    {
-      title: "צילום המספר",
-      text: "תוכן לדוגמה. כאן יופיע איך המספר נראה על הצג לפני השליחה.",
-      image: "/guides/sample-counter-3.svg",
-      alt: "תוכן לדוגמה. איור של צג עם מספר מונה מסומן.",
-    },
-  ],
-};
-
-const sampleToner: Guide = {
-  intro: "תוכן לדוגמה. זה אינו הסבר מאומת להחלפת טונר.",
-  steps: [
-    {
-      title: "פתיחת המכסה",
-      text: "תוכן לדוגמה. כאן יופיע איזה מכסה לפתוח.",
-      image: "/guides/sample-toner-1.svg",
-      alt: "תוכן לדוגמה. איור של מכסה מסומן בעיגול.",
-    },
-    {
-      title: "החלפת המחסנית",
-      text: "תוכן לדוגמה. כאן יופיע כיוון ההחלפה, אחרי שההוראה תאומת.",
-      image: "/guides/sample-toner-2.svg",
-      alt: "תוכן לדוגמה. איור עם חץ לכיוון החלפת המחסנית.",
-    },
-  ],
-};
 
 const canonMeter: Guide = {
   intro: "כך מגיעים למסך המונה.",
@@ -110,35 +67,6 @@ export const placeholderImage = "/guides/placeholder.svg";
 
 export const machines: Machine[] = [
   {
-    id: "sample-sp-100",
-    brand: "דוגמה",
-    model: "SP-100",
-    aliases: ["sp100", "sp 100", "אס פי 100"],
-    image: "/guides/sample-machine.svg",
-    sample: true,
-    category: "printer",
-    guides: { counter: sampleCounter, toner: sampleToner },
-  },
-  {
-    id: "sample-sp-200",
-    brand: "דוגמה",
-    model: "SP-200",
-    aliases: ["sp200", "sp 200"],
-    image: "/guides/sample-machine.svg",
-    sample: true,
-    category: "printer",
-    guides: { toner: sampleToner },
-  },
-  {
-    id: "sample-copy-10",
-    brand: "OfficeDemo",
-    model: "Copy 10",
-    aliases: ["copy10", "copy-10", "קופי 10"],
-    sample: true,
-    category: "copier",
-    guides: {},
-  },
-  {
     id: "canon-mf655cdw",
     brand: "Canon",
     model: "i-SENSYS MF655Cdw",
@@ -159,6 +87,10 @@ export function isGuideKind(value: string): value is GuideKind {
 export function guideLabel(kind: GuideKind): { card: string; title: string } {
   if (kind === "counter" || kind === "meter") return { card: "איך מוציאים מונה?", title: "הוצאת מונה" };
   return { card: "איך מחליפים טונר?", title: "החלפת טונר" };
+}
+
+export function machineNameWords(brand: string, model: string): string[] {
+  return `${brand} ${model}`.trim().split(/\s+/).filter(Boolean);
 }
 
 export function machineGuideLinks(machine: Machine): GuideKind[] {

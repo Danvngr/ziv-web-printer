@@ -8,6 +8,7 @@ import {
   getMachine,
   isGuideKind,
   machineGuideLinks,
+  machineNameWords,
   machines,
   normalizeSearch,
   readyGuide,
@@ -17,54 +18,36 @@ import { counterWhatsappText, whatsappHref } from "../data/site.ts";
 assert.equal(normalizeSearch(" SP-100 "), "sp100");
 assert.equal(normalizeSearch("Copy 10"), "copy10");
 
-const byAlias = filterMachines(machines, "sp 100");
-assert.equal(byAlias.length, 1);
-assert.equal(byAlias[0]?.id, "sample-sp-100");
-
-const byHyphen = filterMachines(machines, "SP-100");
-assert.equal(byHyphen[0]?.id, "sample-sp-100");
-
-const byBrand = filterMachines(machines, "דוגמה");
-assert.equal(byBrand.length, 2);
+assert.equal(filterMachines(machines, "sp 100").length, 0);
+assert.equal(filterMachines(machines, "SP-100").length, 0);
+assert.equal(filterMachines(machines, "דוגמה").length, 0);
+assert.equal(getMachine(machines, "sample-sp-100"), undefined);
+assert.equal(getMachine(machines, "sample-sp-200"), undefined);
+assert.equal(getMachine(machines, "sample-copy-10"), undefined);
 
 assert.equal(filterMachines(machines, "epson").length, 0);
-assert.equal(filterMachines(machines, "   ").length, machines.length);
+assert.equal(filterMachines(machines, "   ").length, 1);
 
 const printersOnly = filterMachines(machines, "  ", "printer");
 assert.deepEqual(
   printersOnly.map((item) => item.id),
-  ["sample-sp-100", "sample-sp-200", "canon-mf655cdw"],
+  ["canon-mf655cdw"],
 );
 assert.ok(printersOnly.every((item) => item.category === "printer"));
 
-const copiersOnly = filterMachines(machines, "", "copier");
 assert.deepEqual(
-  copiersOnly.map((item) => item.id),
-  ["sample-copy-10"],
+  filterMachines(machines, "", "copier").map((item) => item.id),
+  [],
 );
 
-const searchIgnoresCategory = filterMachines(machines, "copy", "printer");
+const searchIgnoresCategory = filterMachines(machines, "mf655", "copier");
 assert.equal(searchIgnoresCategory.length, 1);
-assert.equal(searchIgnoresCategory[0]?.category, "copier");
-
-const sample = getMachine(machines, "sample-sp-100");
-assert.equal(sample?.sample, true);
-assert.ok(readyGuide(sample!, "counter"));
-assert.ok(readyGuide(sample!, "toner"));
-
-const partial = getMachine(machines, "sample-sp-200");
-assert.equal(readyGuide(partial!, "counter"), undefined);
-assert.ok(readyGuide(partial!, "toner"));
-
-const empty = getMachine(machines, "sample-copy-10");
-assert.equal(empty?.image, undefined);
-assert.equal(readyGuide(empty!, "counter"), undefined);
-assert.equal(readyGuide(empty!, "toner"), undefined);
+assert.equal(searchIgnoresCategory[0]?.category, "printer");
 
 assert.equal(isGuideKind("counter"), true);
 assert.equal(isGuideKind("meter"), true);
 assert.equal(isGuideKind("installation"), false);
-assert.deepEqual(machineGuideLinks(sample!), ["counter", "toner"]);
+assert.deepEqual(machineNameWords("Canon", "i-SENSYS MF655Cdw"), ["Canon", "i-SENSYS", "MF655Cdw"]);
 
 const canon = getMachine(machines, "canon-mf655cdw");
 assert.equal(canon?.sample, false);

@@ -10,6 +10,7 @@ import {
   type DeviceCategory,
   type Machine,
 } from "@/data/printers";
+import { MachineName } from "@/components/machine-name";
 import { WhatsAppLink } from "@/components/whatsapp-link";
 
 const categories: { id: DeviceCategory; label: string }[] = [
@@ -82,35 +83,9 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
           {groups.map(([brand, items]) => (
             <section key={brand} aria-label={brand}>
               <h3 className="text-lg font-bold text-ink">{brand}</h3>
-              <ul className="grid w-full min-w-0 grid-cols-1 gap-x-8 gap-y-16 pt-16 lg:grid-cols-3">
+              <ul className="grid w-full min-w-0 grid-cols-1 items-start gap-y-12 overflow-visible md:grid-cols-2 md:gap-x-8">
                 {items.map((machine) => (
-                  <li key={machine.id} className="min-w-0">
-                    <article className="lift relative w-full min-w-0 max-w-full rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
-                      <span className="logo-halo absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full">
-                        <Link
-                          href={`/printers/${machine.id}`}
-                          className="block h-full w-full overflow-hidden rounded-full bg-white shadow-card ring-4 ring-white"
-                          aria-label={`לדגם ${machine.brand} ${machine.model}`}
-                        >
-                          <Image
-                            src={machine.image ?? placeholderImage}
-                            alt={`${machine.brand} ${machine.model}`}
-                            width={96}
-                            height={96}
-                            unoptimized
-                            className="h-full w-full object-cover"
-                          />
-                        </Link>
-                      </span>
-                      <h4 className="text-xl font-bold text-ink">{machine.model}</h4>
-                      <Link
-                        href={`/printers/${machine.id}`}
-                        className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 text-sm font-semibold text-ink hover:bg-action-hover"
-                      >
-                        לדגם
-                      </Link>
-                    </article>
-                  </li>
+                  <ComparisonCards key={machine.id} machine={machine} />
                 ))}
               </ul>
             </section>
@@ -118,5 +93,66 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
         </div>
       )}
     </div>
+  );
+}
+
+function ComparisonCards({ machine }: { machine: Machine }) {
+  const href = `/printers/${machine.id}`;
+  const image = machine.image ?? placeholderImage;
+  return (
+    <>
+      <li className="min-w-0">
+        <p className="text-sm font-medium text-muted">«אפשרות א»</p>
+        <article className="lift relative mt-16 w-full min-w-0 max-w-full rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
+          <span className="logo-halo absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full">
+            <Link
+              href={href}
+              className="block h-full w-full overflow-hidden rounded-full bg-white shadow-card ring-4 ring-white"
+              aria-label={`לדגם ${machine.brand} ${machine.model}`}
+            >
+              <Image
+                src={image}
+                alt=""
+                width={96}
+                height={96}
+                unoptimized
+                className="h-full w-full object-cover"
+              />
+            </Link>
+          </span>
+          <h4 className="text-xl font-bold text-ink">
+            <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+          </h4>
+          <Link
+            href={href}
+            className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 text-sm font-semibold text-ink hover:bg-action-hover"
+          >
+            לדגם
+          </Link>
+        </article>
+      </li>
+      <li className="min-w-0">
+        <p className="text-sm font-medium text-muted">«אפשרות ב»</p>
+        <h4 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">
+          <Link href={href} className="inline-flex max-w-full justify-center">
+            <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+          </Link>
+        </h4>
+        <Link
+          href={href}
+          aria-label={`לדגם ${machine.brand} ${machine.model}`}
+          className="mt-4 block overflow-hidden rounded-3xl border border-edge bg-white"
+        >
+          <Image
+            src={image}
+            alt=""
+            width={1254}
+            height={1254}
+            unoptimized
+            className="h-auto w-full"
+          />
+        </Link>
+      </li>
+    </>
   );
 }
