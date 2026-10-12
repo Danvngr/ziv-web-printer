@@ -27,7 +27,7 @@ export default async function MachinePage({ params }: MachinePageProps) {
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
       <p className="text-sm font-semibold text-accent">{machine.brand}</p>
-      <h1 className="mt-2 text-4xl font-bold text-ink md:text-5xl">{machine.model}</h1>
+      <h1 className="mt-2 text-3xl font-bold text-ink sm:text-4xl md:text-5xl">{machine.model}</h1>
       {machine.sample ? (
         <p className="mt-4 inline-flex rounded-full bg-chip-sand px-3 py-1 text-sm font-semibold text-ink">
           תוכן לדוגמה

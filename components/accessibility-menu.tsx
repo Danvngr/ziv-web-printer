@@ -6,49 +6,12 @@ import {
   a11yAttrNames,
   a11yDataAttrs,
   defaultA11yPrefs,
-  parseA11yPrefs,
+  readA11ySnapshot,
+  subscribeA11y,
+  writeA11yPrefs,
   type A11yPrefs,
   type TextSize,
 } from "@/lib/a11y-prefs";
-
-const STORAGE_KEY = "a11y-prefs";
-const PREFS_EVENT = "a11y-prefs-change";
-
-let snapshot = defaultA11yPrefs;
-let snapshotRaw: string | null = null;
-let hasRead = false;
-
-function readSnapshot(): A11yPrefs {
-  let raw: string | null = null;
-  try {
-    raw = localStorage.getItem(STORAGE_KEY);
-  } catch {
-    raw = null;
-  }
-  if (hasRead && raw === snapshotRaw) return snapshot;
-  hasRead = true;
-  snapshotRaw = raw;
-  snapshot = parseA11yPrefs(raw);
-  return snapshot;
-}
-
-function subscribePrefs(onChange: () => void) {
-  window.addEventListener(PREFS_EVENT, onChange);
-  return () => window.removeEventListener(PREFS_EVENT, onChange);
-}
-
-function writePrefs(next: A11yPrefs) {
-  const raw = JSON.stringify(next);
-  try {
-    localStorage.setItem(STORAGE_KEY, raw);
-  } catch {
-    // Storage can be blocked. The choice still applies for this visit.
-  }
-  snapshot = next;
-  snapshotRaw = raw;
-  hasRead = true;
-  window.dispatchEvent(new Event(PREFS_EVENT));
-}
 
 const textSizes: { value: TextSize; label: string }[] = [
   { value: "normal", label: "רגיל" },
@@ -70,7 +33,7 @@ export function AccessibilityMenu() {
   const panelTitleId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
-  const prefs = useSyncExternalStore(subscribePrefs, readSnapshot, () => defaultA11yPrefs);
+  const prefs = useSyncExternalStore(subscribeA11y, readA11ySnapshot, () => defaultA11yPrefs);
 
   useEffect(() => {
     applyA11yPrefs(prefs);
@@ -88,8 +51,8 @@ export function AccessibilityMenu() {
   }, [open]);
 
   function toggleFlag(key: "contrast" | "grayscale" | "links" | "font" | "motion") {
-    const current = readSnapshot();
-    writePrefs({ ...current, [key]: !current[key] });
+    const current = readA11ySnapshot();
+    writeA11yPrefs({ ...current, [key]: !current[key] });
   }
 
   return (
@@ -121,7 +84,7 @@ export function AccessibilityMenu() {
               key={size.value}
               type="button"
               aria-pressed={prefs.text === size.value}
-              onClick={() => writePrefs({ ...readSnapshot(), text: size.value })}
+              onClick={() => writeA11yPrefs({ ...readA11ySnapshot(), text: size.value })}
               className={`inline-flex min-h-11 items-center justify-center rounded-xl border px-2 text-sm font-medium ${
                 prefs.text === size.value
                   ? "border-action bg-action text-ink"
@@ -150,7 +113,7 @@ export function AccessibilityMenu() {
           </Toggle>
           <button
             type="button"
-            onClick={() => writePrefs(defaultA11yPrefs)}
+            onClick={() => writeA11yPrefs(defaultA11yPrefs)}
             className="inline-flex min-h-11 items-center justify-center rounded-xl border border-mist px-3 text-sm font-medium text-ink"
           >
             איפוס

@@ -76,6 +76,83 @@ body {
   }
 }
 
+html {
+  overflow-x: clip;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translate(0);
+  }
+  50% {
+    transform: translateY(-18px) translate(6px);
+  }
+}
+
+@keyframes float-rotate {
+  0% {
+    transform: translateY(0) rotate(-10deg) scale(1);
+  }
+  50% {
+    transform: translateY(-22px) rotate(14deg) scale(1.08);
+  }
+  100% {
+    transform: translateY(0) rotate(-10deg) scale(1);
+  }
+}
+
+@keyframes drift-x {
+  0%,
+  100% {
+    transform: translate(0) translateY(0) rotate(0);
+  }
+  50% {
+    transform: translate(22px) translateY(-10px) rotate(8deg);
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, #25d366 40%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+.float {
+  animation: 4s ease-in-out infinite float;
+}
+
+.float-rotate {
+  animation: 6s ease-in-out infinite float-rotate;
+}
+
+.drift-x {
+  animation: 7s ease-in-out infinite drift-x;
+}
+
+.pop-in {
+  animation: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both pop-in;
+}
+
+.wa-pulse {
+  animation: 2.4s ease-in-out infinite pulse-glow;
+}
+
 /* Soft lift plus a light highlight so cards sit off the wash. */
 .lift {
   box-shadow:
@@ -130,17 +207,9 @@ input:focus-visible,
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
-  }
-
-  html,
-  body,
-  .a11y-canvas,
-  header {
-    animation: none;
   }
 }
 
@@ -185,11 +254,11 @@ html[data-a11y-contrast="on"][data-a11y-grayscale="on"] .a11y-canvas {
   filter: contrast(1.25) grayscale(1);
 }
 
+html[data-a11y-motion="on"],
 html[data-a11y-motion="on"] *,
 html[data-a11y-motion="on"] *::before,
 html[data-a11y-motion="on"] *::after {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
+  animation: none !important;
+  transition: none !important;
   scroll-behavior: auto !important;
 }

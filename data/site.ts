@@ -6,6 +6,8 @@ export const site = {
   homeTitle: "איך אפשר לעזור עם המדפסת?",
   whatsappE164: "972585554901",
   whatsappDisplay: "058-555-4901",
+  instagram: "yair_smart_office",
+  instagramHref: "https://instagram.com/yair_smart_office",
 } as const;
 
 export const counterWhatsappText =

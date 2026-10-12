@@ -49,6 +49,45 @@ export function parseA11yPrefs(raw: string | null): A11yPrefs {
   }
 }
 
+const STORAGE_KEY = "a11y-prefs";
+const PREFS_EVENT = "a11y-prefs-change";
+
+let snapshot = defaultA11yPrefs;
+let snapshotRaw: string | null = null;
+let hasRead = false;
+
+export function readA11ySnapshot(): A11yPrefs {
+  let raw: string | null = null;
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+  } catch {
+    raw = null;
+  }
+  if (hasRead && raw === snapshotRaw) return snapshot;
+  hasRead = true;
+  snapshotRaw = raw;
+  snapshot = parseA11yPrefs(raw);
+  return snapshot;
+}
+
+export function subscribeA11y(onChange: () => void) {
+  window.addEventListener(PREFS_EVENT, onChange);
+  return () => window.removeEventListener(PREFS_EVENT, onChange);
+}
+
+export function writeA11yPrefs(next: A11yPrefs) {
+  const raw = JSON.stringify(next);
+  try {
+    localStorage.setItem(STORAGE_KEY, raw);
+  } catch {
+    // Storage can be blocked. The choice still applies for this visit.
+  }
+  snapshot = next;
+  snapshotRaw = raw;
+  hasRead = true;
+  window.dispatchEvent(new Event(PREFS_EVENT));
+}
+
 export function a11yDataAttrs(prefs: A11yPrefs): Partial<Record<A11yAttrName, string>> {
   const attrs: Partial<Record<A11yAttrName, string>> = {};
   if (prefs.text !== "normal") attrs["data-a11y-text"] = prefs.text;
