@@ -82,10 +82,10 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
           {groups.map(([brand, items]) => (
             <section key={brand} aria-label={brand}>
               <h3 className="text-lg font-bold text-ink">{brand}</h3>
-              <ul className="grid grid-cols-1 gap-x-8 gap-y-16 px-2 pt-16 md:grid-cols-3">
+              <ul className="grid w-full min-w-0 grid-cols-1 gap-x-8 gap-y-16 pt-16 lg:grid-cols-3">
                 {items.map((machine) => (
-                  <li key={machine.id}>
-                    <article className="lift relative rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
+                  <li key={machine.id} className="min-w-0">
+                    <article className="lift relative w-full min-w-0 max-w-full rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
                       <Link
                         href={`/printers/${machine.id}`}
                         className="absolute -top-12 left-1/2 block h-24 w-24 -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-card ring-4 ring-wash"

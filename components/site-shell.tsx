@@ -9,10 +9,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="a11y-canvas flex min-h-screen flex-col text-ink">
+      <div className="a11y-canvas flex min-h-screen min-w-0 flex-col text-ink">
         <SiteHeader pathname={pathname} />
-        <div className="flex flex-1 flex-col px-14">
-          <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-5xl flex-1">
+        <div className="flex min-w-0 flex-1 flex-col px-16">
+          <main id="main-content" tabIndex={-1} className="mx-auto w-full min-w-0 max-w-5xl flex-1">
             {children}
           </main>
         </div>

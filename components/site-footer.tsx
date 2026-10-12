@@ -19,42 +19,49 @@ export function SiteFooter({ pathname }: { pathname: string }) {
   const stopped = prefs.motion;
 
   return (
-    <footer className="mt-auto bg-transparent text-ink">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-4">
-        <p className="text-sm leading-6 text-ink">© 2026 YAIR Smart Office. מרחבי למידה חכמים.</p>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <button
-            type="button"
-            aria-pressed={stopped}
-            onClick={() => writeA11yPrefs({ ...readA11ySnapshot(), motion: !stopped })}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
-          >
-            <ZapIcon />
-            {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
-          </button>
-          <a href={`tel:${site.whatsappDisplay.replace(/-/g, "")}`} className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink">
-            {site.whatsappDisplay}
-            <PhoneIcon />
-          </a>
-          <a
-            href={site.instagramHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
-            aria-label={`אינסטגרם ${site.instagram}`}
-          >
-            {site.instagram}
-            <InstagramIcon />
-          </a>
-          <WhatsAppLink
-            label="וואטסאפ לשירות"
-            className="wa-pulse inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#1ebe5a]"
-          >
-            <WhatsAppMark />
-          </WhatsAppLink>
-        </div>
+    <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent text-ink">
+      {/* dir=ltr pins the circle to the visual left, not the RTL start. */}
+      <div dir="ltr" className="flex w-full min-w-0 items-center gap-0.5 px-1.5 py-2 sm:gap-4 sm:px-5 sm:py-3">
+        <WhatsAppLink
+          label="וואטסאפ לשירות"
+          className="wa-pulse inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#1ebe5a] sm:h-14 sm:w-14"
+        >
+          <WhatsAppMark />
+        </WhatsAppLink>
+        <a
+          href={site.instagramHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+          aria-label={`אינסטגרם ${site.instagram}`}
+        >
+          <InstagramIcon />
+          {site.instagram}
+        </a>
+        <a
+          href={`tel:${site.whatsappDisplay.replace(/-/g, "")}`}
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+        >
+          <PhoneIcon />
+          {site.whatsappDisplay}
+        </a>
+        <button
+          type="button"
+          aria-pressed={stopped}
+          onClick={() => writeA11yPrefs({ ...readA11ySnapshot(), motion: !stopped })}
+          className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[10px] font-medium text-ink sm:gap-2 sm:text-sm"
+        >
+          <ZapIcon />
+          {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
+        </button>
+        <p className="ms-auto hidden shrink-0 text-sm leading-6 text-ink sm:block">
+          © 2026 YAIR Smart Office. מרחבי למידה חכמים.
+        </p>
       </div>
-      <nav aria-label="מידע על האתר" className="mx-auto flex max-w-6xl flex-wrap justify-center gap-x-3 px-4 pb-3">
+      <p className="px-3 text-right text-[11px] leading-5 text-ink sm:hidden">
+        © 2026 YAIR Smart Office. מרחבי למידה חכמים.
+      </p>
+      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pb-2">
         {links.map((link) => (
           <Link
             key={link.href}
