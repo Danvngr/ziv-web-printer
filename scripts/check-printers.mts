@@ -26,6 +26,20 @@ assert.equal(byBrand.length, 2);
 assert.equal(filterMachines(machines, "epson").length, 0);
 assert.equal(filterMachines(machines, "   ").length, machines.length);
 
+const printersOnly = filterMachines(machines, "  ", "printer");
+assert.equal(printersOnly.length, 2);
+assert.ok(printersOnly.every((item) => item.category === "printer"));
+
+const copiersOnly = filterMachines(machines, "", "copier");
+assert.deepEqual(
+  copiersOnly.map((item) => item.id),
+  ["sample-copy-10"],
+);
+
+const searchIgnoresCategory = filterMachines(machines, "copy", "printer");
+assert.equal(searchIgnoresCategory.length, 1);
+assert.equal(searchIgnoresCategory[0]?.category, "copier");
+
 const sample = getMachine(machines, "sample-sp-100");
 assert.equal(sample?.sample, true);
 assert.ok(readyGuide(sample!, "counter"));

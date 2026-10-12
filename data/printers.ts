@@ -3,6 +3,7 @@
 // מדריך: guides.counter או guides.toner. בלי steps המדריך מוצג כ״יעלה בקרוב״.
 
 export type GuideKind = "counter" | "toner";
+export type DeviceCategory = "printer" | "copier";
 
 export interface GuideStep {
   title: string;
@@ -23,6 +24,7 @@ export interface Machine {
   aliases: string[];
   image?: string;
   sample: boolean;
+  category: DeviceCategory;
   guides: Partial<Record<GuideKind, Guide>>;
 }
 
@@ -78,6 +80,7 @@ export const machines: Machine[] = [
     aliases: ["sp100", "sp 100", "אס פי 100"],
     image: "/guides/sample-machine.svg",
     sample: true,
+    category: "printer",
     guides: { counter: sampleCounter, toner: sampleToner },
   },
   {
@@ -87,6 +90,7 @@ export const machines: Machine[] = [
     aliases: ["sp200", "sp 200"],
     image: "/guides/sample-machine.svg",
     sample: true,
+    category: "printer",
     guides: { toner: sampleToner },
   },
   {
@@ -95,6 +99,7 @@ export const machines: Machine[] = [
     model: "Copy 10",
     aliases: ["copy10", "copy-10", "קופי 10"],
     sample: true,
+    category: "copier",
     guides: {},
   },
 ];
@@ -114,9 +119,16 @@ export function normalizeSearch(value: string): string {
   return value.trim().toLowerCase().replace(/[\s\-–—_./]+/g, "").slice(0, 80);
 }
 
-export function filterMachines(list: readonly Machine[], query: string): Machine[] {
+export function filterMachines(
+  list: readonly Machine[],
+  query: string,
+  category?: DeviceCategory,
+): Machine[] {
   const q = normalizeSearch(query);
-  if (!q) return [...list];
+  if (!q) {
+    const pool = category ? list.filter((machine) => machine.category === category) : list;
+    return [...pool];
+  }
   return list.filter((machine) =>
     [machine.brand, machine.model, ...machine.aliases].some((part) => normalizeSearch(part).includes(q)),
   );

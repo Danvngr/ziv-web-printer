@@ -3,17 +3,52 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { filterMachines, machinesByBrand, placeholderImage, type Machine } from "@/data/printers";
+import {
+  filterMachines,
+  machinesByBrand,
+  placeholderImage,
+  type DeviceCategory,
+  type Machine,
+} from "@/data/printers";
 import { WhatsAppLink } from "@/components/whatsapp-link";
+
+const categories: { id: DeviceCategory; label: string }[] = [
+  { id: "printer", label: "מדפסות" },
+  { id: "copier", label: "מכונות צילום" },
+];
 
 export function HomeSearch({ machines }: { machines: Machine[] }) {
   const [query, setQuery] = useState("");
-  const matches = useMemo(() => filterMachines(machines, query), [machines, query]);
+  const [category, setCategory] = useState<DeviceCategory>("printer");
+  const matches = useMemo(
+    () => filterMachines(machines, query, category),
+    [machines, query, category],
+  );
   const browsing = query.trim() === "";
-  const groups = machinesByBrand(browsing ? machines : matches);
+  const groups = machinesByBrand(matches);
 
   return (
     <div id="search" className="mx-auto mt-8 w-full max-w-5xl">
+      <div role="group" aria-label="קטגוריות" className="mb-5 flex flex-wrap justify-center gap-3">
+        {categories.map((item) => {
+          const pressed = category === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={pressed}
+              onClick={() => setCategory(item.id)}
+              className={`inline-flex min-h-11 items-center justify-center rounded-full px-6 text-sm font-semibold ${
+                pressed
+                  ? "bg-action text-ink hover:bg-action-hover"
+                  : "border border-mist bg-white text-ink shadow-sm hover:bg-wash"
+              }`}
+            >
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
       <form role="search" className="mx-auto max-w-2xl" onSubmit={(event) => event.preventDefault()}>
         <label htmlFor="model-search" className="sr-only">
           הקלידו דגם מדפסת
