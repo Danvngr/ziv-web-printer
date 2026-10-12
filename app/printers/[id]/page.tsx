@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MachineName } from "@/components/machine-name";
+import { ZoomImage } from "@/components/zoom-image";
 import { getMachine, guideLabel, machineGuideLinks, machines, placeholderImage } from "@/data/printers";
 
 type MachinePageProps = {
@@ -36,14 +36,13 @@ export default async function MachinePage({ params }: MachinePageProps) {
         </p>
       ) : null}
       <figure className="mt-8 overflow-hidden rounded-3xl bg-white p-6 shadow-card">
-        <Image
+        <ZoomImage
           src={machine.image ?? placeholderImage}
           alt={`${machine.brand} ${machine.model}`}
-          width={640}
-          height={360}
-          unoptimized
-          priority
-          className="mx-auto aspect-video w-full max-w-md object-contain"
+          width={1254}
+          height={1254}
+          triggerClassName="block w-full"
+          imageClassName="mx-auto aspect-video w-full max-w-md object-contain"
         />
       </figure>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">

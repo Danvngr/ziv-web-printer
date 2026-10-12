@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/data/printers";
 import { MachineName } from "@/components/machine-name";
 import { WhatsAppLink } from "@/components/whatsapp-link";
+import { ZoomImage } from "@/components/zoom-image";
 
 const categories: { id: DeviceCategory; label: string }[] = [
   { id: "printer", label: "מדפסות" },
@@ -105,23 +105,20 @@ function ComparisonCards({ machine }: { machine: Machine }) {
         <p className="text-sm font-medium text-muted">«אפשרות א»</p>
         <article className="lift relative mt-16 w-full min-w-0 max-w-full rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
           <span className="logo-halo absolute -top-12 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full">
-            <Link
-              href={href}
-              className="block h-full w-full overflow-hidden rounded-full bg-white shadow-card ring-4 ring-white"
-              aria-label={`לדגם ${machine.brand} ${machine.model}`}
-            >
-              <Image
-                src={image}
-                alt=""
-                width={96}
-                height={96}
-                unoptimized
-                className="h-full w-full object-cover"
-              />
-            </Link>
+            <ZoomImage
+              src={image}
+              alt=""
+              label="הגדלת תמונת המדפסת"
+              width={1254}
+              height={1254}
+              triggerClassName="block h-full w-full overflow-hidden rounded-full bg-white shadow-card ring-4 ring-white"
+              imageClassName="h-full w-full object-cover"
+            />
           </span>
           <h4 className="text-xl font-bold text-ink">
-            <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+            <Link href={href} className="inline-flex max-w-full justify-center">
+              <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+            </Link>
           </h4>
           <Link
             href={href}
@@ -138,20 +135,15 @@ function ComparisonCards({ machine }: { machine: Machine }) {
             <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
           </Link>
         </h4>
-        <Link
-          href={href}
-          aria-label={`לדגם ${machine.brand} ${machine.model}`}
-          className="mt-4 block overflow-hidden rounded-3xl border border-edge bg-white"
-        >
-          <Image
-            src={image}
-            alt=""
-            width={1254}
-            height={1254}
-            unoptimized
-            className="h-auto w-full"
-          />
-        </Link>
+        <ZoomImage
+          src={image}
+          alt=""
+          label="הגדלת תמונת המדפסת"
+          width={1254}
+          height={1254}
+          triggerClassName="mt-4 block w-full overflow-hidden rounded-3xl border border-edge bg-white"
+          imageClassName="h-auto w-full"
+        />
       </li>
     </>
   );

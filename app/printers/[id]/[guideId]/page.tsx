@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MachineName } from "@/components/machine-name";
 import { WhatsAppLink } from "@/components/whatsapp-link";
+import { ZoomImage } from "@/components/zoom-image";
 import { getMachine, guideLabel, isGuideKind, machineGuideLinks, machines, readyGuide } from "@/data/printers";
 import { counterWhatsappText } from "@/data/site";
 
@@ -85,13 +85,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     כאן תופיע התמונה
                   </div>
                 ) : (
-                  <Image
+                  <ZoomImage
                     src={step.image}
                     alt={step.alt}
                     width={1536}
                     height={1024}
-                    unoptimized
-                    className="mt-4 h-auto w-full rounded-2xl border border-edge bg-[#f9fcff]"
+                    triggerClassName="mt-4 block w-full overflow-hidden rounded-2xl border border-edge bg-[#f9fcff]"
+                    imageClassName="h-auto w-full"
                   />
                 )}
               </li>
