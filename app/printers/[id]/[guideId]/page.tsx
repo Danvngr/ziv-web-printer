@@ -83,7 +83,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <h2 className="text-lg font-bold text-ink">{step.title}</h2>
                 <p className="mt-2 leading-7 text-muted">{step.text}</p>
                 {machine.sample ? (
-                  <div className="mt-4 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
+                  <div className="mt-8 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
                     כאן תופיע התמונה
                   </div>
                 ) : (
@@ -92,7 +92,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     alt={step.alt}
                     width={1536}
                     height={1024}
-                    triggerClassName="mt-4 block w-full overflow-hidden rounded-2xl border border-edge bg-[#f9fcff]"
+                    triggerClassName="mt-8 block w-full overflow-hidden rounded-2xl border border-edge bg-[#f9fcff]"
                     imageClassName="h-auto w-full"
                   />
                 )}

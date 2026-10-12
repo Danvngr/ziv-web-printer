@@ -8,11 +8,11 @@ export function SiteHeader({ pathname }: { pathname: string }) {
 
   return (
     <header className="sticky top-0 z-30">
-      <div className="mx-auto flex max-w-5xl items-center px-4 py-2 sm:px-6">
+      <div className="flex items-center justify-center px-4 py-3">
         <Link
           href="/"
           aria-current={homeActive ? "page" : undefined}
-          className="inline-flex min-h-11 items-center font-bold tracking-tight text-ink"
+          className="inline-flex min-h-11 items-center text-3xl font-bold tracking-tight text-ink sm:text-4xl"
         >
           {site.name}
         </Link>

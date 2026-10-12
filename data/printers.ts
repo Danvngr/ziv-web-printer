@@ -119,6 +119,15 @@ export function filterMachines(
   );
 }
 
+export function brandsInCategory(list: readonly Machine[], category: DeviceCategory): string[] {
+  const brands: string[] = [];
+  for (const machine of list) {
+    if (machine.category !== category || brands.includes(machine.brand)) continue;
+    brands.push(machine.brand);
+  }
+  return brands;
+}
+
 export function machinesByBrand(list: readonly Machine[]): [string, Machine[]][] {
   const groups = new Map<string, Machine[]>();
   for (const machine of list) {

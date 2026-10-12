@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { a11yDataAttrs, parseA11yPrefs } from "../lib/a11y-prefs.ts";
 import {
+  brandsInCategory,
   filterMachines,
   getMachine,
   isGuideKind,
@@ -39,6 +40,8 @@ assert.deepEqual(
   filterMachines(machines, "", "copier").map((item) => item.id),
   [],
 );
+assert.deepEqual(brandsInCategory(machines, "printer"), ["Canon"]);
+assert.deepEqual(brandsInCategory(machines, "copier"), []);
 
 const searchIgnoresCategory = filterMachines(machines, "mf655", "copier");
 assert.equal(searchIgnoresCategory.length, 1);
