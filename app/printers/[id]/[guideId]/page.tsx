@@ -1,74 +1,125 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getGuide, getPrinter, printers } from "@/data/printers";
+import { ZoomImage } from "@/components/zoom-image";
+import { WhatsAppLink } from "@/components/whatsapp-link";
+import { getMachine, guideLabel, isGuideKind, machines, readyGuide } from "@/data/printers";
+import { counterWhatsappText } from "@/data/site";
 
 type GuidePageProps = {
   params: Promise<{ id: string; guideId: string }>;
 };
 
 export function generateStaticParams() {
-  return printers.flatMap((printer) =>
-    printer.guides.map((guide) => ({ id: printer.id, guideId: guide.id })),
-  );
+  return machines.flatMap((machine) => [
+    { id: machine.id, guideId: "counter" },
+    { id: machine.id, guideId: "toner" },
+  ]);
 }
 
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
   const { id, guideId } = await params;
-  const printer = getPrinter(printers, id);
-  if (!printer) return { title: "המדריך לא נמצא" };
-  const guide = getGuide(printer, guideId);
-  if (!guide) return { title: "המדריך לא נמצא" };
-  return { title: `${guide.title} — ${printer.brand} ${printer.model}` };
+  const machine = getMachine(machines, id);
+  if (!machine || !isGuideKind(guideId)) return { title: "המדריך לא נמצא" };
+  const label = guideLabel(guideId);
+  return { title: `${label.title} — ${machine.brand} ${machine.model}` };
 }
 
 export default async function GuidePage({ params }: GuidePageProps) {
   const { id, guideId } = await params;
-  const printer = getPrinter(printers, id);
-  if (!printer) notFound();
-  const guide = getGuide(printer, guideId);
-  if (!guide) notFound();
+  const machine = getMachine(machines, id);
+  if (!machine || !isGuideKind(guideId)) notFound();
+  const label = guideLabel(guideId);
+  const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="mx-auto my-10 max-w-3xl rounded-3xl bg-white px-4 py-12 shadow-card sm:px-8">
+    <article className="mx-auto my-8 max-w-3xl rounded-3xl bg-white px-4 py-10 shadow-card sm:px-8">
       <nav aria-label="פירורי לחם" className="text-sm text-muted">
         <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
-          דף הבית
+          חיפוש דגם
         </Link>
         <span aria-hidden="true"> › </span>
-        <Link href="/#guides" className="inline-flex min-h-11 items-center text-accent hover:underline">
-          מדריכים
+        <Link
+          href={`/printers/${machine.id}`}
+          className="inline-flex min-h-11 items-center text-accent hover:underline"
+        >
+          {machine.brand} {machine.model}
         </Link>
-        <span aria-hidden="true"> › </span>
-        <Link href={`/printers/${printer.id}`} className="inline-flex min-h-11 items-center text-accent hover:underline">
-          {printer.brand} {printer.model}
-        </Link>
-        <span aria-hidden="true"> › </span>
-        <span className="text-ink">{guide.title}</span>
       </nav>
-      <h1 className="mt-4 text-4xl font-bold text-ink md:text-5xl">{guide.title}</h1>
-      <p className="mt-4 leading-8 text-muted">{guide.description}</p>
-      <ol className="relative mt-12 space-y-10">
-        <span className="absolute top-0 bottom-0 start-4 w-0.5 bg-chip-sky" aria-hidden="true" />
-        {guide.steps.map((step, index) => (
-          <li key={step.title} className="relative ps-14">
-            <span className="absolute start-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
-              {index + 1}
-            </span>
-            <h2 className="text-lg font-bold text-ink">{step.title}</h2>
-            <p className="mt-2 leading-7 text-muted">{step.description}</p>
-            <div
-              className="mt-4 aspect-video rounded-2xl border border-mist bg-wash"
-              aria-hidden="true"
-            />
-          </li>
-        ))}
-      </ol>
+      <h1 className="mt-4 text-4xl font-bold text-ink md:text-5xl">
+        <span className="block">{label.title}</span>
+        <span className="mt-1 block text-3xl md:text-4xl">{machine.model}</span>
+      </h1>
+      {machine.sample ? (
+        <p className="mt-4 inline-flex rounded-full bg-chip-sand px-3 py-1 text-sm font-semibold text-ink">
+          תוכן לדוגמה
+        </p>
+      ) : null}
+
+      {guide ? (
+        <>
+          <p className="mt-4 leading-8 text-muted">{guide.intro}</p>
+          <ol className="mt-10 space-y-10">
+            {guide.steps.map((step, index) => (
+              <li key={`${step.title}-${index}`}>
+                <h2 className="flex items-center gap-3 text-xl font-bold text-ink">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
+                    {index + 1}
+                  </span>
+                  {step.title}
+                </h2>
+                <div className="mt-4">
+                  <ZoomImage src={step.image} alt={step.alt} />
+                </div>
+                <p className="mt-3 leading-7 text-muted">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+          {guideId === "counter" ? (
+            <section className="mt-12 rounded-3xl bg-chip-mint px-5 py-6">
+              <h2 className="text-xl font-bold text-ink">שליחת המונה</h2>
+              <p className="mt-3 text-lg font-semibold leading-8 text-ink">
+                צלמו את המונה ושלחו את התמונה בוואטסאפ למשרד. חובה לרשום בהודעה גם את מספר המכונה
+                הפנימי שמופיע על המדבקה.
+              </p>
+              <p className="mt-3 leading-7 text-muted">
+                השליחה מתבצעת בוואטסאפ, אחרי שמצרפים את התמונה ומחליפים את הטקסט במספר המכונה. האתר
+                לא שולח את התמונה ולא בודק שהמספר נכתב.
+              </p>
+              <WhatsAppLink
+                text={counterWhatsappText}
+                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover"
+              >
+                פתיחת וואטסאפ לשליחת מונה
+              </WhatsAppLink>
+            </section>
+          ) : (
+            <section className="mt-12 rounded-3xl bg-wash px-5 py-6">
+              <h2 className="text-xl font-bold text-ink">סיימתם?</h2>
+              <p className="mt-3 leading-7 text-muted">אם משהו לא הסתדר, אפשר לפנות לשירות.</p>
+              <WhatsAppLink className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover">
+                וואטסאפ לשירות
+              </WhatsAppLink>
+            </section>
+          )}
+        </>
+      ) : (
+        <section className="mt-8 rounded-3xl bg-wash px-5 py-8">
+          <h2 className="text-2xl font-bold text-ink">המדריך יעלה בקרוב</h2>
+          <p className="mt-3 leading-7 text-muted">
+            ההוראות לדגם הזה עדיין לא הוזנו. בינתיים אפשר לפנות לשירות בוואטסאפ.
+          </p>
+          <WhatsAppLink className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover">
+            פתיחת וואטסאפ
+          </WhatsAppLink>
+        </section>
+      )}
+
       <Link
-        href={`/printers/${printer.id}`}
-        className="mt-10 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-page px-6 font-semibold text-ink hover:bg-wash"
+        href={`/printers/${machine.id}`}
+        className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-page px-6 font-semibold text-ink hover:bg-wash"
       >
-        חזרה למדריכי {printer.model}
+        חזרה לדגם
       </Link>
     </article>
   );

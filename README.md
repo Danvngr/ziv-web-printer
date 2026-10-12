@@ -1,6 +1,8 @@
-# PrinterGuides
+# YAIR Smart Office guides
 
-Hebrew printer installation guides. Static Next.js site. The printer names in the catalog are placeholders, not a final product list.
+Hebrew, mobile-first help site for printer and copier counter readings and toner changes. The models in the catalog are sample content, not verified instructions.
+
+One QR sticker on every machine should open the homepage. The site does not map a code to a specific machine.
 
 ## Run locally
 
@@ -18,11 +20,18 @@ npm run check
 npm run build
 ```
 
-## Add content
+## Add a model
 
-Edit `data/printers.ts`:
+Edit `data/printers.ts`. Add an object to `machines`:
 
-- **New printer:** add an object to the `printers` array.
-- **New guide:** add an object to that printer's `guides` array (`id`, `title`, `description`, `steps`).
+- `id`: stable URL slug
+- `brand`, `model`, `aliases` for search
+- `image`: optional file under `public/`
+- `sample`: `true` until the instructions are verified
+- `guides.counter` and `guides.toner`: each has `intro` and `steps` (`title`, `text`, `image`, `alt`)
 
-Routes: `/printers/{id}` (guide list) → `/printers/{id}/{guideId}` (steps).
+Leave a guide out, or give it an empty `steps` array, to show “המדריך יעלה בקרוב”.
+
+Routes: `/` (search) → `/printers/{id}` → `/printers/{id}/counter` or `/printers/{id}/toner`.
+
+WhatsApp number and the site name live in `data/site.ts`.

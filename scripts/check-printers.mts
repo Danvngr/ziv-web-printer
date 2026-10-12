@@ -1,41 +1,53 @@
 import assert from "node:assert/strict";
 import { a11yDataAttrs, parseA11yPrefs } from "../lib/a11y-prefs.ts";
-import { filterPrinters, getGuide, getPrinter, printers } from "../data/printers.ts";
+import {
+  filterMachines,
+  getMachine,
+  isGuideKind,
+  machines,
+  normalizeSearch,
+  readyGuide,
+} from "../data/printers.ts";
+import { counterWhatsappText, whatsappHref } from "../data/site.ts";
 
-const byBrand = filterPrinters(printers, "cAnOn");
-assert.equal(byBrand.length, 1);
-assert.equal(byBrand[0]?.id, "canon-pixma-tr4520");
+assert.equal(normalizeSearch(" SP-100 "), "sp100");
+assert.equal(normalizeSearch("Copy 10"), "copy10");
 
-const byModel = filterPrinters(printers, "laser tr4520");
-assert.equal(byModel.length, 1);
-assert.equal(byModel[0]?.id, "laser-tr4520");
+const byAlias = filterMachines(machines, "sp 100");
+assert.equal(byAlias.length, 1);
+assert.equal(byAlias[0]?.id, "sample-sp-100");
 
-assert.equal(filterPrinters(printers, "epson").length, 0);
+const byHyphen = filterMachines(machines, "SP-100");
+assert.equal(byHyphen[0]?.id, "sample-sp-100");
 
-const printersOnly = filterPrinters(printers, "  ", "printer");
-assert.equal(printersOnly.length, 3);
-assert.ok(printersOnly.every((item) => item.category === "printer"));
+const byBrand = filterMachines(machines, "דוגמה");
+assert.equal(byBrand.length, 2);
 
-const copiersOnly = filterPrinters(printers, "", "copier");
-assert.equal(copiersOnly.length, 2);
-assert.deepEqual(
-  copiersOnly.map((item) => item.id),
-  ["copydesk-office-220", "docstation-biz-410"],
-);
+assert.equal(filterMachines(machines, "epson").length, 0);
+assert.equal(filterMachines(machines, "   ").length, machines.length);
 
-const searchIgnoresCategory = filterPrinters(printers, "copydesk", "printer");
-assert.equal(searchIgnoresCategory.length, 1);
-assert.equal(searchIgnoresCategory[0]?.category, "copier");
+const sample = getMachine(machines, "sample-sp-100");
+assert.equal(sample?.sample, true);
+assert.ok(readyGuide(sample!, "counter"));
+assert.ok(readyGuide(sample!, "toner"));
 
-const inkjet = getPrinter(printers, "inkjet-pixma-tr4520");
-assert.equal(inkjet?.category, "printer");
-assert.equal(inkjet?.brand, "Inkjet");
-assert.equal(inkjet?.guides.length, 2);
+const partial = getMachine(machines, "sample-sp-200");
+assert.equal(readyGuide(partial!, "counter"), undefined);
+assert.ok(readyGuide(partial!, "toner"));
 
-const install = inkjet && getGuide(inkjet, "installation");
-assert.equal(install?.title, "התקנה ראשונית");
-assert.equal(getGuide(inkjet!, "no-such-guide"), undefined);
-assert.equal(getPrinter(printers, "no-such-printer"), undefined);
+const empty = getMachine(machines, "sample-copy-10");
+assert.equal(empty?.image, undefined);
+assert.equal(readyGuide(empty!, "counter"), undefined);
+assert.equal(readyGuide(empty!, "toner"), undefined);
+
+assert.equal(isGuideKind("counter"), true);
+assert.equal(isGuideKind("installation"), false);
+assert.equal(getMachine(machines, "no-such"), undefined);
+
+const counterLink = whatsappHref(counterWhatsappText);
+assert.ok(counterLink?.startsWith("https://wa.me/"));
+assert.ok(counterLink?.includes(encodeURIComponent("מספר מכונה פנימי")));
+assert.equal(whatsappHref(), "https://wa.me/972585554901");
 
 const parsed = parseA11yPrefs(
   '{"text":"125","contrast":true,"grayscale":true,"links":false,"font":"yes"}',

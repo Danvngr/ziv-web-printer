@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Heebo } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
+import { site } from "@/data/site";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -11,10 +12,10 @@ const heebo = Heebo({
 
 export const metadata: Metadata = {
   title: {
-    default: "PrinterGuides",
-    template: "%s | PrinterGuides",
+    default: site.name,
+    template: `%s | ${site.name}`,
   },
-  description: "סרקו את ה-QR שעל המדפסת שלכם, או חפשו את הדגם",
+  description: "חיפוש דגם, הוצאת מונה או החלפת טונר, בלי הרשמה ובלי טופס.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

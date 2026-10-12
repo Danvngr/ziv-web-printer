@@ -2,65 +2,78 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { GuideBannerList } from "@/components/guide-banner-list";
-import { getPrinter, printers } from "@/data/printers";
+import { getMachine, guideKinds, guideLabel, machines } from "@/data/printers";
 
-type PrinterPageProps = {
+type MachinePageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return printers.map((printer) => ({ id: printer.id }));
+  return machines.map((machine) => ({ id: machine.id }));
 }
 
-export async function generateMetadata({ params }: PrinterPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: MachinePageProps): Promise<Metadata> {
   const { id } = await params;
-  const printer = getPrinter(printers, id);
-  if (!printer) return { title: "המדפסת לא נמצאה" };
-  return { title: `${printer.brand} ${printer.model}` };
+  const machine = getMachine(machines, id);
+  if (!machine) return { title: "הדגם לא נמצא" };
+  return { title: `${machine.brand} ${machine.model}` };
 }
 
-export default async function PrinterPage({ params }: PrinterPageProps) {
+export default async function MachinePage({ params }: MachinePageProps) {
   const { id } = await params;
-  const printer = getPrinter(printers, id);
-  if (!printer) notFound();
+  const machine = getMachine(machines, id);
+  if (!machine) notFound();
 
   return (
-    <article className="mx-auto max-w-5xl px-4 py-14">
-      <nav aria-label="פירורי לחם" className="text-sm text-muted">
-        <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
-          דף הבית
-        </Link>
-        <span aria-hidden="true"> › </span>
-        <Link href="/#guides" className="inline-flex min-h-11 items-center text-accent hover:underline">
-          מדריכים
-        </Link>
-        <span aria-hidden="true"> › </span>
-        <span className="text-ink">
-          {printer.brand} {printer.model}
-        </span>
-      </nav>
-      <h1 className="mt-4 text-4xl font-bold text-ink md:text-5xl">
-        {printer.brand} {printer.model}
-      </h1>
-      <p className="mt-4 max-w-3xl leading-8 text-muted">{printer.intro}</p>
-      <figure className="mt-8 overflow-hidden rounded-3xl bg-white p-6 shadow-card">
-        <Image
-          src={printer.image}
-          alt={`${printer.brand} ${printer.model}`}
-          width={240}
-          height={240}
-          unoptimized
-          priority
-          className="mx-auto h-48 w-48 object-contain"
-        />
-      </figure>
-      <GuideBannerList printerId={printer.id} guides={printer.guides} />
+    <article className="mx-auto max-w-3xl px-4 py-12">
+      <p className="text-sm font-semibold text-accent">{machine.brand}</p>
+      <h1 className="mt-2 text-4xl font-bold text-ink md:text-5xl">{machine.model}</h1>
+      {machine.sample ? (
+        <p className="mt-4 inline-flex rounded-full bg-chip-sand px-3 py-1 text-sm font-semibold text-ink">
+          תוכן לדוגמה
+        </p>
+      ) : null}
+      {machine.image ? (
+        <figure className="mt-8 overflow-hidden rounded-3xl bg-white p-6 shadow-card">
+          <Image
+            src={machine.image}
+            alt={`${machine.brand} ${machine.model}`}
+            width={640}
+            height={360}
+            unoptimized
+            priority
+            className="mx-auto aspect-video w-full max-w-md object-contain"
+          />
+        </figure>
+      ) : (
+        <p className="mt-8 rounded-3xl bg-white px-6 py-10 text-center text-muted shadow-card">
+          אין עדיין תמונה כללית לדגם הזה.
+        </p>
+      )}
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+        {guideKinds.map((kind) => {
+          const label = guideLabel(kind);
+          const ready = (machine.guides[kind]?.steps.length ?? 0) > 0;
+          return (
+            <li key={kind}>
+              <Link
+                href={`/printers/${machine.id}/${kind}`}
+                className="flex min-h-36 flex-col justify-between rounded-3xl bg-white p-6 shadow-card"
+              >
+                <span className="text-2xl font-bold text-ink">{label.card}</span>
+                <span className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 text-sm font-semibold text-ink">
+                  {ready ? "למדריך" : "המדריך יעלה בקרוב"}
+                </span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
       <Link
-        href="/"
-        className="mt-10 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-white px-6 font-semibold text-ink hover:bg-wash"
+        href="/#search"
+        className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-white px-6 font-semibold text-ink hover:bg-wash"
       >
-        חזרה לכל המדפסות
+        חזרה לחיפוש דגם
       </Link>
     </article>
   );
