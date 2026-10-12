@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ZoomImage } from "@/components/zoom-image";
 import { WhatsAppLink } from "@/components/whatsapp-link";
 import { getMachine, guideLabel, isGuideKind, machines, readyGuide } from "@/data/printers";
 import { counterWhatsappText } from "@/data/site";
@@ -33,7 +32,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="mx-auto my-8 max-w-3xl rounded-3xl bg-white px-4 py-10 shadow-card sm:px-8">
+    <article className="lift mx-auto my-8 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-10 sm:px-8">
       <nav aria-label="פירורי לחם" className="text-sm text-muted">
         <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
           חיפוש דגם
@@ -59,19 +58,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {guide ? (
         <>
           <p className="mt-4 leading-8 text-muted">{guide.intro}</p>
-          <ol className="mt-10 space-y-10">
+          <ol className="relative mt-12 space-y-10">
+            <span className="absolute top-0 bottom-0 start-4 w-0.5 bg-line" aria-hidden="true" />
             {guide.steps.map((step, index) => (
-              <li key={`${step.title}-${index}`}>
-                <h2 className="flex items-center gap-3 text-xl font-bold text-ink">
-                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
-                    {index + 1}
-                  </span>
-                  {step.title}
-                </h2>
-                <div className="mt-4">
-                  <ZoomImage src={step.image} alt={step.alt} />
+              <li key={`${step.title}-${index}`} className="relative ps-14">
+                <span className="absolute start-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
+                  {index + 1}
+                </span>
+                <h2 className="text-lg font-bold text-ink">{step.title}</h2>
+                <p className="mt-2 leading-7 text-muted">{step.text}</p>
+                <div className="mt-4 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
+                  כאן תופיע התמונה
                 </div>
-                <p className="mt-3 leading-7 text-muted">{step.text}</p>
               </li>
             ))}
           </ol>

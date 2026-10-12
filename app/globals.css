@@ -1,27 +1,88 @@
 @import "tailwindcss";
 
 @theme {
-  --color-page: #f9fcff;
+  --color-page: #fafcfd;
   --color-wash: #eaf3f8;
   --color-mist: #e7f0f5;
+  --color-line: #deeaf0;
+  --color-edge: #cbdae2b3;
   --color-ink: #001e44;
   --color-accent: #007bae;
   --color-action: #63c000;
   --color-action-hover: #56a800;
   --color-muted: #425771;
+  --color-cream: #f9f5e6;
   --color-chip-mint: #c5f9b9;
   --color-chip-sky: #bbe9ff;
   --color-chip-sand: #ffeba0;
-  --shadow-card: 0 16px 40px rgb(0 30 68 / 0.08);
+  --shadow-card: 0 1px 2px #0a20360a, 0 10px 30px -18px #0a20362e;
 }
 
-html {
-  background-color: #f9fcff;
+/* Same wash as yso.co.il body: canvas #fafcfd plus the four radial stops. */
+html,
+body,
+.a11y-canvas,
+header {
+  background-color: #fafcfd;
+  background-image:
+    radial-gradient(60% 55% at 12% 8%, #e6f4d6 0%, transparent 70%),
+    radial-gradient(55% 50% at 88% 18%, #d6eaf8 0%, transparent 70%),
+    radial-gradient(65% 60% at 18% 92%, #fff 0%, transparent 72%),
+    radial-gradient(60% 55% at 92% 82%, #eaf2fb 0%, transparent 72%);
+  background-repeat: no-repeat;
+  background-size: 180% 180%, 180% 180%, 180% 180%, 180% 180%;
+  background-position: 0 0, 100% 100%, 0 100%, 100% 0;
+  background-attachment: fixed;
+  animation: gradient-drift 28s ease-in-out infinite;
+}
+
+@supports (color: color-mix(in lab, red, red)) {
+  html,
+  body,
+  .a11y-canvas,
+  header {
+    background-image:
+      radial-gradient(60% 55% at 12% 8%, color-mix(in oklab, #e6f4d6 85%, transparent) 0%, transparent 70%),
+      radial-gradient(55% 50% at 88% 18%, color-mix(in oklab, #d6eaf8 85%, transparent) 0%, transparent 70%),
+      radial-gradient(65% 60% at 18% 92%, color-mix(in oklab, #fff 80%, transparent) 0%, transparent 72%),
+      radial-gradient(60% 55% at 92% 82%, color-mix(in oklab, #eaf2fb 80%, transparent) 0%, transparent 72%);
+  }
 }
 
 body {
   margin: 0;
-  background-color: #f9fcff;
+  color: #001e44;
+}
+
+@keyframes gradient-drift {
+  0% {
+    background-position: 0 0, 100% 100%, 0 100%, 100% 0;
+  }
+  50% {
+    background-position: 100%, 0%, 100% 0, 0 100%;
+  }
+  to {
+    background-position: 0 0, 100% 100%, 0 100%, 100% 0;
+  }
+}
+
+@media (max-width: 640px) {
+  html,
+  body,
+  .a11y-canvas,
+  header {
+    background-attachment: scroll;
+    animation: none;
+  }
+}
+
+/* Soft lift plus a light highlight so cards sit off the wash. */
+.lift {
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 2px #0a20360a,
+    0 18px 40px -20px #0a20362e,
+    0 0 24px color-mix(in oklab, #63c000 32%, transparent);
 }
 
 .skip-link {
@@ -73,6 +134,13 @@ input:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  html,
+  body,
+  .a11y-canvas,
+  header {
+    animation: none;
   }
 }
 

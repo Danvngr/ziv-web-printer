@@ -52,7 +52,7 @@ export default async function MachinePage({ params }: MachinePageProps) {
             <li key={kind}>
               <Link
                 href={`/printers/${machine.id}/${kind}`}
-                className="flex min-h-36 flex-col justify-between rounded-3xl bg-white p-6 shadow-card"
+                className="lift flex min-h-36 flex-col justify-between rounded-3xl border border-edge bg-white p-6"
               >
                 <span className="text-2xl font-bold text-ink">{label.card}</span>
                 <span className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 text-sm font-semibold text-ink">

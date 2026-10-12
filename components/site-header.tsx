@@ -7,7 +7,7 @@ export function SiteHeader({ pathname }: { pathname: string }) {
   const homeActive = pathname === "/";
 
   return (
-    <header className="sticky top-0 z-30 bg-page">
+    <header className="sticky top-0 z-30">
       <div className="mx-auto flex max-w-5xl items-center px-4 py-2 sm:px-6">
         <Link
           href="/"

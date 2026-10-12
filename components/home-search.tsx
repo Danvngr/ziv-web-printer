@@ -38,10 +38,10 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
               type="button"
               aria-pressed={pressed}
               onClick={() => setCategory(item.id)}
-              className={`inline-flex min-h-11 items-center justify-center rounded-full px-6 text-sm font-semibold ${
+              className={`lift inline-flex min-h-11 items-center justify-center rounded-full px-6 text-sm font-semibold ${
                 pressed
                   ? "bg-action text-ink hover:bg-action-hover"
-                  : "border border-mist bg-white text-ink shadow-sm hover:bg-wash"
+                  : "border border-edge bg-white text-ink hover:bg-wash"
               }`}
             >
               {item.label}
@@ -85,7 +85,7 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
               <ul className="grid grid-cols-1 gap-x-8 gap-y-16 px-2 pt-16 md:grid-cols-3">
                 {items.map((machine) => (
                   <li key={machine.id}>
-                    <article className="relative rounded-3xl bg-white px-6 pb-8 pt-16 text-center shadow-card">
+                    <article className="lift relative rounded-3xl border border-edge bg-white px-6 pb-8 pt-16 text-center">
                       <Link
                         href={`/printers/${machine.id}`}
                         className="absolute -top-12 left-1/2 block h-24 w-24 -translate-x-1/2 overflow-hidden rounded-full bg-white shadow-card ring-4 ring-wash"

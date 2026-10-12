@@ -4,7 +4,7 @@ import { site } from "@/data/site";
 
 export default function HomePage() {
   return (
-    <section className="bg-page px-4 pb-16 pt-12 text-center md:pt-20">
+    <section className="px-4 pb-16 pt-12 text-center md:pt-20">
       <p className="text-sm font-semibold text-accent">{site.name}</p>
       <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-bold tracking-tight text-ink md:text-6xl">
         {site.homeTitle}
