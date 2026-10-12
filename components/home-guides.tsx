@@ -53,7 +53,7 @@ export function HomeGuides({ printers }: { printers: Printer[] }) {
           onChange={(event) => setQuery(event.target.value.slice(0, 80))}
           placeholder="הקלידו מותג או דגם (למשל: Canon, CopyDesk)"
           autoComplete="off"
-          className="min-h-11 w-full rounded-full border border-mist bg-white px-6 py-3.5 text-ink shadow-sm placeholder:text-muted"
+          className="min-h-11 w-full rounded-full border border-mist bg-white px-5 py-3.5 text-sm text-ink shadow-sm placeholder:text-muted sm:px-6 sm:text-base"
         />
       </form>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
