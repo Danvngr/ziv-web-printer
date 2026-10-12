@@ -12,8 +12,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="a11y-canvas flex min-h-screen flex-col bg-page text-ink">
+        <SiteHeader pathname={pathname} />
         <div className="flex flex-1 flex-col pe-20">
-          <SiteHeader pathname={pathname} />
           <main id="main-content" tabIndex={-1} className="flex-1">
             {children}
           </main>

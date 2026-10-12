@@ -15,8 +15,13 @@
   --shadow-card: 0 16px 40px rgb(0 30 68 / 0.08);
 }
 
+html {
+  background-color: #f9fcff;
+}
+
 body {
   margin: 0;
+  background-color: #f9fcff;
 }
 
 .skip-link {
