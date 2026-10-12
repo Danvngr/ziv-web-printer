@@ -123,13 +123,12 @@ html {
   }
 }
 
-@keyframes pulse-glow {
-  0%,
+/* Copied from yso.co.il floating button: Tailwind ping, 1s, scale 2. */
+@keyframes wa-ping {
+  75%,
   100% {
-    box-shadow: 0 0 0 0 color-mix(in oklab, #25d366 40%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 14px transparent;
+    opacity: 0;
+    transform: scale(2);
   }
 }
 
@@ -149,8 +148,18 @@ html {
   animation: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both pop-in;
 }
 
-.wa-pulse {
-  animation: 2.4s ease-in-out infinite pulse-glow;
+/* Halo from yso.co.il: bg-brand-green/50 ping, plus shadow-2xl shadow-brand-green/40 and ring-4 ring-background/60. */
+.wa-ping {
+  background-color: color-mix(in oklab, #63c000 50%, transparent);
+  animation: wa-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.wa-btn {
+  background-color: #63c000;
+  color: #f9fcff;
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, #fafcfd 60%, transparent),
+    0 25px 50px -12px color-mix(in oklab, #63c000 40%, transparent);
 }
 
 /* Glow sits outside the circle so it never paints over the logo. */

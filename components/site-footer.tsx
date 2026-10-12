@@ -27,9 +27,12 @@ export function SiteFooter({ pathname }: { pathname: string }) {
       >
         <WhatsAppLink
           label="וואטסאפ לשירות"
-          className="wa-pulse inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white hover:bg-[#1ebe5a]"
+          className="group relative inline-flex h-14 w-14 shrink-0 sm:h-16 sm:w-16"
         >
-          <WhatsAppMark />
+          <span className="wa-ping absolute inset-0 rounded-full" aria-hidden="true" />
+          <span className="wa-btn relative grid h-full w-full place-items-center rounded-full transition-transform duration-200 group-hover:scale-110">
+            <WhatsAppMark />
+          </span>
         </WhatsAppLink>
         <a
           href={site.instagramHref}
