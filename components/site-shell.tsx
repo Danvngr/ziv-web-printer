@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { AccessibilityMenu } from "@/components/accessibility-menu";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { WhatsAppButton } from "@/components/whatsapp-link";
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -19,6 +21,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <SiteFooter pathname={pathname} />
       </div>
       <AccessibilityMenu />
+      <WhatsAppButton />
     </>
   );
 }

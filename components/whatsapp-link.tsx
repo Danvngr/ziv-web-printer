@@ -27,6 +27,20 @@ export function WhatsAppLink({
   );
 }
 
+export function WhatsAppButton() {
+  return (
+    <WhatsAppLink
+      label="וואטסאפ לשירות"
+      className="group fixed bottom-4 left-2 z-30 inline-flex h-14 w-14 lg:bottom-5 lg:left-5 lg:h-16 lg:w-16"
+    >
+      <span className="wa-ping absolute inset-0 rounded-full" aria-hidden="true" />
+      <span className="wa-btn relative grid h-full w-full place-items-center rounded-full transition-transform duration-200 group-hover:scale-110">
+        <WhatsAppMark />
+      </span>
+    </WhatsAppLink>
+  );
+}
+
 export function WhatsAppMark() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

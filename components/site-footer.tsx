@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import { WhatsAppLink, WhatsAppMark } from "@/components/whatsapp-link";
 import { site } from "@/data/site";
 import { defaultA11yPrefs, readA11ySnapshot, subscribeA11y, writeA11yPrefs } from "@/lib/a11y-prefs";
 
@@ -20,20 +19,11 @@ export function SiteFooter({ pathname }: { pathname: string }) {
 
   return (
     <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent text-ink">
-      {/* dir=ltr keeps the circle on the visual left. Phone wraps and centers; desktop stays one row. */}
+      {/* dir=ltr keeps this row on the visual left. Padding clears the fixed button. */}
       <div
         dir="ltr"
-        className="flex w-full min-w-0 flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-3 sm:flex-nowrap sm:justify-start sm:px-5"
+        className="flex w-full min-w-0 flex-wrap items-center justify-center gap-x-4 gap-y-2 py-3 pl-20 pr-4 sm:flex-nowrap sm:justify-start sm:py-3 sm:pl-24 sm:pr-5 lg:pl-32"
       >
-        <WhatsAppLink
-          label="וואטסאפ לשירות"
-          className="group relative inline-flex h-14 w-14 shrink-0 sm:h-16 sm:w-16"
-        >
-          <span className="wa-ping absolute inset-0 rounded-full" aria-hidden="true" />
-          <span className="wa-btn relative grid h-full w-full place-items-center rounded-full transition-transform duration-200 group-hover:scale-110">
-            <WhatsAppMark />
-          </span>
-        </WhatsAppLink>
         <a
           href={site.instagramHref}
           target="_blank"
@@ -64,7 +54,7 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           © 2026 YAIR Smart Office. מרחבי למידה חכמים.
         </p>
       </div>
-      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pb-2">
+      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pt-1 pb-28">
         {links.map((link) => (
           <Link
             key={link.href}
