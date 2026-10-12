@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
@@ -117,7 +118,7 @@ function ComparisonCards({ machine }: { machine: Machine }) {
           </span>
           <h4 className="text-xl font-bold text-ink">
             <Link href={href} className="inline-flex max-w-full justify-center">
-              <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+              <MachineName brand={machine.brand} model={machine.model} />
             </Link>
           </h4>
           <Link
@@ -132,18 +133,15 @@ function ComparisonCards({ machine }: { machine: Machine }) {
         <p className="text-sm font-medium text-muted">«אפשרות ב»</p>
         <h4 className="mt-4 text-2xl font-bold leading-snug text-ink sm:text-3xl">
           <Link href={href} className="inline-flex max-w-full justify-center">
-            <MachineName brand={machine.brand} model={machine.model} className="w-full justify-center" />
+            <MachineName brand={machine.brand} model={machine.model} />
           </Link>
         </h4>
-        <ZoomImage
-          src={image}
-          alt=""
-          label="הגדלת תמונת המדפסת"
-          width={1254}
-          height={1254}
-          triggerClassName="mt-4 block w-full overflow-hidden rounded-3xl border border-edge bg-white"
-          imageClassName="h-auto w-full"
-        />
+        <Link
+          href={href}
+          className="logo-halo mx-auto mt-4 block w-1/2 overflow-hidden rounded-3xl border border-edge bg-white"
+        >
+          <Image src={image} alt="" width={1254} height={1254} unoptimized className="h-auto w-full" />
+        </Link>
       </li>
     </>
   );

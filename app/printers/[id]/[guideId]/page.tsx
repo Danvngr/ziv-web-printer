@@ -60,7 +60,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </nav>
       <h1 className="mt-4 text-3xl font-bold text-ink sm:text-4xl md:text-5xl">
         <span className="block">{label.title}</span>
-        <span className="mt-1 block text-3xl md:text-4xl">{machine.model}</span>
+        <span className="mt-1 block text-3xl md:text-4xl">
+          <MachineName brand={machine.brand} model={machine.model} />
+        </span>
       </h1>
       {machine.sample ? (
         <p className="mt-4 inline-flex rounded-full bg-chip-sand px-3 py-1 text-sm font-semibold text-ink">

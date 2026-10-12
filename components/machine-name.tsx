@@ -1,5 +1,3 @@
-import { machineNameWords } from "@/data/printers";
-
 export function MachineName({
   brand,
   model,
@@ -9,12 +7,9 @@ export function MachineName({
   model: string;
   className?: string;
 }) {
-  const words = machineNameWords(brand, model);
   return (
-    <span dir="rtl" className={`inline-flex max-w-full flex-wrap items-baseline gap-x-[0.35em] ${className}`}>
-      {words.map((word, index) => (
-        <bdi key={`${word}-${index}`}>{word}</bdi>
-      ))}
-    </span>
+    <bdi dir="ltr" className={className} style={{ unicodeBidi: "isolate" }}>
+      {brand} {model}
+    </bdi>
   );
 }
