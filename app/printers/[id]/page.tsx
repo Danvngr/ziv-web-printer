@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getMachine, guideKinds, guideLabel, machines, placeholderImage } from "@/data/printers";
+import { getMachine, guideLabel, machineGuideLinks, machines, placeholderImage } from "@/data/printers";
 
 type MachinePageProps = {
   params: Promise<{ id: string }>;
@@ -45,7 +45,7 @@ export default async function MachinePage({ params }: MachinePageProps) {
         />
       </figure>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-        {guideKinds.map((kind) => {
+        {machineGuideLinks(machine).map((kind) => {
           const label = guideLabel(kind);
           const ready = (machine.guides[kind]?.steps.length ?? 0) > 0;
           return (

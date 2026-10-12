@@ -1,8 +1,8 @@
 // תוכן לדוגמה בלבד. אין כאן הוראות מאומתות.
 // דגם חדש: אובייקט ב-machines. מזהה קבוע, כינויים לחיפוש, תמונה אופציונלית.
-// מדריך: guides.counter או guides.toner. בלי steps המדריך מוצג כ״יעלה בקרוב״.
+// מדריך: guides.counter, guides.meter (הוצאת מונה) או guides.toner. בלי steps המדריך מוצג כ״יעלה בקרוב״.
 
-export type GuideKind = "counter" | "toner";
+export type GuideKind = "counter" | "meter" | "toner";
 export type DeviceCategory = "printer" | "copier";
 
 export interface GuideStep {
@@ -70,6 +70,42 @@ const sampleToner: Guide = {
   ],
 };
 
+const canonMeter: Guide = {
+  intro: "כך מגיעים למסך המונה.",
+  steps: [
+    {
+      title: "חזרה למסך הבית",
+      text: "אם אינכם במסך הבית, לחצו על כפתור הבית שמתחת למסך. זה הכפתור עם סמל הבית.",
+      image: "/guides/canon-mf655cdw-1.png",
+      alt: "כפתור הבית שמתחת למסך מסומן בעיגול",
+    },
+    {
+      title: "פתיחת Status Monitor",
+      text: "במסך הבית לחצו על Status Monitor, בפינה הימנית התחתונה של המסך.",
+      image: "/guides/canon-mf655cdw-2.png",
+      alt: "Status Monitor מסומן בעיגול בפינה הימנית התחתונה",
+    },
+    {
+      title: "כניסה לפרטי המכשיר",
+      text: "לחצו על Device Information.",
+      image: "/guides/canon-mf655cdw-3.png",
+      alt: "Device Information מסומן בעיגול",
+    },
+    {
+      title: "בחירת בדיקת המונה",
+      text: "לחצו על Check Counter.",
+      image: "/guides/canon-mf655cdw-4.png",
+      alt: "Check Counter מסומן בעיגול",
+    },
+    {
+      title: "צילום המונה",
+      text: "על המסך יופיעו מספרי המונה. צלמו את המסך ושלחו את התמונה בוואטסאפ. בהודעה כתבו גם את מספר המכונה שעל המדבקה.",
+      image: "/guides/canon-mf655cdw-5.png",
+      alt: "מסך המונה מסומן במסגרת",
+    },
+  ],
+};
+
 export const placeholderImage = "/guides/placeholder.svg";
 
 export const machines: Machine[] = [
@@ -102,17 +138,34 @@ export const machines: Machine[] = [
     category: "copier",
     guides: {},
   },
+  {
+    id: "canon-mf655cdw",
+    brand: "Canon",
+    model: "i-SENSYS MF655Cdw",
+    aliases: ["mf655cdw", "mf655", "i-sensys", "isensys", "canon mf655"],
+    image: "/printers/canon-mf655cdw.png",
+    sample: false,
+    category: "printer",
+    guides: { meter: canonMeter },
+  },
 ];
 
 export const guideKinds = ["counter", "toner"] as const;
 
 export function isGuideKind(value: string): value is GuideKind {
-  return value === "counter" || value === "toner";
+  return value === "counter" || value === "meter" || value === "toner";
 }
 
 export function guideLabel(kind: GuideKind): { card: string; title: string } {
-  if (kind === "counter") return { card: "איך מוציאים מונה?", title: "הוצאת מונה" };
+  if (kind === "counter" || kind === "meter") return { card: "איך מוציאים מונה?", title: "הוצאת מונה" };
   return { card: "איך מחליפים טונר?", title: "החלפת טונר" };
+}
+
+export function machineGuideLinks(machine: Machine): GuideKind[] {
+  const meter = (machine.guides.meter?.steps.length ?? 0) > 0;
+  const counter = (machine.guides.counter?.steps.length ?? 0) > 0;
+  const reading: GuideKind = meter && !counter ? "meter" : "counter";
+  return [reading, "toner"];
 }
 
 export function normalizeSearch(value: string): string {

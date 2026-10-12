@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WhatsAppLink } from "@/components/whatsapp-link";
-import { getMachine, guideLabel, isGuideKind, machines, readyGuide } from "@/data/printers";
+import { getMachine, guideLabel, isGuideKind, machineGuideLinks, machines, readyGuide } from "@/data/printers";
 import { counterWhatsappText } from "@/data/site";
 
 type GuidePageProps = {
@@ -10,10 +11,9 @@ type GuidePageProps = {
 };
 
 export function generateStaticParams() {
-  return machines.flatMap((machine) => [
-    { id: machine.id, guideId: "counter" },
-    { id: machine.id, guideId: "toner" },
-  ]);
+  return machines.flatMap((machine) =>
+    machineGuideLinks(machine).map((guideId) => ({ id: machine.id, guideId })),
+  );
 }
 
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
@@ -67,13 +67,24 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 </span>
                 <h2 className="text-lg font-bold text-ink">{step.title}</h2>
                 <p className="mt-2 leading-7 text-muted">{step.text}</p>
-                <div className="mt-4 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
-                  כאן תופיע התמונה
-                </div>
+                {machine.sample ? (
+                  <div className="mt-4 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
+                    כאן תופיע התמונה
+                  </div>
+                ) : (
+                  <Image
+                    src={step.image}
+                    alt={step.alt}
+                    width={1536}
+                    height={1024}
+                    unoptimized
+                    className="mt-4 h-auto w-full rounded-2xl border border-edge bg-[#f9fcff]"
+                  />
+                )}
               </li>
             ))}
           </ol>
-          {guideId === "counter" ? (
+          {guideId === "counter" || guideId === "meter" ? (
             <section className="mt-12 rounded-3xl bg-chip-mint px-5 py-6">
               <h2 className="text-xl font-bold text-ink">שליחת המונה</h2>
               <p className="mt-3 text-lg font-semibold leading-8 text-ink">

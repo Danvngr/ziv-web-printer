@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { a11yDataAttrs, parseA11yPrefs } from "../lib/a11y-prefs.ts";
 import {
   filterMachines,
   getMachine,
   isGuideKind,
+  machineGuideLinks,
   machines,
   normalizeSearch,
   readyGuide,
@@ -27,7 +31,10 @@ assert.equal(filterMachines(machines, "epson").length, 0);
 assert.equal(filterMachines(machines, "   ").length, machines.length);
 
 const printersOnly = filterMachines(machines, "  ", "printer");
-assert.equal(printersOnly.length, 2);
+assert.deepEqual(
+  printersOnly.map((item) => item.id),
+  ["sample-sp-100", "sample-sp-200", "canon-mf655cdw"],
+);
 assert.ok(printersOnly.every((item) => item.category === "printer"));
 
 const copiersOnly = filterMachines(machines, "", "copier");
@@ -55,7 +62,24 @@ assert.equal(readyGuide(empty!, "counter"), undefined);
 assert.equal(readyGuide(empty!, "toner"), undefined);
 
 assert.equal(isGuideKind("counter"), true);
+assert.equal(isGuideKind("meter"), true);
 assert.equal(isGuideKind("installation"), false);
+assert.deepEqual(machineGuideLinks(sample!), ["counter", "toner"]);
+
+const canon = getMachine(machines, "canon-mf655cdw");
+assert.equal(canon?.sample, false);
+assert.equal(canon?.category, "printer");
+assert.equal(canon?.model, "i-SENSYS MF655Cdw");
+assert.deepEqual(machineGuideLinks(canon!), ["meter", "toner"]);
+assert.equal(filterMachines(machines, "mf655")[0]?.id, "canon-mf655cdw");
+const meter = readyGuide(canon!, "meter");
+assert.equal(meter?.steps.length, 5);
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+assert.equal(existsSync(join(root, "public", canon!.image!.slice(1))), true);
+for (const step of meter!.steps) {
+  assert.equal(existsSync(join(root, "public", step.image.slice(1))), true, step.image);
+  assert.ok(step.alt.length > 0);
+}
 assert.equal(getMachine(machines, "no-such"), undefined);
 
 const counterLink = whatsappHref(counterWhatsappText);
