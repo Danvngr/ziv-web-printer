@@ -68,6 +68,8 @@ const sampleToner: Guide = {
   ],
 };
 
+export const placeholderImage = "/guides/placeholder.svg";
+
 export const machines: Machine[] = [
   {
     id: "sample-sp-100",

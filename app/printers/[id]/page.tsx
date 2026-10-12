@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getMachine, guideKinds, guideLabel, machines } from "@/data/printers";
+import { getMachine, guideKinds, guideLabel, machines, placeholderImage } from "@/data/printers";
 
 type MachinePageProps = {
   params: Promise<{ id: string }>;
@@ -33,23 +33,17 @@ export default async function MachinePage({ params }: MachinePageProps) {
           תוכן לדוגמה
         </p>
       ) : null}
-      {machine.image ? (
-        <figure className="mt-8 overflow-hidden rounded-3xl bg-white p-6 shadow-card">
-          <Image
-            src={machine.image}
-            alt={`${machine.brand} ${machine.model}`}
-            width={640}
-            height={360}
-            unoptimized
-            priority
-            className="mx-auto aspect-video w-full max-w-md object-contain"
-          />
-        </figure>
-      ) : (
-        <p className="mt-8 rounded-3xl bg-white px-6 py-10 text-center text-muted shadow-card">
-          אין עדיין תמונה כללית לדגם הזה.
-        </p>
-      )}
+      <figure className="mt-8 overflow-hidden rounded-3xl bg-white p-6 shadow-card">
+        <Image
+          src={machine.image ?? placeholderImage}
+          alt={`${machine.brand} ${machine.model}`}
+          width={640}
+          height={360}
+          unoptimized
+          priority
+          className="mx-auto aspect-video w-full max-w-md object-contain"
+        />
+      </figure>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {guideKinds.map((kind) => {
           const label = guideLabel(kind);
