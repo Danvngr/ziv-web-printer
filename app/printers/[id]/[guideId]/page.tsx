@@ -33,7 +33,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="lift mx-auto my-4 max-w-3xl rounded-3xl border border-edge bg-white px-2 py-6 sm:my-8 sm:px-8 sm:py-10">
+    <article className="mx-auto my-4 max-w-3xl rounded-3xl border border-edge bg-white px-2 py-6 shadow-card sm:my-8 sm:px-8 sm:py-10">
       <nav aria-label="פירורי לחם" className="text-sm">
         <ol className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>
@@ -81,12 +81,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <ol className="relative mt-12 space-y-10">
             <span className="absolute top-0 bottom-0 start-4 w-0.5 bg-line" aria-hidden="true" />
             {guide.steps.map((step, index) => (
-              <li key={`${step.title}-${index}`} className="relative ps-14">
+              <li key={`${step.title}-${index}`} className="relative px-14 sm:pe-0">
                 <span className="absolute start-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
                   {index + 1}
                 </span>
-                <h2 className="text-lg font-bold text-ink">{step.title}</h2>
-                <p className="mt-2 leading-7 text-muted">{step.text}</p>
+                <h2 className="text-center text-lg font-bold text-ink sm:text-start">{step.title}</h2>
+                <p className="mt-2 text-center leading-7 text-muted sm:text-start">{step.text}</p>
                 {machine.sample ? (
                   <div className="mt-8 flex aspect-video w-full max-w-full items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
                     כאן תופיע התמונה
@@ -97,7 +97,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     alt={step.alt}
                     width={1536}
                     height={1024}
-                    triggerClassName="mt-8 block min-w-0 w-[calc(100%+0.5rem)] -ms-8 overflow-hidden rounded-2xl border border-edge bg-[#f9fcff] sm:ms-0 sm:w-full"
+                    triggerClassName="mx-auto mt-8 block w-full min-w-0 overflow-hidden rounded-2xl border border-edge bg-[#f9fcff]"
                     imageClassName="mx-auto block h-auto w-full max-w-full object-contain"
                   />
                 )}
