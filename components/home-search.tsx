@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import {
   brandsInCategory,
   filterMachines,
@@ -125,31 +125,106 @@ function BrandPicker({
   brand: string | null;
   onChange: (brand: string | null) => void;
 }) {
-  const chip =
-    "inline-flex min-h-11 items-center justify-center rounded-full px-5 text-sm font-semibold";
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const choice = brand ?? "הכל";
+  const brandKey = brands.join("\0");
+
+  useEffect(() => {
+    setOpen(false);
+  }, [brandKey]);
+
+  useEffect(() => {
+    if (!open) return;
+    const selected = menuRef.current?.querySelector<HTMLButtonElement>("[aria-checked='true']");
+    (selected ?? menuRef.current?.querySelector("button"))?.focus();
+    function onPointer(event: PointerEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function onKey(event: globalThis.KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      buttonRef.current?.focus();
+    }
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  function choose(next: string | null) {
+    onChange(next);
+    setOpen(false);
+    buttonRef.current?.focus();
+  }
+
+  function onMenuKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    const items = [...(menuRef.current?.querySelectorAll("button") ?? [])];
+    const index = items.indexOf(document.activeElement as HTMLButtonElement);
+    if (event.key === "ArrowDown" || event.key === "ArrowUp" || event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+    }
+    if (event.key === "ArrowDown") items[(index + 1) % items.length]?.focus();
+    if (event.key === "ArrowUp") items[(index - 1 + items.length) % items.length]?.focus();
+    if (event.key === "Home") items[0]?.focus();
+    if (event.key === "End") items[items.length - 1]?.focus();
+  }
+
+  const options: { id: string; value: string | null; label: string }[] = [
+    { id: "all", value: null, label: "הכל" },
+    ...brands.map((name) => ({ id: name, value: name, label: name })),
+  ];
+
   return (
-    <div className="mx-auto mt-6 max-w-xl rounded-3xl border border-edge bg-white px-4 py-4 shadow-card">
-      <div role="group" aria-label="יצרן" className="flex flex-wrap items-center justify-center gap-2">
-        <span className="px-1 text-sm font-bold text-accent">יצרן</span>
-        <button
-          type="button"
-          aria-pressed={brand === null}
-          onClick={() => onChange(null)}
-          className={`${chip} ${brand === null ? "bg-action text-ink" : "bg-chip-sky text-ink hover:bg-wash"}`}
+    <div ref={rootRef} className="relative mx-auto mt-6 w-fit min-w-56">
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls="brand-menu"
+        onClick={() => setOpen((value) => !value)}
+        className="inline-flex min-h-12 w-full items-center justify-between gap-4 rounded-full border border-edge bg-white py-1.5 ps-5 pe-1.5 shadow-card"
+      >
+        <span className="text-sm font-bold text-accent">יצרן</span>
+        <span
+          className={`inline-flex min-h-9 items-center gap-1 rounded-full px-4 text-sm font-semibold text-ink ${
+            brand ? "bg-action" : "bg-chip-sky"
+          }`}
         >
-          הכל
-        </button>
-        {brands.map((name) => {
-          const selected = brand === name;
+          {brand ? <bdi dir="ltr">{choice}</bdi> : choice}
+          <svg viewBox="0 0 20 20" aria-hidden="true" className={`h-4 w-4 ${open ? "rotate-180" : ""}`}>
+            <path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+        </span>
+      </button>
+      <div
+        ref={menuRef}
+        id="brand-menu"
+        role="menu"
+        aria-label="יצרן"
+        hidden={!open}
+        onKeyDown={onMenuKeyDown}
+        className="absolute inset-x-0 top-full z-20 mt-2 rounded-3xl border border-edge bg-white p-2 shadow-[0_16px_36px_-20px_#0a203655]"
+      >
+        {options.map((option) => {
+          const selected = option.value === brand;
           return (
             <button
-              key={name}
+              key={option.id}
               type="button"
-              aria-pressed={selected}
-              onClick={() => onChange(name)}
-              className={`${chip} ${selected ? "bg-action text-ink" : "bg-chip-sky text-ink hover:bg-wash"}`}
+              role="menuitemradio"
+              aria-checked={selected}
+              onClick={() => choose(option.value)}
+              className={`flex min-h-11 w-full items-center rounded-2xl px-4 py-3 text-start text-sm font-semibold text-ink ${
+                selected ? "bg-action" : "hover:bg-chip-sky"
+              }`}
             >
-              <bdi dir="ltr">{name}</bdi>
+              {option.value ? <bdi dir="ltr">{option.label}</bdi> : option.label}
             </button>
           );
         })}
