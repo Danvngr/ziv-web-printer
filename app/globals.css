@@ -52,6 +52,94 @@ header {
 body {
   margin: 0;
   color: #001e44;
+  font-family: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* yso.co.il: h1–h3 use Rubik, letter-spacing -0.01em. Body stays Heebo. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-rubik), var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* דברו איתנו בוואטסאפ: rounded-2xl, #63c000, bold, px-4 py-2.5, light label. */
+.wa-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background-color: #63c000;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  color: #f9fcff;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.wa-action:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  background: #fafcfd;
+  animation: splash-leave 0.35s ease 1.45s forwards;
+}
+
+.splash-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.splash-mark {
+  position: relative;
+  width: min(86vw, 28rem);
+}
+
+.splash-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.splash-outline {
+  filter: url(#logo-outline);
+}
+
+.splash-color {
+  position: absolute;
+  inset: 0;
+  animation: splash-fill 0.95s ease 0.2s both;
+}
+
+@keyframes splash-fill {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes splash-leave {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+html.splash-skip .splash,
+html[data-a11y-motion="on"] .splash {
+  display: none !important;
 }
 
 @keyframes gradient-drift {
@@ -239,6 +327,10 @@ input:focus-visible,
     transition: none !important;
     scroll-behavior: auto !important;
   }
+
+  .splash {
+    display: none !important;
+  }
 }
 
 html[data-a11y-text="110"] {
@@ -249,7 +341,11 @@ html[data-a11y-text="125"] {
   font-size: 125%;
 }
 
-html[data-a11y-font="on"] {
+html[data-a11y-font="on"],
+html[data-a11y-font="on"] body,
+html[data-a11y-font="on"] h1,
+html[data-a11y-font="on"] h2,
+html[data-a11y-font="on"] h3 {
   font-family: Arial, "Arial Hebrew", Tahoma, var(--font-heebo), sans-serif;
   letter-spacing: 0.02em;
 }

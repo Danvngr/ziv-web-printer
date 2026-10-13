@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { a11yDataAttrs, parseA11yPrefs } from "../lib/a11y-prefs.ts";
@@ -16,6 +16,7 @@ import {
   readyGuide,
 } from "../data/printers.ts";
 import { counterWhatsappText, whatsappHref } from "../data/site.ts";
+import { shouldSkipSplash } from "../lib/splash-skip.ts";
 
 assert.equal(normalizeSearch(" SP-100 "), "sp100");
 assert.equal(normalizeSearch("Copy 10"), "copy10");
@@ -94,5 +95,18 @@ assert.deepEqual(a11yDataAttrs(parsed), {
 assert.equal(parseA11yPrefs("nope").text, "normal");
 assert.equal(parseA11yPrefs(null).motion, false);
 assert.equal(parseA11yPrefs('{"text":"200"}').text, "normal");
+
+assert.equal(existsSync(join(root, "public", "logo.png")), true);
+assert.equal(shouldSkipSplash({ seen: null, reduce: false, motionStop: false }), false);
+assert.equal(shouldSkipSplash({ seen: "1", reduce: false, motionStop: false }), true);
+assert.equal(shouldSkipSplash({ seen: null, reduce: true, motionStop: false }), true);
+assert.equal(shouldSkipSplash({ seen: null, reduce: false, motionStop: true }), true);
+const layout = readFileSync(join(root, "app", "layout.tsx"), "utf8");
+assert.ok(layout.includes('sessionStorage.getItem("yair-splash")'));
+assert.ok(layout.includes("prefers-reduced-motion"));
+assert.ok(layout.includes("Rubik"));
+const guide = readFileSync(join(root, "app", "printers", "[id]", "[guideId]", "page.tsx"), "utf8");
+assert.ok(guide.includes("wa-action"));
+assert.ok(guide.includes("פתיחת וואטסאפ לשליחת מונה"));
 
 console.log("printer checks passed");

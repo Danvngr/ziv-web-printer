@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Heebo } from "next/font/google";
+import { Heebo, Rubik } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
+import { Splash } from "@/components/splash";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -9,6 +10,14 @@ const heebo = Heebo({
   weight: ["400", "500", "600", "700"],
   variable: "--font-heebo",
 });
+
+const rubik = Rubik({
+  subsets: ["hebrew", "latin"],
+  weight: ["500", "700", "900"],
+  variable: "--font-rubik",
+});
+
+const splashBoot = `(function(){try{var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;var seen=sessionStorage.getItem("yair-splash")==="1";var raw=localStorage.getItem("a11y-prefs");var stop=!!(raw&&JSON.parse(raw).motion===true);if(reduce||seen||stop)document.documentElement.classList.add("splash-skip");}catch(e){document.documentElement.classList.add("splash-skip");}})();`;
 
 export const metadata: Metadata = {
   title: {
@@ -20,8 +29,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.className} ${heebo.variable} h-full antialiased`}>
+    <html lang="he" dir="rtl" className={`${heebo.className} ${heebo.variable} ${rubik.variable} h-full antialiased`}>
       <body className="min-h-full">
+        <script dangerouslySetInnerHTML={{ __html: splashBoot }} />
+        <Splash />
         <a href="#main-content" className="skip-link">
           דלגו לתוכן הראשי
         </a>

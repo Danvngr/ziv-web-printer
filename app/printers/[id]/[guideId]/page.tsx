@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MachineName } from "@/components/machine-name";
-import { WhatsAppLink } from "@/components/whatsapp-link";
+import { WhatsAppLink, WhatsAppMark } from "@/components/whatsapp-link";
 import { ZoomImage } from "@/components/zoom-image";
 import { getMachine, guideLabel, isGuideKind, machineGuideLinks, machines, readyGuide } from "@/data/printers";
 import { counterWhatsappText } from "@/data/site";
@@ -63,8 +63,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </li>
         </ol>
       </nav>
-      <h1 className="mt-6 text-center text-3xl font-bold text-ink sm:text-4xl md:text-5xl">
-        <span className="block">{label.title}</span>
+      <h1 className="mt-6 text-center text-ink">
+        <span className="block text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">{label.title}</span>
         <span className="mt-2 block text-2xl font-semibold text-[#7dae6a] md:text-3xl">
           <MachineName brand={machine.brand} model={machine.model} />
         </span>
@@ -116,10 +116,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <li>1. צלמו את המונה ושלחו את התמונה בוואטסאפ למשרד</li>
                 <li>2. חייב לרשום את מספר המכונה ושם המוסד</li>
               </ol>
-              <WhatsAppLink
-                text={counterWhatsappText}
-                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover"
-              >
+              <WhatsAppLink text={counterWhatsappText} className="wa-action mt-5">
+                <WhatsAppMark size={16} />
                 פתיחת וואטסאפ לשליחת מונה
               </WhatsAppLink>
             </section>
@@ -127,7 +125,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
             <section className="mt-12 rounded-3xl bg-wash px-5 py-6">
               <h2 className="text-xl font-bold text-ink">סיימתם?</h2>
               <p className="mt-3 leading-7 text-muted">אם משהו לא הסתדר, אפשר לפנות לשירות.</p>
-              <WhatsAppLink className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover">
+              <WhatsAppLink className="wa-action mt-5">
+                <WhatsAppMark size={16} />
                 וואטסאפ לשירות
               </WhatsAppLink>
             </section>
@@ -139,7 +138,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p className="mt-3 leading-7 text-muted">
             ההוראות לדגם הזה עדיין לא הוזנו. בינתיים אפשר לפנות לשירות בוואטסאפ.
           </p>
-          <WhatsAppLink className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover">
+          <WhatsAppLink className="wa-action mt-5">
+            <WhatsAppMark size={16} />
             פתיחת וואטסאפ
           </WhatsAppLink>
         </section>

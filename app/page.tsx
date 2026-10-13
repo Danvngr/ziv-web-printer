@@ -7,7 +7,7 @@ export default function HomePage() {
     <section className="relative px-1 pb-16 pt-12 text-center md:pt-20">
       <HeroDrift />
       <div className="pop-in relative">
-        <h1 className="mx-auto max-w-3xl text-3xl font-bold tracking-tight text-ink sm:text-4xl md:text-6xl">
+        <h1 className="mx-auto max-w-3xl text-3xl font-black tracking-tight text-ink sm:text-4xl lg:text-5xl">
           {site.homeTitle}
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
