@@ -1,28 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { site } from "@/data/site";
 import { defaultA11yPrefs, readA11ySnapshot, subscribeA11y, writeA11yPrefs } from "@/lib/a11y-prefs";
 
-const links = [
-  { href: "/about", label: "אודותינו" },
-  { href: "/contact", label: "יצירת קשר" },
-  { href: "/terms", label: "תנאי שימוש" },
-  { href: "/privacy", label: "מדיניות פרטיות" },
-  { href: "/accessibility", label: "הצהרת נגישות" },
-] as const;
-
-export function SiteFooter({ pathname }: { pathname: string }) {
+export function SiteFooter() {
   const prefs = useSyncExternalStore(subscribeA11y, readA11ySnapshot, () => defaultA11yPrefs);
   const stopped = prefs.motion;
 
   return (
-    <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent text-ink">
-      {/* On a phone the lines are centered. From sm, dir=ltr keeps the row clear of the fixed button. */}
+    <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent pb-24 text-ink">
       <div
         dir="ltr"
-        className="flex w-full min-w-0 flex-col items-center gap-1 px-4 py-3 text-center sm:flex-row sm:flex-nowrap sm:justify-start sm:gap-x-4 sm:py-3 sm:pl-24 sm:pr-5 sm:text-start lg:pl-32"
+        className="flex w-full min-w-0 flex-col items-center gap-1 px-3 py-4 text-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6"
       >
         <div className="flex flex-wrap items-center justify-center gap-x-4">
           <a
@@ -52,20 +42,8 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           <ZapIcon />
           {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
         </button>
-        <p className="text-sm leading-6 text-ink sm:ms-auto">© 2026 {site.name}</p>
+        <p className="text-sm leading-6 text-ink">© 2026 {site.name}</p>
       </div>
-      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 ps-4 pe-14 pt-1 pb-28 sm:px-3">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            aria-current={pathname === link.href ? "page" : undefined}
-            className="inline-flex min-h-11 items-center text-xs font-medium text-muted hover:text-ink"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
     </footer>
   );
 }

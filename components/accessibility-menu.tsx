@@ -56,11 +56,11 @@ export function AccessibilityMenu() {
   }
 
   return (
-    <div className="fixed end-0 top-1/2 z-40 -translate-y-1/2">
+    <div className="absolute end-2 top-3 z-40 sm:top-4">
       <button
         ref={buttonRef}
         type="button"
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-s-2xl border border-mist bg-wash px-2 py-3 text-sm font-semibold text-ink shadow-card [writing-mode:vertical-rl]"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-2xl border border-mist bg-wash px-2 py-3 text-sm font-semibold text-ink shadow-card [writing-mode:vertical-rl]"
         aria-expanded={open}
         aria-controls="a11y-panel"
         onClick={() => setOpen((value) => !value)}
@@ -72,7 +72,7 @@ export function AccessibilityMenu() {
         role="region"
         aria-labelledby={panelTitleId}
         hidden={!open}
-        className="absolute end-[calc(100%+0.5rem)] top-1/2 max-h-[min(32rem,80vh)] w-[min(18rem,calc(100vw-4.5rem))] -translate-y-1/2 overflow-y-auto rounded-2xl border border-mist bg-white p-3 text-start text-ink shadow-card"
+        className="absolute end-[calc(100%+0.5rem)] top-0 max-h-[min(32rem,70vh)] w-[min(18rem,calc(100vw-4.5rem))] overflow-y-auto rounded-2xl border border-mist bg-white p-3 text-start text-ink shadow-card"
       >
         <h2 id={panelTitleId} className="px-1 text-base font-bold text-ink">
           התאמות נגישות

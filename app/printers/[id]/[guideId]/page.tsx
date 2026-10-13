@@ -33,7 +33,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="lift mx-auto my-6 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-8 sm:my-8 sm:px-8 sm:py-10">
+    <article className="lift mx-auto my-4 max-w-3xl rounded-3xl border border-edge bg-white px-2 py-6 sm:my-8 sm:px-8 sm:py-10">
       <nav aria-label="פירורי לחם" className="text-sm">
         <ol className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>
@@ -97,7 +97,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     alt={step.alt}
                     width={1536}
                     height={1024}
-                    triggerClassName="mt-8 block w-full overflow-hidden rounded-2xl border border-edge bg-[#f9fcff]"
+                    triggerClassName="mt-8 -ms-14 block w-[calc(100%+3.5rem)] overflow-hidden rounded-2xl border border-edge bg-[#f9fcff] sm:ms-0 sm:w-full"
                     imageClassName="h-auto w-full"
                   />
                 )}
@@ -145,17 +145,17 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </section>
       )}
 
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+      <div className="mt-8 flex flex-col items-center gap-3">
         <Link
           href={`/printers/${machine.id}`}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-mist bg-page px-5 font-semibold text-ink hover:bg-wash"
+          className="inline-flex min-h-12 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-mist bg-page px-6 text-base font-semibold text-ink hover:bg-wash"
         >
           <PrinterIcon />
           חזרה לדגם
         </Link>
         <Link
           href="/"
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-mist bg-page px-5 font-semibold text-ink hover:bg-wash"
+          className="inline-flex min-h-12 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-mist bg-page px-6 text-base font-semibold text-ink hover:bg-wash"
         >
           <HomeIcon />
           חזרה למסך הבית
@@ -167,7 +167,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
 function HomeIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" strokeLinejoin="round" />
     </svg>
   );
@@ -175,7 +175,7 @@ function HomeIcon() {
 
 function PrinterIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M7 8V4h10v4" strokeLinejoin="round" />
       <path d="M6 17H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" strokeLinejoin="round" />
       <rect x="7" y="14" width="10" height="6" rx="1" />
