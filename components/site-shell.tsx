@@ -13,7 +13,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <>
       <div className="a11y-canvas flex min-h-screen min-w-0 flex-col text-ink">
         <SiteHeader pathname={pathname} />
-        <div className="flex min-w-0 flex-1 flex-col ps-4 pe-14 sm:px-16">
+        <div className="flex min-w-0 flex-1 flex-col ps-4 pe-14 pt-28 sm:px-16 sm:pt-40">
           <main id="main-content" tabIndex={-1} className="mx-auto w-full min-w-0 max-w-5xl flex-1">
             {children}
           </main>

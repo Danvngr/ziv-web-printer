@@ -28,7 +28,7 @@ export function Splash() {
         // A blocked store replays the splash on the next load.
       }
       setOn(false);
-    }, 2100);
+    }, 2800);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -50,7 +50,7 @@ export function Splash() {
     >
       <svg className="splash-filter" aria-hidden="true">
         <filter id="logo-outline" x="-4%" y="-8%" width="108%" height="116%" colorInterpolationFilters="sRGB">
-          <feMorphology in="SourceAlpha" operator="dilate" radius="1.6" result="dilated" />
+          <feMorphology in="SourceAlpha" operator="dilate" radius="2.4" result="dilated" />
           <feComposite in="dilated" in2="SourceAlpha" operator="out" result="edge" />
           <feFlood floodColor="#001e44" result="ink" />
           <feComposite in="ink" in2="edge" operator="in" />

@@ -4,15 +4,11 @@ import { site } from "@/data/site";
 
 export default function HomePage() {
   return (
-    <section className="relative px-1 pb-16 pt-12 text-center md:pt-20">
+    <section className="relative px-1 pb-16 pt-2 text-center md:pt-4">
       <HeroDrift />
       <div className="pop-in relative">
-        <h1 className="mx-auto max-w-3xl text-3xl font-black tracking-tight text-ink sm:text-4xl lg:text-5xl">
-          {site.homeTitle}
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
-          חפשו את דגם המכונה, בחרו פעולה, ועקבו אחרי השלבים.
-        </p>
+        <h1 className="yso-title mx-auto max-w-3xl">{site.homeTitle}</h1>
+        <p className="yso-line mx-auto mt-4 max-w-xl">חפשו את דגם המכונה, בחרו פעולה, ועקבו אחרי השלבים.</p>
       </div>
       <HomeSearch machines={machines} />
     </section>

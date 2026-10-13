@@ -63,9 +63,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </li>
         </ol>
       </nav>
-      <h1 className="mt-6 text-center text-ink">
-        <span className="block text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">{label.title}</span>
-        <span className="mt-2 block text-2xl font-semibold text-[#7dae6a] md:text-3xl">
+      <h1 className="mt-6 text-center">
+        <span className="yso-title block">{label.title}</span>
+        <span className="yso-title yso-green mt-2 block">
           <MachineName brand={machine.brand} model={machine.model} />
         </span>
       </h1>
@@ -109,10 +109,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </ol>
           {guideId === "counter" || guideId === "meter" ? (
             <section className="mt-12 rounded-3xl bg-chip-mint px-5 py-6 text-center">
-              <h2 className="inline-block border-b border-dashed border-ink pb-1 text-xl font-bold text-ink">
+              <h2 className="yso-title inline-block border-b border-dashed border-ink pb-1">
                 אופן שליחת המונה
               </h2>
-              <ol className="mt-5 space-y-2 text-lg font-semibold leading-8 text-ink">
+              <ol className="yso-line mt-5 space-y-2 text-ink">
                 <li>1. צלמו את המונה ושלחו את התמונה בוואטסאפ למשרד</li>
                 <li>2. חייב לרשום את מספר המכונה ושם המוסד</li>
               </ol>

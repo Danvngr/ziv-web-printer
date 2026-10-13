@@ -84,6 +84,61 @@ h3 {
   transform: translateY(-2px);
 }
 
+.yso-title {
+  font-family: var(--font-rubik), var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: #001e44;
+  font-size: 1.875rem;
+}
+
+.yso-line {
+  font-family: var(--font-rubik), var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  color: color-mix(in srgb, #001e44 70%, transparent);
+  font-size: 1.125rem;
+}
+
+.yso-line.text-ink {
+  color: #001e44;
+}
+
+.yso-green {
+  color: #7dae6a;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .yso-title {
+    font-size: 2.25rem;
+  }
+
+  .yso-line {
+    font-size: 1.25rem;
+  }
+
+  .yso-green {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .yso-title {
+    font-size: 3rem;
+  }
+
+  .yso-line {
+    font-size: 1.5rem;
+  }
+
+  .yso-green {
+    font-size: 2.25rem;
+  }
+}
+
 .splash {
   position: fixed;
   inset: 0;
@@ -91,7 +146,7 @@ h3 {
   display: grid;
   place-items: center;
   background: #fafcfd;
-  animation: splash-leave 0.35s ease 1.45s forwards;
+  animation: splash-leave 0.3s ease 2.05s forwards;
 }
 
 .splash-filter {
@@ -102,7 +157,7 @@ h3 {
 
 .splash-mark {
   position: relative;
-  width: min(86vw, 28rem);
+  width: min(94vw, 72rem);
 }
 
 .splash-mark img {
@@ -118,7 +173,8 @@ h3 {
 .splash-color {
   position: absolute;
   inset: 0;
-  animation: splash-fill 0.95s ease 0.2s both;
+  filter: saturate(1.65) contrast(1.12);
+  animation: splash-fill 1.2s ease 0.15s both;
 }
 
 @keyframes splash-fill {
@@ -157,10 +213,14 @@ html[data-a11y-motion="on"] .splash {
 @media (max-width: 640px) {
   html,
   body,
-  .a11y-canvas,
-  header {
+  .a11y-canvas {
     background-attachment: scroll;
     animation: none;
+  }
+
+  header {
+    animation: none;
+    background-attachment: fixed;
   }
 }
 
@@ -345,7 +405,10 @@ html[data-a11y-font="on"],
 html[data-a11y-font="on"] body,
 html[data-a11y-font="on"] h1,
 html[data-a11y-font="on"] h2,
-html[data-a11y-font="on"] h3 {
+html[data-a11y-font="on"] h3,
+html[data-a11y-font="on"] .yso-title,
+html[data-a11y-font="on"] .yso-line,
+html[data-a11y-font="on"] .yso-green {
   font-family: Arial, "Arial Hebrew", Tahoma, var(--font-heebo), sans-serif;
   letter-spacing: 0.02em;
 }

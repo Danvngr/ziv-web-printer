@@ -26,8 +26,8 @@ export default async function MachinePage({ params }: MachinePageProps) {
   if (!machine) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-black tracking-tight text-ink sm:text-4xl lg:text-5xl">
+    <article className="mx-auto max-w-3xl px-4 pt-2 pb-12">
+      <h1 className="yso-title">
         <MachineName brand={machine.brand} model={machine.model} />
       </h1>
       {machine.sample ? (
