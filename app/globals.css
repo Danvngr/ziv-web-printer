@@ -198,6 +198,47 @@ html[data-a11y-motion="on"] .splash {
   display: none !important;
 }
 
+/* Preview only. Live splash stays 2.35s; this loop is that length plus 0.25s. */
+.logo-preview-mark {
+  position: relative;
+  width: min(92vw, 52rem);
+}
+
+.logo-preview-mark img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.logo-preview-outline {
+  filter: url(#logo-preview-outline);
+}
+
+.logo-preview-color {
+  position: absolute;
+  inset: 0;
+  filter: saturate(1.4) contrast(1.06) brightness(1.06) drop-shadow(0 0 16px rgb(50 230 70 / 0.55))
+    drop-shadow(0 0 22px rgb(0 110 140 / 0.4));
+  animation: logo-preview-fill 2.6s ease-in-out infinite;
+}
+
+@keyframes logo-preview-fill {
+  0%,
+  5.77% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 1;
+  }
+  51.92%,
+  88.46% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+
 @keyframes gradient-drift {
   0% {
     background-position: 0 0, 100% 100%, 0 100%, 100% 0;
