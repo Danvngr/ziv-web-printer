@@ -28,7 +28,7 @@ export interface Machine {
 }
 
 const canonMeter: Guide = {
-  intro: "כך מגיעים למסך המונה.",
+  intro: "",
   steps: [
     {
       title: "חזרה למסך הבית",
@@ -85,8 +85,8 @@ export function isGuideKind(value: string): value is GuideKind {
 }
 
 export function guideLabel(kind: GuideKind): { card: string; title: string } {
-  if (kind === "counter" || kind === "meter") return { card: "איך מוציאים מונה?", title: "הוצאת מונה" };
-  return { card: "איך מחליפים טונר?", title: "החלפת טונר" };
+  if (kind === "counter" || kind === "meter") return { card: "מדריך להוצאת מונה", title: "מדריך להוצאת מונה" };
+  return { card: "מדריך להחלפת טונר", title: "מדריך להחלפת טונר" };
 }
 
 export function machineNameWords(brand: string, model: string): string[] {

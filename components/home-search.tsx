@@ -246,8 +246,8 @@ function MachineCard({ machine }: { machine: Machine }) {
             label="הגדלת תמונת המדפסת"
             width={1254}
             height={1254}
-            triggerClassName="block h-full w-full overflow-hidden rounded-full bg-white ring-2 ring-white"
-            imageClassName="h-full w-full scale-110 object-cover"
+              triggerClassName="flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-white ring-2 ring-white"
+              imageClassName="h-[62%] w-[62%] object-contain"
           />
         </span>
         <h4 className="text-xl font-bold text-ink">

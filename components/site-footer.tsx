@@ -50,9 +50,10 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           <ZapIcon />
           {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
         </button>
-        <p className="w-full text-center text-sm leading-6 text-ink sm:ms-auto sm:w-auto sm:text-left">
-          © 2026 YAIR Smart Office. מרחבי למידה חכמים.
-        </p>
+        <div className="w-full text-center text-sm leading-6 text-ink sm:ms-auto sm:w-auto sm:text-end">
+          <p>© 2026 {site.name}</p>
+          <p>{site.tagline}</p>
+        </div>
       </div>
       <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pt-1 pb-28">
         {links.map((link) => (

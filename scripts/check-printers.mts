@@ -8,6 +8,7 @@ import {
   filterMachines,
   getMachine,
   isGuideKind,
+  guideLabel,
   machineGuideLinks,
   machineNameWords,
   machines,
@@ -60,6 +61,9 @@ assert.deepEqual(machineGuideLinks(canon!), ["meter", "toner"]);
 assert.equal(filterMachines(machines, "mf655")[0]?.id, "canon-mf655cdw");
 const meter = readyGuide(canon!, "meter");
 assert.equal(meter?.steps.length, 5);
+assert.equal(meter?.intro, "");
+assert.equal(guideLabel("meter").title, "מדריך להוצאת מונה");
+assert.equal(guideLabel("toner").card, "מדריך להחלפת טונר");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 assert.equal(existsSync(join(root, "public", canon!.image!.slice(1))), true);
 for (const step of meter!.steps) {
@@ -70,7 +74,8 @@ assert.equal(getMachine(machines, "no-such"), undefined);
 
 const counterLink = whatsappHref(counterWhatsappText);
 assert.ok(counterLink?.startsWith("https://wa.me/"));
-assert.ok(counterLink?.includes(encodeURIComponent("מספר מכונה פנימי")));
+assert.equal(counterWhatsappText, "שם מוסד:\nמספר מכונה:\n*נא לצרף תמונה של המונה*");
+assert.ok(counterLink?.includes(encodeURIComponent("שם מוסד:")));
 assert.equal(whatsappHref(), "https://wa.me/972585554901");
 
 const parsed = parseA11yPrefs(

@@ -34,33 +34,38 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   return (
     <article className="lift mx-auto my-8 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-10 pe-8 sm:px-8">
-      <nav aria-label="פירורי לחם" className="text-sm text-muted">
-        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+      <nav aria-label="פירורי לחם" className="text-sm">
+        <ol className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>
-            <Link href="/" className="inline-flex min-h-11 items-center text-accent hover:underline">
+            <Link href="/" className="inline-flex min-h-11 items-center text-muted hover:text-ink">
               דף הבית
             </Link>
           </li>
-          <li aria-hidden="true">‹</li>
+          <li aria-hidden="true" className="text-xs text-muted/40">
+            /
+          </li>
           <li>
-            <Link href="/#search" className="inline-flex min-h-11 items-center text-accent hover:underline">
+            <Link href="/#search" className="inline-flex min-h-11 items-center text-muted hover:text-ink">
               חיפוש דגם
             </Link>
           </li>
-          <li aria-hidden="true">‹</li>
+          <li aria-hidden="true" className="text-xs text-muted/40">
+            /
+          </li>
           <li>
             <Link
               href={`/printers/${machine.id}`}
-              className="inline-flex min-h-11 items-center text-accent hover:underline"
+              aria-current="page"
+              className="inline-flex min-h-11 items-center font-semibold text-ink"
             >
               <MachineName brand={machine.brand} model={machine.model} />
             </Link>
           </li>
         </ol>
       </nav>
-      <h1 className="mt-4 text-3xl font-bold text-ink sm:text-4xl md:text-5xl">
+      <h1 className="mt-6 text-center text-3xl font-bold text-ink sm:text-4xl md:text-5xl">
         <span className="block">{label.title}</span>
-        <span className="mt-1 block text-3xl md:text-4xl">
+        <span className="mt-2 block text-2xl font-semibold text-[#7dae6a] md:text-3xl">
           <MachineName brand={machine.brand} model={machine.model} />
         </span>
       </h1>
@@ -72,7 +77,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       {guide ? (
         <>
-          <p className="mt-4 leading-8 text-muted">{guide.intro}</p>
+          {guide.intro ? <p className="mt-4 leading-8 text-muted">{guide.intro}</p> : null}
           <ol className="relative mt-12 space-y-10">
             <span className="absolute top-0 bottom-0 start-4 w-0.5 bg-line" aria-hidden="true" />
             {guide.steps.map((step, index) => (
@@ -96,20 +101,21 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     imageClassName="h-auto w-full"
                   />
                 )}
+                {index < guide.steps.length - 1 ? (
+                  <div className="mt-8 border-t border-[#d5dee6]" aria-hidden="true" />
+                ) : null}
               </li>
             ))}
           </ol>
           {guideId === "counter" || guideId === "meter" ? (
-            <section className="mt-12 rounded-3xl bg-chip-mint px-5 py-6">
-              <h2 className="text-xl font-bold text-ink">שליחת המונה</h2>
-              <p className="mt-3 text-lg font-semibold leading-8 text-ink">
-                צלמו את המונה ושלחו את התמונה בוואטסאפ למשרד. חובה לרשום בהודעה גם את מספר המכונה
-                הפנימי שמופיע על המדבקה.
-              </p>
-              <p className="mt-3 leading-7 text-muted">
-                השליחה מתבצעת בוואטסאפ, אחרי שמצרפים את התמונה ומחליפים את הטקסט במספר המכונה. האתר
-                לא שולח את התמונה ולא בודק שהמספר נכתב.
-              </p>
+            <section className="mt-12 rounded-3xl bg-chip-mint px-5 py-6 text-center">
+              <h2 className="inline-block border-b border-dashed border-ink pb-1 text-xl font-bold text-ink">
+                אופן שליחת המונה
+              </h2>
+              <ol className="mt-5 space-y-2 text-lg font-semibold leading-8 text-ink">
+                <li>1. צלמו את המונה ושלחו את התמונה בוואטסאפ למשרד</li>
+                <li>2. חייב לרשום את מספר המכונה ושם המוסד</li>
+              </ol>
               <WhatsAppLink
                 text={counterWhatsappText}
                 className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover"
@@ -139,12 +145,40 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </section>
       )}
 
-      <Link
-        href={`/printers/${machine.id}`}
-        className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-page px-6 font-semibold text-ink hover:bg-wash"
-      >
-        חזרה לדגם
-      </Link>
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
+        <Link
+          href={`/printers/${machine.id}`}
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-mist bg-page px-5 font-semibold text-ink hover:bg-wash"
+        >
+          <PrinterIcon />
+          חזרה לדגם
+        </Link>
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-mist bg-page px-5 font-semibold text-ink hover:bg-wash"
+        >
+          <HomeIcon />
+          חזרה למסך הבית
+        </Link>
+      </div>
     </article>
+  );
+}
+
+function HomeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function PrinterIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M7 8V4h10v4" strokeLinejoin="round" />
+      <path d="M6 17H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" strokeLinejoin="round" />
+      <rect x="7" y="14" width="10" height="6" rx="1" />
+    </svg>
   );
 }
