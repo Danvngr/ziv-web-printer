@@ -88,17 +88,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <h2 className="text-lg font-bold text-ink">{step.title}</h2>
                 <p className="mt-2 leading-7 text-muted">{step.text}</p>
                 {machine.sample ? (
-                  <div className="mt-8 flex aspect-video items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
+                  <div className="mt-8 flex aspect-video w-full max-w-full items-center justify-center rounded-2xl border border-edge bg-[#f9fcff] px-4 text-center text-sm text-muted">
                     כאן תופיע התמונה
                   </div>
                 ) : (
+                  {/* Phone: 1.5rem inside the card. -ms-8 and +0.5rem cancel ps-14 without crossing the card. */}
                   <ZoomImage
                     src={step.image}
                     alt={step.alt}
                     width={1536}
                     height={1024}
-                    triggerClassName="mt-8 -ms-14 block w-[calc(100%+3.5rem)] overflow-hidden rounded-2xl border border-edge bg-[#f9fcff] sm:ms-0 sm:w-full"
-                    imageClassName="h-auto w-full"
+                    triggerClassName="mt-8 block min-w-0 w-[calc(100%+0.5rem)] -ms-8 overflow-hidden rounded-2xl border border-edge bg-[#f9fcff] sm:ms-0 sm:w-full"
+                    imageClassName="mx-auto block h-auto w-full max-w-full object-contain"
                   />
                 )}
                 {index < guide.steps.length - 1 ? (
