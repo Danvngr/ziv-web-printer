@@ -92,7 +92,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     כאן תופיע התמונה
                   </div>
                 ) : (
-                  {/* Phone: 1.5rem inside the card. -ms-8 and +0.5rem cancel ps-14 without crossing the card. */}
                   <ZoomImage
                     src={step.image}
                     alt={step.alt}
