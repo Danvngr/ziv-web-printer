@@ -412,6 +412,59 @@ input:focus-visible,
   box-shadow: 0 0 0 6px #facc15;
 }
 
+/* Home choices use the guide button, with a green ring instead of the gold one. */
+.choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  border-radius: 1rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+
+.choice-on {
+  background-color: #63c000;
+  color: #f9fcff;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.choice-off {
+  background-color: #fff;
+  color: #001e44;
+  box-shadow: inset 0 0 0 1px #e7f0f5;
+}
+
+button.choice:focus-visible,
+a.choice:focus-visible {
+  outline: 2px solid #2f7a00;
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+.choice-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.choice-menu .choice {
+  width: 100%;
+  border-radius: 0.625rem;
+  box-shadow: none;
+}
+
+.choice-menu .choice-off {
+  background: transparent;
+}
+
+.choice-menu button.choice:focus-visible {
+  outline-offset: 1px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

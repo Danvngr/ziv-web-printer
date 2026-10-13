@@ -19,15 +19,10 @@ const categories: { id: DeviceCategory; label: string }[] = [
   { id: "copier", label: "מכונות צילום" },
 ];
 
-function initialBrand(machines: Machine[], category: DeviceCategory): string | null {
-  const brands = brandsInCategory(machines, category);
-  return brands.length === 1 ? brands[0] : null;
-}
-
 export function HomeSearch({ machines }: { machines: Machine[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<DeviceCategory>("printer");
-  const [brand, setBrand] = useState<string | null>(() => initialBrand(machines, "printer"));
+  const [brand, setBrand] = useState<string | null>(null);
   const matches = useMemo(
     () => filterMachines(machines, query, category),
     [machines, query, category],
@@ -42,7 +37,7 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
 
   function chooseCategory(next: DeviceCategory) {
     setCategory(next);
-    setBrand(initialBrand(machines, next));
+    setBrand(null);
   }
 
   return (
@@ -56,11 +51,7 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
               type="button"
               aria-pressed={pressed}
               onClick={() => chooseCategory(item.id)}
-              className={`lift inline-flex min-h-11 items-center justify-center rounded-full px-6 text-sm font-semibold ${
-                pressed
-                  ? "bg-action text-ink hover:bg-action-hover"
-                  : "border border-edge bg-white text-ink hover:bg-wash"
-              }`}
+              className={`choice ${pressed ? "choice-on" : "choice-off"}`}
             >
               {item.label}
             </button>
@@ -94,7 +85,7 @@ export function HomeSearch({ machines }: { machines: Machine[] }) {
         <div className="mx-auto mt-8 max-w-2xl rounded-3xl bg-white px-6 py-8 text-center shadow-card">
           <h2 className="text-2xl font-bold text-ink">לא מצאתם את הדגם?</h2>
           <p className="mt-3 leading-7 text-muted">אפשר לפנות לשירות בוואטסאפ ונעזור לזהות את המכונה.</p>
-          <WhatsAppLink className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 font-semibold text-ink hover:bg-action-hover">
+          <WhatsAppLink className="choice choice-on mt-5">
             פתיחת וואטסאפ
           </WhatsAppLink>
         </div>
@@ -180,27 +171,24 @@ function BrandPicker({
   ];
 
   return (
-    <div ref={rootRef} className="relative mx-auto mt-6 w-fit min-w-56">
+    <div ref={rootRef} className="relative z-20 mx-auto mt-6 flex w-fit flex-col items-center">
+      <span id="brand-label" className="mb-2 text-sm font-bold text-ink">
+        יצרן
+      </span>
       <button
         ref={buttonRef}
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls="brand-menu"
+        aria-labelledby="brand-label"
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-12 w-full items-center justify-between gap-4 rounded-full border border-edge bg-white py-1.5 ps-5 pe-1.5 shadow-card"
+        className="choice choice-on min-w-36"
       >
-        <span className="text-sm font-bold text-accent">יצרן</span>
-        <span
-          className={`inline-flex min-h-9 items-center gap-1 rounded-full px-4 text-sm font-semibold text-ink ${
-            brand ? "bg-action" : "bg-chip-sky"
-          }`}
-        >
-          {brand ? <bdi dir="ltr">{choice}</bdi> : choice}
-          <svg viewBox="0 0 20 20" aria-hidden="true" className={`h-4 w-4 ${open ? "rotate-180" : ""}`}>
-            <path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-        </span>
+        {brand ? <bdi dir="ltr">{choice}</bdi> : choice}
+        <svg viewBox="0 0 20 20" aria-hidden="true" className={`h-4 w-4 ${open ? "rotate-180" : ""}`}>
+          <path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
       </button>
       <div
         ref={menuRef}
@@ -209,7 +197,7 @@ function BrandPicker({
         aria-label="יצרן"
         hidden={!open}
         onKeyDown={onMenuKeyDown}
-        className="absolute inset-x-0 top-full z-20 mt-2 rounded-3xl border border-edge bg-white p-2 shadow-[0_16px_36px_-20px_#0a203655]"
+        className="choice-menu absolute top-full z-20 mt-2 w-full min-w-44 rounded-2xl bg-white p-1.5 shadow-[0_16px_36px_-16px_#0a203655]"
       >
         {options.map((option) => {
           const selected = option.value === brand;
@@ -220,9 +208,7 @@ function BrandPicker({
               role="menuitemradio"
               aria-checked={selected}
               onClick={() => choose(option.value)}
-              className={`flex min-h-11 w-full items-center rounded-2xl px-4 py-3 text-start text-sm font-semibold text-ink ${
-                selected ? "bg-action" : "hover:bg-chip-sky"
-              }`}
+              className={`choice w-full justify-start ${selected ? "choice-on" : "choice-off shadow-none"}`}
             >
               {option.value ? <bdi dir="ltr">{option.label}</bdi> : option.label}
             </button>
@@ -257,7 +243,7 @@ function MachineCard({ machine }: { machine: Machine }) {
         </h4>
         <Link
           href={href}
-          className="mt-3 inline-flex min-h-11 items-center justify-center rounded-full bg-action px-6 text-sm font-semibold text-ink hover:bg-action-hover"
+          className="choice choice-on mt-3"
         >
           לדגם
         </Link>
