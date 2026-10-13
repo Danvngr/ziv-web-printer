@@ -19,28 +19,30 @@ export function SiteFooter({ pathname }: { pathname: string }) {
 
   return (
     <footer className="mt-auto w-full min-w-0 max-w-full bg-transparent text-ink">
-      {/* dir=ltr keeps this row on the visual left. Padding clears the fixed button. */}
+      {/* On a phone the lines are centered. From sm, dir=ltr keeps the row clear of the fixed button. */}
       <div
         dir="ltr"
-        className="flex w-full min-w-0 flex-wrap items-center justify-center gap-x-4 gap-y-2 py-3 pl-20 pr-4 sm:flex-nowrap sm:justify-start sm:py-3 sm:pl-24 sm:pr-5 lg:pl-32"
+        className="flex w-full min-w-0 flex-col items-center gap-1 px-4 py-3 text-center sm:flex-row sm:flex-nowrap sm:justify-start sm:gap-x-4 sm:py-3 sm:pl-24 sm:pr-5 sm:text-start lg:pl-32"
       >
-        <a
-          href={site.instagramHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
-          aria-label={`אינסטגרם ${site.instagram}`}
-        >
-          <InstagramIcon />
-          {site.instagram}
-        </a>
-        <a
-          href={`tel:${site.whatsappDisplay.replace(/-/g, "")}`}
-          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
-        >
-          <PhoneIcon />
-          {site.whatsappDisplay}
-        </a>
+        <div className="flex flex-wrap items-center justify-center gap-x-4">
+          <a
+            href={site.instagramHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
+            aria-label={`אינסטגרם ${site.instagram}`}
+          >
+            <InstagramIcon />
+            {site.instagram}
+          </a>
+          <a
+            href={`tel:${site.whatsappDisplay.replace(/-/g, "")}`}
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink"
+          >
+            <PhoneIcon />
+            {site.whatsappDisplay}
+          </a>
+        </div>
         <button
           type="button"
           aria-pressed={stopped}
@@ -50,12 +52,9 @@ export function SiteFooter({ pathname }: { pathname: string }) {
           <ZapIcon />
           {stopped ? "הפעל אנימציה" : "הפסק אנימציה"}
         </button>
-        <div className="w-full text-center text-sm leading-6 text-ink sm:ms-auto sm:w-auto sm:text-end">
-          <p>© 2026 {site.name}</p>
-          <p>{site.tagline}</p>
-        </div>
+        <p className="text-sm leading-6 text-ink sm:ms-auto">© 2026 {site.name}</p>
       </div>
-      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 px-3 pt-1 pb-28">
+      <nav aria-label="מידע על האתר" className="flex flex-wrap justify-center gap-x-3 ps-4 pe-14 pt-1 pb-28 sm:px-3">
         {links.map((link) => (
           <Link
             key={link.href}

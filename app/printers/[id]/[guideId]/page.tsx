@@ -33,7 +33,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="lift mx-auto my-8 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-10 pe-8 sm:px-8">
+    <article className="lift mx-auto my-6 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-8 sm:my-8 sm:px-8 sm:py-10">
       <nav aria-label="פירורי לחם" className="text-sm">
         <ol className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>

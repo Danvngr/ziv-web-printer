@@ -4,7 +4,6 @@
 export const site = {
   name: "YAIR SMART OFFICE LTD",
   hebrewName: "יאיר סמארט אופיס בע״מ",
-  tagline: "מרחבי למידה חכמים",
   homeTitle: "איך אפשר לעזור עם המדפסת?",
   whatsappE164: "972585554901",
   whatsappDisplay: "058-555-4901",
