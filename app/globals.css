@@ -157,62 +157,33 @@ h3 {
   animation: splash-mark-out 0.7s cubic-bezier(0.22, 1, 0.36, 1) 3.15s forwards;
 }
 
-.splash-mark,
-.logo-preview-mark {
+.splash-mark {
   position: relative;
   width: min(92vw, 52rem);
 }
 
-.splash-mark img,
-.logo-preview-mark img {
+.splash-mark img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.splash-outline,
-.logo-preview-outline {
+.splash-outline {
   position: relative;
   z-index: 1;
 }
 
-.splash-fill,
-.logo-preview-fill {
+.splash-fill {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.logo-preview-fill {
-  animation: splash-rise-loop 3.1s ease-in-out infinite;
-}
-
 @keyframes splash-mark-out {
   to {
     opacity: 0;
     transform: translateY(-10px);
-  }
-}
-
-@keyframes splash-rise-loop {
-  0%,
-  6% {
-    clip-path: inset(100% 0 0 0);
-    opacity: 1;
-  }
-  52%,
-  74% {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-  90% {
-    clip-path: inset(0 0 0 0);
-    opacity: 0;
-  }
-  100% {
-    clip-path: inset(100% 0 0 0);
-    opacity: 0;
   }
 }
 
