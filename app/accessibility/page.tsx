@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "הצהרת נגישות",
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function AccessibilityPage() {
   return (
-    <article className="lift mx-auto my-10 max-w-3xl rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
+    <article className="lift mx-auto my-10 w-[min(100%-2rem,48rem)] rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
       <h1 className="text-4xl font-bold text-ink md:text-5xl">הצהרת נגישות</h1>
       <p className="mt-2 text-sm text-muted">עודכן לאחרונה: 24 בספטמבר 2026</p>
       <div className="mt-6 space-y-4 leading-8">
@@ -33,7 +34,7 @@ export default function AccessibilityPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">תפריט הנגישות</h2>
           <p>
-            בצד המסך יש כפתור ״נגישות״. הוא עזר בלבד, ואינו תחליף למבנה נגיש של העמודים.
+            בכותרת העמוד יש כפתור ״נגישות״. הוא עזר בלבד, ואינו תחליף למבנה נגיש של העמודים.
             אפשר לבחור גודל טקסט (רגיל, 110% או 125%), ניגודיות גבוהה, גווני אפור, הדגשת
             קישורים, גופן קריא והפחתת תנועה, ולאפס את הבחירה. ההעדפות נשמרות בדפדפן בלבד
             ואינן נשלחות לשרת. הכפתור נפתח ונסגר במקלדת, ומקש Escape סוגר את החלונית ומחזיר
@@ -59,9 +60,8 @@ export default function AccessibilityPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">דיווח על קושי</h2>
           <p>
-            כדי לדווח על קושי בנגישות, פנו אל [שם העוסק] ב-[אימייל] או ב-[טלפון], בכתובת
-            [כתובת]. ציינו את כתובת העמוד ואת תיאור הקושי. מספר עוסק: [מספר עוסק]. אין באתר
-            טופס.
+            כדי לדווח על קושי בנגישות, פנו אל {site.hebrewName} בטלפון <bdi dir="ltr">{site.whatsappDisplay}</bdi>, בכתובת{" "}
+            {site.address}. ציינו את כתובת העמוד ואת תיאור הקושי. אין באתר טופס.
           </p>
         </section>
       </div>

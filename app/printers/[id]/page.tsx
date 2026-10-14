@@ -26,7 +26,8 @@ export default async function MachinePage({ params }: MachinePageProps) {
   if (!machine) notFound();
 
   return (
-    <article className="mx-auto max-w-3xl px-4 pt-2 pb-12">
+    <div className="wrap">
+    <article className="mx-auto max-w-3xl pt-6 pb-12">
       <h1 className="yso-title">
         <MachineName brand={machine.brand} model={machine.model} />
       </h1>
@@ -65,11 +66,12 @@ export default async function MachinePage({ params }: MachinePageProps) {
         })}
       </ul>
       <Link
-        href="/#search"
+        href="/guides"
         className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-mist bg-white px-6 font-semibold text-ink hover:bg-wash"
       >
         חזרה לחיפוש דגם
       </Link>
     </article>
+    </div>
   );
 }

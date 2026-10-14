@@ -33,7 +33,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const guide = readyGuide(machine, guideId);
 
   return (
-    <article className="mx-auto my-4 max-w-3xl rounded-3xl border border-edge bg-white px-2 py-6 shadow-card sm:my-8 sm:px-8 sm:py-10">
+    <div className="wrap">
+    <article className="mx-auto my-4 max-w-3xl rounded-3xl border border-edge bg-white px-4 py-6 shadow-card sm:my-8 sm:px-8 sm:py-10">
       <nav aria-label="פירורי לחם" className="text-sm">
         <ol className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>
@@ -45,7 +46,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             /
           </li>
           <li>
-            <Link href="/#search" className="inline-flex min-h-11 items-center text-muted hover:text-ink">
+            <Link href="/guides" className="inline-flex min-h-11 items-center text-muted hover:text-ink">
               חיפוש דגם
             </Link>
           </li>
@@ -154,7 +155,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           חזרה לדגם
         </Link>
         <Link
-          href="/"
+          href="/guides"
           className="inline-flex min-h-12 w-full max-w-sm items-center justify-center gap-2 rounded-full border border-mist bg-page px-6 text-base font-semibold text-ink hover:bg-wash"
         >
           <HomeIcon />
@@ -162,6 +163,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </Link>
       </div>
     </article>
+    </div>
   );
 }
 

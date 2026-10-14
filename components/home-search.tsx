@@ -122,10 +122,11 @@ function BrandPicker({
   const menuRef = useRef<HTMLDivElement>(null);
   const choice = brand ?? "הכל";
   const brandKey = brands.join("\0");
-
-  useEffect(() => {
+  const [brandKeySeen, setBrandKeySeen] = useState(brandKey);
+  if (brandKeySeen !== brandKey) {
+    setBrandKeySeen(brandKey);
     setOpen(false);
-  }, [brandKey]);
+  }
 
   useEffect(() => {
     if (!open) return;

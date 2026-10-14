@@ -9,6 +9,9 @@ export const site = {
   whatsappDisplay: "058-555-4901",
   instagram: "yair_smart_office",
   instagramHref: "https://instagram.com/yair_smart_office",
+  address: "הבנאים 9 אשדוד",
+  hours: "ימים א׳–ה׳ 09:00–16:00",
+  learningSpacesHref: "https://www.yso.co.il/",
 } as const;
 
 export const counterWhatsappText = "שם מוסד:\nמספר מכונה:\n*נא לצרף תמונה של המונה*";

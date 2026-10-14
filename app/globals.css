@@ -51,6 +51,121 @@ body {
   margin: 0;
   color: #001e44;
   font-family: var(--font-heebo), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01" on;
+}
+
+::selection {
+  background: #63c000;
+  color: #f9fcff;
+}
+
+/* yso.co.il container: max-w-7xl, px-4, md:px-12, lg:px-16. */
+.wrap {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    padding-inline: 4rem;
+  }
+}
+
+.band {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .band {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+/* yso buttons. rounded-3xl is radius 1.25rem + 12px. Hover green is the approved #56a800. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  border-radius: 2rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, color 200ms ease;
+}
+
+@media (min-width: 640px) {
+  .btn {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-green {
+  background-color: #63c000;
+  color: #f9fcff;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px color-mix(in oklab, #63c000 20%, transparent);
+}
+
+.btn-green:hover {
+  background-color: #56a800;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.btn-blue {
+  border: 2px solid color-mix(in oklab, #007bae 50%, transparent);
+  background-color: #fff;
+  color: #007bae;
+}
+
+.btn-blue:hover {
+  background-color: #007bae;
+  color: #f9fcff;
+}
+
+.btn-sm {
+  min-height: 2.5rem;
+  border-radius: 1.75rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.btn-sm:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+@media (max-width: 639px) {
+  .header-cta {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8125rem;
+  }
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 /* yso.co.il: h1–h3 use Rubik, letter-spacing -0.01em. Body stays Heebo. */
