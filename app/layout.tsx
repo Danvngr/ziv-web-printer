@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "YSO – Yair Smart Office. פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים.",
+    "מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים. מתכנון ועד תמיכה שוטפת.",
   openGraph: {
     locale: "he_IL",
     type: "website",
     siteName: site.name,
     title: site.hebrewName,
     description:
-      "פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים.",
+      "מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים.",
   },
 };
 

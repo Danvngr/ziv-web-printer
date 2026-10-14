@@ -3,14 +3,14 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "פרויקטים",
-  description: "מבנה עמוד הפרויקטים של YSO. פרויקטים יפורסמו רק לאחר אישור.",
+  description: "פרויקטים של יאיר סמארט אופיס. יפורסמו כאן אחרי אישור.",
 };
 
 const fields = [
-  { title: "סוג הפרויקט", text: "התחום והיקף העבודה, בלי שם של מוסד עד שיהיה אישור." },
+  { title: "סוג הפרויקט", text: "התחום והיקף העבודה." },
   { title: "האתגר", text: "מה היה צריך לפתור." },
-  { title: "הפתרון", text: "מה YSO תכננה והקימה." },
-  { title: "התוצאה", text: "מה השתנה בשטח, בלי מספרים שלא אושרו." },
+  { title: "הפתרון", text: "מה תוכנן והוקם." },
+  { title: "התוצאה", text: "מה השתנה בשטח." },
 ];
 
 export default function ProjectsPage() {
@@ -19,12 +19,12 @@ export default function ProjectsPage() {
       <header className="max-w-3xl">
         <h1 className="yso-title">פרויקטים</h1>
         <p className="mt-4 text-lg leading-8 text-ink/70">
-          המבנה מוכן. פרויקט יעלה לכאן רק אחרי אישור פרסום, עם צילומים שאפשר להציג. אין בעמוד לקוחות לדוגמה, שמות מוסדות או מספרים.
+          פרויקט יעלה לכאן אחרי אישור פרסום, עם צילומים שאפשר להציג.
         </p>
       </header>
 
       <section className="band" aria-label="מבנה כרטיס פרויקט">
-        <h2 className="text-2xl font-black text-ink">כך ייראה כרטיס פרויקט</h2>
+        <h2 className="text-2xl font-black text-ink">מה יופיע בכרטיס</h2>
         <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {fields.map((field) => (
             <li key={field.title} className="rounded-[2rem] border border-dashed border-edge bg-white p-6">
@@ -33,7 +33,7 @@ export default function ProjectsPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-sm leading-6 text-muted">הגלריה תתווסף יחד עם הפרויקט המאושר. אין כאן תמונת מציין מקום שמוצגת כעבודה.</p>
+        <p className="mt-6 text-sm leading-6 text-muted">צילומים יצורפו לכל פרויקט מאושר.</p>
       </section>
 
       <Link href="/contact" className="btn btn-green">

@@ -77,7 +77,7 @@ export default async function DomainPage({ params }: PageProps) {
       </section>
 
       <section className="band">
-        <h2 className="text-3xl font-black text-ink">כך נראה הפרויקט</h2>
+        <h2 className="text-3xl font-black text-ink">שלבי העבודה</h2>
         <ol className="mt-6 grid gap-4 md:grid-cols-2">
           {workProcess.map((step, index) => (
             <li key={step.title} className="rounded-[1.75rem] border border-edge bg-white p-5">
@@ -94,7 +94,7 @@ export default async function DomainPage({ params }: PageProps) {
       <section className="band" aria-label="גלריה">
         <h2 className="text-3xl font-black text-ink">גלריה</h2>
         <p className="mt-3 max-w-2xl leading-7 text-muted">
-          המקום שמור לצילומי שטח מאושרים. אין כאן תמונה שמוצגת כעבודה שבוצעה.
+          צילומי שטח יעלו לכאן אחרי אישור.
         </p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-3">
           {["צילום שטח", "צילום מערכת", "לפני ואחרי"].map((label) => (
@@ -103,14 +103,14 @@ export default async function DomainPage({ params }: PageProps) {
               className="flex min-h-40 items-center justify-center rounded-[1.75rem] border border-dashed border-edge bg-white/70 px-4 text-center text-sm font-medium text-muted"
             >
               {label}
-              <span className="sr-only">, יתווסף לאחר אישור</span>
+              <span className="sr-only">, יעלה אחרי אישור</span>
             </li>
           ))}
         </ul>
       </section>
 
       <section className="band">
-        <h2 className="text-3xl font-black text-ink">שאלות קצרות</h2>
+        <h2 className="text-3xl font-black text-ink">שאלות ותשובות</h2>
         <div className="mt-6 grid max-w-3xl gap-3">
           {domain.faqs.map((faq) => (
             <details key={faq.q} className="rounded-[1.75rem] border border-edge bg-white px-5 py-3">
@@ -140,9 +140,9 @@ export default async function DomainPage({ params }: PageProps) {
       </section>
 
       <section className="rounded-[2rem] bg-chip-mint px-6 py-8 text-center sm:px-10">
-        <h2 className="text-3xl font-black text-ink">לקבלת הצעה</h2>
+        <h2 className="text-3xl font-black text-ink">נשמח להכין הצעה</h2>
         <p className="mx-auto mt-3 max-w-xl leading-7 text-ink/80">
-          נחזור עם כיוון עבודה לפי התחום. אין צורך למלא טופס.
+          לפי התחום. בלי טופס באתר.
         </p>
         <Link href={`/contact?topic=${domain.slug}`} className="btn btn-green mt-5">
           לקבלת הצעה

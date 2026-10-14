@@ -9,19 +9,23 @@ import { site } from "@/data/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "הטכנולוגיה שמניעה את המחר",
-  description:
-    "YSO – Yair Smart Office. פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים.",
+  title: "כל הטכנולוגיה שהארגון צריך",
+  description: "מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים. מתכנון ועד תמיכה שוטפת.",
 };
 
 const benefits = [
-  { title: "תכנון והקמה", text: "מהבנת הצורך ועד מסירה בשטח.", icon: "computer-rooms" },
-  { title: "תשתיות ומחשוב", text: "רשתות, ציוד ומערכות שעובדות יחד.", icon: "networks" },
-  { title: "שירות שנתי ותמיכה", text: "כתובת אחת לקריאות ולליווי שוטף.", icon: "it" },
+  { title: "תכנון והקמה", text: "מהצורך בשטח ועד מסירה.", icon: "computer-rooms" },
+  { title: "תשתיות ומחשוב", text: "רשת, ציוד ומערכות במקום אחד.", icon: "networks" },
+  { title: "שירות שנתי ותמיכה", text: "קריאות, טיפול וליווי לאורך השנה.", icon: "it" },
   { title: "כתובת אחת לכל המערכות", text: "מחשוב, כיתות, אבטחה, הדפסה ושירות.", icon: "learning-spaces" },
 ];
 
-const projectFields = ["סוג הפרויקט", "האתגר", "הפתרון", "התוצאה"];
+const projectFields = [
+  { title: "סוג הפרויקט", text: "התחום והיקף העבודה." },
+  { title: "האתגר", text: "מה היה צריך לפתור." },
+  { title: "הפתרון", text: "מה תוכנן והוקם." },
+  { title: "התוצאה", text: "מה השתנה בשטח." },
+];
 
 export default function HomePage() {
   const jsonLd = {
@@ -51,27 +55,25 @@ export default function HomePage() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#63c000]/60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#63c000]" />
               </span>
-              מעטפת טכנולוגית אחת
+              שירות טכנולוגי
             </p>
             <h1 className="mt-6 text-3xl font-black leading-[1.1] text-ink sm:text-5xl lg:text-6xl">
-              הטכנולוגיה שמניעה את <span className="text-[#63c000]">המחר</span>.
+              כל הטכנולוגיה שהארגון צריך. <span className="text-[#63c000]">כתובת אחת.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-ink/70 sm:text-xl lg:mx-0">
-              <bdi dir="ltr">YSO – Yair Smart Office</bdi>
-              {" | "}
-              פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים. משלב התכנון ועד התמיכה השוטפת.
+              מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים. מתכנון ועד תמיכה שוטפת.
             </p>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
               <a href="#domains" className="btn btn-green w-full sm:w-auto">
-                גלו את הפתרונות שלנו
+                לכל הפתרונות
               </a>
               <Link href="/contact" className="btn btn-blue w-full sm:w-auto">
-                דברו עם מומחה
+                צרו קשר
               </Link>
             </div>
           </div>
           <aside className="rounded-[2rem] border border-edge bg-white p-5 shadow-card lg:col-span-5">
-            <h2 className="text-xl font-bold text-ink">שמונה תחומים. כתובת אחת.</h2>
+            <h2 className="text-xl font-bold text-ink">כל התחומים. מקום אחד.</h2>
             <ul className="mt-4 grid gap-2">
               {domains.map((domain) => (
                 <li key={domain.slug}>
@@ -103,10 +105,8 @@ export default function HomePage() {
       </section>
 
       <section id="domains" className="wrap band">
-        <h2 className="yso-title">תחומי פעילות</h2>
-        <p className="mt-3 max-w-2xl text-lg leading-8 text-ink/70">
-          מחשוב, תקשורת, כיתות, אבטחה, מרחבי למידה, מדפסות ושירות. כל תחום נפתח בעמוד משלו.
-        </p>
+        <h2 className="yso-title">התחומים</h2>
+        <p className="mt-3 max-w-2xl text-lg leading-8 text-ink/70">לכל תחום יש עמוד משלו.</p>
         <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {domains.map((domain, index) => (
             <li key={domain.slug} className="min-w-0">
@@ -122,7 +122,7 @@ export default function HomePage() {
             מחלקת ה־<bdi dir="ltr">IT</bdi> של בית הספר שלכם. בלי להקים אחת.
           </h2>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-ink/70">
-            שירות שנתי שכולל פתיחת קריאות וטיפול בכיתות, בחדרי מורים, במנהלה ובחדרי מחשבים. היכרות עם רשתות פדגוגיות ומנהליות, מיפוי מערכות, וליווי בבגרויות כולל טכנאי בשטח לפי ההתקשרות.
+            שירות שנתי לבית הספר: קריאות, כיתות, חדרי מורים, מנהלה וחדרי מחשבים. מכירים את הרשת הפדגוגית ואת הרשת המנהלית, ממפים את המערכות, ומלווים בבגרויות עם טכנאי בשטח. לפי ההתקשרות.
           </p>
           <Link href="/contact?topic=it" className="btn btn-green mt-6">
             לקבלת הצעת שירות
@@ -133,13 +133,13 @@ export default function HomePage() {
       <section id="projects" className="wrap band">
         <h2 className="yso-title">פרויקטים נבחרים</h2>
         <p className="mt-3 max-w-2xl text-lg leading-8 text-ink/70">
-          פרויקטים יפורסמו כאן רק אחרי אישור. אין בעמוד שמות של מוסדות, לוגואים או מספרים.
+          פרויקטים יעלו לכאן אחרי אישור פרסום.
         </p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {projectFields.map((field) => (
-            <li key={field} className="rounded-[2rem] border border-dashed border-edge bg-white/80 p-5">
-              <h3 className="text-lg font-bold text-ink">{field}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">יופיע כאן כשיהיה חומר מאושר.</p>
+            <li key={field.title} className="rounded-[2rem] border border-dashed border-edge bg-white/80 p-5">
+              <h3 className="text-lg font-bold text-ink">{field.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{field.text}</p>
             </li>
           ))}
         </ul>
@@ -157,7 +157,7 @@ export default function HomePage() {
           <div className="p-6 sm:p-10 md:col-span-3">
             <h2 className="yso-title">מרחבי למידה חכמים</h2>
             <p className="mt-4 text-lg leading-8 text-ink/70">
-              <bdi dir="ltr">YSO</bdi> מתכננת ומקימה מרחבי למידה חכמים. הפירוט, הגלריה והתהליך המלא נמצאים באתר מרחבי הלמידה. מכאן רק יוצאים אליו.
+              מתכננים ומקימים מרחבי למידה חכמים. הפירוט והגלריה נמצאים באתר מרחבי הלמידה.
             </p>
             <a href={site.learningSpacesHref} className="btn btn-green mt-6">
               לאתר מרחבי הלמידה
@@ -168,9 +168,9 @@ export default function HomePage() {
 
       <section id="guides" className="wrap band">
         <div className="rounded-[2rem] bg-chip-mint px-6 py-8 sm:px-10">
-          <h2 className="yso-title max-w-3xl">כבר לקוחות שלנו? השירות נמצא במרחק לחיצה.</h2>
+          <h2 className="yso-title max-w-3xl">כבר לקוחות? המדריכים כאן.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-ink/80">
-            מרכז המדריכים פתוח בלי הרשמה ובלי טופס. מחפשים דגם, ופותחים הוצאת מונה או החלפת טונר.
+            מחפשים דגם ופותחים הוצאת מונה או החלפת טונר. בלי הרשמה ובלי טופס.
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link href="/guides" className="btn btn-green">
@@ -188,12 +188,12 @@ export default function HomePage() {
           <div>
             <h2 className="yso-title">אודות</h2>
             <p className="mt-4 text-lg leading-8 text-ink/70">
-              {site.hebrewName} נותנת פתרונות טכנולוגיים למוסדות חינוך ולעסקים: מחשוב, תקשורת, כיתות, אבטחה, מרחבי למידה, מדפסות ושירות. משלב התכנון וההקמה ועד תחזוקה ותמיכה שוטפת.
+              {site.hebrewName} מלווה מוסדות חינוך ועסקים במחשוב, בתקשורת, בכיתות, באבטחה, במרחבי למידה ובמדפסות. מהתכנון ועד השירות השוטף.
             </p>
             <Link href="/about" className="mt-4 inline-flex min-h-11 items-center font-bold text-accent">
               עוד על החברה
             </Link>
-            <p className="mt-8 text-2xl font-black text-ink">בואו נתכנן את הפתרון הבא שלכם</p>
+            <p className="mt-8 text-2xl font-black text-ink">בואו נתכנן את הצעד הבא</p>
             <Link href="/contact" className="btn btn-green mt-4">
               דברו איתנו
             </Link>

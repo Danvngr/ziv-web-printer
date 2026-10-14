@@ -19,7 +19,7 @@ export function DomainCard({ domain, index }: { domain: Domain; index: number })
           <RichText text={domain.title} />
         </span>
         <span className="mt-2 flex-1 text-sm leading-6 text-muted">{domain.summary}</span>
-        <span className="btn btn-green btn-sm mt-5 w-full">לגלות את הפתרון</span>
+        <span className="btn btn-green btn-sm mt-5 w-full">לפרטים</span>
       </span>
     </Link>
   );
