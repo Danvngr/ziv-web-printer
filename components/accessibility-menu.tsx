@@ -56,23 +56,24 @@ export function AccessibilityMenu() {
   }
 
   return (
-    <div className="absolute end-2 top-3 z-40 sm:top-4">
+    <div className="relative">
       <button
         ref={buttonRef}
         type="button"
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-2xl border border-mist bg-wash px-2 py-3 text-sm font-semibold text-ink shadow-card [writing-mode:vertical-rl]"
+        className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-edge bg-white text-sm font-semibold text-ink sm:w-auto sm:px-3"
         aria-expanded={open}
         aria-controls="a11y-panel"
         onClick={() => setOpen((value) => !value)}
       >
-        נגישות
+        <AccessIcon />
+        <span className="sr-only sm:not-sr-only sm:ms-1">נגישות</span>
       </button>
       <div
         id="a11y-panel"
         role="region"
         aria-labelledby={panelTitleId}
         hidden={!open}
-        className="absolute end-[calc(100%+0.5rem)] top-0 max-h-[min(32rem,70vh)] w-[min(18rem,calc(100vw-4.5rem))] overflow-y-auto rounded-2xl border border-mist bg-white p-3 text-start text-ink shadow-card"
+        className="absolute end-0 top-[calc(100%+0.5rem)] z-50 max-h-[min(32rem,70vh)] w-[min(18rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.75rem] border border-edge bg-white p-3 text-start text-ink shadow-card"
       >
         <h2 id={panelTitleId} className="px-1 text-base font-bold text-ink">
           התאמות נגישות
@@ -128,6 +129,15 @@ export function AccessibilityMenu() {
         </div>
       </div>
     </div>
+  );
+}
+
+function AccessIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 sm:h-4 sm:w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="5" r="1.4" fill="currentColor" stroke="none" />
+      <path d="M5 9h14M12 9v11M12 13l-5 7M12 13l5 7" strokeLinecap="round" />
+    </svg>
   );
 }
 

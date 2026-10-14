@@ -63,11 +63,12 @@ export function Splash() {
     try {
       seen = sessionStorage.getItem(splashStorageKey);
     } catch {
-      setOn(false);
+      // sessionStorage can throw. CSS already hides a skipped splash; unmount on the next turn.
+      queueMicrotask(() => setOn(false));
       return;
     }
     if (root.classList.contains("splash-skip") || shouldSkipSplash({ seen, reduce, motionStop })) {
-      setOn(false);
+      queueMicrotask(() => setOn(false));
       return;
     }
     const timer = window.setTimeout(() => {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "תנאי שימוש",
@@ -6,15 +7,15 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <article className="lift mx-auto my-10 max-w-3xl rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
+    <article className="lift mx-auto my-10 w-[min(100%-2rem,48rem)] rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
       <h1 className="text-4xl font-bold text-ink md:text-5xl">תנאי שימוש</h1>
       <p className="mt-2 text-sm text-muted">עודכן לאחרונה: 24 בספטמבר 2026</p>
       <div className="mt-6 space-y-4 leading-8">
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">מפעיל האתר</h2>
           <p>
-            מפעיל האתר: [שם העוסק]. מספר עוסק: [מספר עוסק]. דוא״ל: [אימייל]. טלפון: [טלפון].
-            כתובת: [כתובת].
+            מפעיל האתר: {site.hebrewName} (<bdi dir="ltr">{site.name}</bdi>). טלפון: <bdi dir="ltr">{site.whatsappDisplay}</bdi>. כתובת: {site.address}.
+            מספר עוסק ודוא״ל אינם מפורסמים בעמוד זה.
           </p>
         </section>
         <section className="space-y-2">
@@ -34,7 +35,7 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">התוכן כמות שהוא</h2>
           <p>
-            המדריכים והאתר ניתנים כמות שהם (AS IS). אין מצג שהם שלמים, מדויקים, מתאימים לדגם
+            המדריכים והאתר ניתנים כמות שהם (<bdi dir="ltr">AS IS</bdi>). אין מצג שהם שלמים, מדויקים, מתאימים לדגם
             מסוים, או מתאימים למטרה מסוימת. ייתכנו טעויות, חוסרים, או אי-התאמה לגרסת קושחה או
             למערכת הפעלה.
           </p>
@@ -49,7 +50,7 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">הגבלת אחריות</h2>
           <p>
-            ככל שהדין מתיר זאת, [שם העוסק] ומפעילי האתר אינם אחראים לנזק למדפסת, למחשב, לרשת
+            ככל שהדין מתיר זאת, {site.hebrewName} ומפעילי האתר אינם אחראים לנזק למדפסת, למחשב, לרשת
             או לנתונים, לרבות אובדן מידע, שנגרם מהסתמכות על המדריכים או משימוש באתר. אין באמור
             כדי לגרוע מאחריות שאינה ניתנת להגבלה לפי דין.
           </p>
@@ -65,15 +66,15 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">זכויות יוצרים</h2>
           <p>
-            זכויות היוצרים בנוסח המדריכים, במבנה האתר ובעיצובו שמורות ל-[שם העוסק], אלא אם
+            זכויות היוצרים בנוסח המדריכים, במבנה האתר ובעיצובו שמורות ל-{site.hebrewName}, אלא אם
             צוין אחרת. אין להעתיק אותם לאתר אחר בלי רשות מראש.
           </p>
         </section>
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">סימני מסחר</h2>
           <p>
-            שמות וסימני מסחר שייכים לבעליהם. האתר אינו קשור ל-HP, ל-Canon, ל-Brother או
-            ל-Epson, ואינו מייצג אותם, אלא אם נכתב אחרת במפורש באותו עמוד.
+            שמות וסימני מסחר שייכים לבעליהם. האתר אינו קשור ל־<bdi dir="ltr">HP</bdi>, ל־<bdi dir="ltr">Canon</bdi>, ל־<bdi dir="ltr">Brother</bdi> או
+            ל־<bdi dir="ltr">Epson</bdi>, ואינו מייצג אותם, אלא אם נכתב אחרת במפורש באותו עמוד.
           </p>
         </section>
         <section className="space-y-2">
@@ -86,7 +87,7 @@ export default function TermsPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">עדכון התנאים</h2>
           <p>
-            [שם העוסק] רשאי לעדכן תנאים אלה מעת לעת. הנוסח התקף הוא זה שמופיע בעמוד זה, והוא
+            {site.hebrewName} רשאית לעדכן תנאים אלה מעת לעת. הנוסח התקף הוא זה שמופיע בעמוד זה, והוא
             נושא את תאריך העדכון.
           </p>
         </section>

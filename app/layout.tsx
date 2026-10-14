@@ -19,12 +19,26 @@ const rubik = Rubik({
 
 const splashBoot = `(function(){try{var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;var seen=sessionStorage.getItem("yair-splash")==="1";var raw=localStorage.getItem("a11y-prefs");var stop=!!(raw&&JSON.parse(raw).motion===true);if(reduce||seen||stop)document.documentElement.classList.add("splash-skip");}catch(e){document.documentElement.classList.add("splash-skip");}})();`;
 
+const metadataBase = new URL(
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://127.0.0.1:43123",
+);
+
 export const metadata: Metadata = {
+  metadataBase,
   title: {
-    default: site.name,
+    default: site.hebrewName,
     template: `%s | ${site.name}`,
   },
-  description: "חיפוש דגם, הוצאת מונה או החלפת טונר, בלי הרשמה ובלי טופס.",
+  description:
+    "YSO – Yair Smart Office. פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים.",
+  openGraph: {
+    locale: "he_IL",
+    type: "website",
+    siteName: site.name,
+    title: site.hebrewName,
+    description:
+      "פתרונות מחשוב, תקשורת, אבטחה, מרחבי למידה ושירות טכנולוגי למוסדות חינוך ולעסקים.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "מדיניות פרטיות",
@@ -6,15 +7,15 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <article className="lift mx-auto my-10 max-w-3xl rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
+    <article className="lift mx-auto my-10 w-[min(100%-2rem,48rem)] rounded-3xl border border-edge bg-white px-6 py-14 text-muted sm:px-10 md:my-16">
       <h1 className="text-4xl font-bold text-ink md:text-5xl">מדיניות פרטיות</h1>
       <p className="mt-2 text-sm text-muted">עודכן לאחרונה: 24 בספטמבר 2026</p>
       <div className="mt-6 space-y-4 leading-8">
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">מי מפעיל את האתר</h2>
           <p>
-            מפעיל האתר: [שם העוסק]. מספר עוסק: [מספר עוסק]. דוא״ל: [אימייל]. טלפון: [טלפון].
-            כתובת: [כתובת].
+            מפעיל האתר: {site.hebrewName} (<bdi dir="ltr">{site.name}</bdi>). טלפון: <bdi dir="ltr">{site.whatsappDisplay}</bdi>. כתובת: {site.address}.
+            שעות: {site.hours}. מספר עוסק ודוא״ל אינם מפורסמים בעמוד זה.
           </p>
         </section>
         <section className="space-y-2">
@@ -45,8 +46,7 @@ export default function PrivacyPage() {
         <section className="space-y-2">
           <h2 className="text-xl font-semibold text-ink">פניות</h2>
           <p>
-            לשאלות על מדיניות זו אפשר לפנות אל [שם העוסק] ב-[אימייל] או ב-[טלפון], בכתובת
-            [כתובת].
+            לשאלות על מדיניות זו אפשר לפנות אל {site.hebrewName} בטלפון <bdi dir="ltr">{site.whatsappDisplay}</bdi>, בכתובת {site.address}.
           </p>
         </section>
       </div>

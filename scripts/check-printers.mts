@@ -15,7 +15,8 @@ import {
   normalizeSearch,
   readyGuide,
 } from "../data/printers.ts";
-import { counterWhatsappText, whatsappHref } from "../data/site.ts";
+import { domains, getDomain } from "../data/domains.ts";
+import { counterWhatsappText, site, whatsappHref } from "../data/site.ts";
 import { shouldSkipSplash } from "../lib/splash-skip.ts";
 
 assert.equal(normalizeSearch(" SP-100 "), "sp100");
@@ -108,5 +109,21 @@ assert.ok(layout.includes("Rubik"));
 const guide = readFileSync(join(root, "app", "printers", "[id]", "[guideId]", "page.tsx"), "utf8");
 assert.ok(guide.includes("wa-action"));
 assert.ok(guide.includes("פתיחת וואטסאפ לשליחת מונה"));
+
+assert.equal(domains.length, 8);
+assert.equal(new Set(domains.map((domain) => domain.slug)).size, 8);
+const domainBlob = JSON.stringify(domains);
+assert.equal(/\b(?:\d{1,3}\.){3}\d{1,3}\b/.test(domainBlob), false);
+assert.equal(/סיסמ|password/i.test(domainBlob), false);
+for (const domain of domains) {
+  assert.ok(domain.capabilities.length >= 4 && domain.capabilities.length <= 8, domain.slug);
+  assert.ok(domain.faqs.length >= 2, domain.slug);
+  for (const related of domain.related) assert.ok(getDomain(related), related);
+}
+assert.equal(site.address, "הבנאים 9 אשדוד");
+assert.equal(site.hours, "ימים א׳–ה׳ 09:00–16:00");
+assert.equal(site.instagram, "yair_smart_office");
+assert.equal(site.learningSpacesHref, "https://www.yso.co.il/");
+assert.equal(site.whatsappDisplay, "058-555-4901");
 
 console.log("printer checks passed");
