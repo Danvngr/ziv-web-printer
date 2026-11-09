@@ -8,7 +8,6 @@ import { HeroCollage } from "@/components/ls/HeroCollage";
 import { Hotspots } from "@/components/ls/Hotspots";
 import { Reveal } from "@/components/ls/Reveal";
 import { SiteFooter } from "@/components/ls/SiteFooter";
-import { SiteHeader } from "@/components/ls/SiteHeader";
 import { WhatsAppCTA } from "@/components/ls/WhatsAppCTA";
 import { WhatsAppIcon } from "@/components/ls/icons/WhatsAppIcon";
 import { Brush, Cable, CirclePlay as PlayCircle, Hammer, Ruler } from "lucide-react";
@@ -56,9 +55,6 @@ const steps = [
 export function LearningLanding() {
   return (
     <div className="ls:min-h-screen ls:overflow-x-hidden ls:text-foreground">
-      {/* Header */}
-      <SiteHeader />
-
       <main id="main-content">
         {/* Hero */}
         <section

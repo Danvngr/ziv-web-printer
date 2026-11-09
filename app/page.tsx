@@ -232,9 +232,6 @@ export default function HomePage() {
             <p className="mt-4 text-lg leading-8 text-ink/70">
               {site.hebrewName} מלווה מוסדות חינוך ועסקים במחשוב, בתקשורת, בכיתות, באבטחה, במרחבי למידה ובמדפסות. מהתכנון ועד השירות השוטף.
             </p>
-            <Link href="/about" className="mt-4 inline-flex min-h-11 items-center font-bold text-accent">
-              עוד על החברה
-            </Link>
             <p className="mt-8 text-2xl font-black text-ink">בואו נתכנן את הצעד הבא</p>
             <Link href="/contact" className="btn btn-green mt-4">
               דברו איתנו

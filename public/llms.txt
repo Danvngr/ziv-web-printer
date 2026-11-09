@@ -47,7 +47,6 @@ https://www.yso.co.il/guides — search a model, then open the meter or toner gu
 ## Pages
 
 - https://www.yso.co.il/
-- https://www.yso.co.il/about
 - https://www.yso.co.il/contact
 - https://www.yso.co.il/projects
 - https://www.yso.co.il/guides

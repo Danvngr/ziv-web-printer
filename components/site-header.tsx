@@ -19,7 +19,6 @@ const links: { href: string; label: string; current: (path: string) => boolean }
     label: "מרכז שירות",
     current: (path) => path.startsWith("/guides") || path.startsWith("/printers"),
   },
-  { href: "/about", label: "אודות", current: (path) => path.startsWith("/about") },
   { href: "/contact", label: "צור קשר", current: (path) => path.startsWith("/contact") },
 ];
 
