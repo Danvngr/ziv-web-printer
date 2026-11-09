@@ -77,21 +77,21 @@ export const learningFuture = [
 ] as const;
 
 export const learningPhotos: LearningPhoto[] = [
-  { src: "/learning-spaces/pastel-arches.jpg", alt: "מרחב חכם בקשתות פסטל", width: 1051, height: 1400 },
-  { src: "/learning-spaces/hands-wall.jpg", alt: "עמדת ידיים אינטראקטיבית בכיתה חכמה", width: 1050, height: 1400 },
+  { src: "/learning-spaces/pastel-arches.jpg", alt: "מרחב חכם בקשתות פסטל", width: 1442, height: 1920 },
+  { src: "/learning-spaces/hands-wall.jpg", alt: "עמדת ידיים אינטראקטיבית בכיתה חכמה", width: 1080, height: 1440 },
   {
     src: "/learning-spaces/learning-no-limits.jpg",
     alt: "מרחב מסכים חכם, Learning without Limits",
-    width: 1051,
-    height: 1400,
+    width: 1080,
+    height: 1438,
   },
   {
     src: "/learning-spaces/chevruta-wall.jpg",
     alt: "מרחב חברותא חכם: דרך ארץ, חברותא וידע",
-    width: 1050,
-    height: 1400,
+    width: 1080,
+    height: 1440,
   },
-  { src: "/learning-spaces/stem-wall.jpg", alt: "עמדת STEM בכיתה יסודית", width: 1051, height: 1400 },
+  { src: "/learning-spaces/stem-wall.jpg", alt: "עמדת STEM בכיתה יסודית", width: 1442, height: 1920 },
   {
     src: "/learning-spaces/girls-kiosks.jpg",
     alt: "תלמידות לומדות בעמדות אישיות במרחב חכם",
@@ -110,13 +110,13 @@ export const learningCompare = {
   before: {
     src: "/learning-spaces/before.jpg",
     alt: "לפני: חלל סטנדרטי לפני הקמת המרחב",
-    width: 1600,
-    height: 900,
+    width: 1920,
+    height: 1080,
   },
   after: {
     src: "/learning-spaces/after.jpg",
     alt: "אחרי: מרחב למידה חכם באותו חלל",
-    width: 1600,
-    height: 900,
+    width: 1920,
+    height: 1080,
   },
 } as const;

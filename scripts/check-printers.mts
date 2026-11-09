@@ -183,4 +183,15 @@ for (const dir of ["app", "components", "data"]) {
   }
 }
 
+const learningPage = readFileSync(join(root, "app/solutions/learning-spaces/page.tsx"), "utf8");
+const learningLanding = readFileSync(join(root, "components/ls/LearningLanding.tsx"), "utf8");
+for (const needle of ["HeroCollage", "Hotspots", "BeforeAfter", "Gallery", "FutureVision", "Reveal"]) {
+  assert.ok(learningLanding.includes(needle), needle);
+}
+assert.equal(learningPage.includes("aggregateRating"), false);
+assert.equal(learningLanding.includes("17:00"), false);
+assert.equal(learningLanding.includes("CookieConsent"), false);
+assert.equal(existsSync(join(root, "public/learning-spaces/yair-logo.png")), true);
+assert.equal(readFileSync(join(root, "components/site-shell.tsx"), "utf8").includes('pathname === "/solutions/learning-spaces"'), true);
+
 console.log("printer checks passed");

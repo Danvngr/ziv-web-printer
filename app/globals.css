@@ -476,6 +476,10 @@ html {
   border: 0;
 }
 
+html[data-ls-page] .skip-link {
+  display: none;
+}
+
 .skip-link:focus {
   position: fixed;
   z-index: 80;
