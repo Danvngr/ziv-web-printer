@@ -31,9 +31,6 @@ export function SiteFooter() {
           <Link href="/guides" className="flex min-h-11 items-center font-medium hover:text-accent">
             מרכז שירות
           </Link>
-          <Link href="/about" className="flex min-h-11 items-center font-medium hover:text-accent">
-            אודות
-          </Link>
           <Link href="/contact" className="flex min-h-11 items-center font-medium hover:text-accent">
             צור קשר
           </Link>
