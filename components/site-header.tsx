@@ -7,9 +7,13 @@ import { RichText } from "@/components/rich-text";
 import { domains } from "@/data/domains";
 import { site } from "@/data/site";
 
-const links: { href: string; label: string; external?: boolean; current: (path: string) => boolean }[] = [
+const links: { href: string; label: string; current: (path: string) => boolean }[] = [
   { href: "/projects", label: "פרויקטים", current: (path) => path.startsWith("/projects") },
-  { href: site.learningSpacesHref, label: "מרחבי למידה", external: true, current: () => false },
+  {
+    href: site.learningSpacesPath,
+    label: "מרחבי למידה",
+    current: (path) => path.startsWith(site.learningSpacesPath),
+  },
   {
     href: "/guides",
     label: "מרכז שירות",
@@ -142,13 +146,6 @@ function NavLink({
 }) {
   const current = link.current(pathname);
   const className = mobile ? mobileClass(current) : navClass(current);
-  if (link.external) {
-    return (
-      <a href={link.href} className={className}>
-        {link.label}
-      </a>
-    );
-  }
   return (
     <Link href={link.href} aria-current={current ? "page" : undefined} className={className}>
       {link.label}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ContactDetails } from "@/components/contact-details";
 import { DomainCard } from "@/components/domain-card";
@@ -5,12 +6,13 @@ import { DomainIcon } from "@/components/domain-icon";
 import { LegacySearchRedirect } from "@/components/legacy-search-redirect";
 import { RichText } from "@/components/rich-text";
 import { domains } from "@/data/domains";
-import { site } from "@/data/site";
+import { absoluteUrl, pageShare, site } from "@/data/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "כל הטכנולוגיה שהארגון צריך",
   description: "מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים. מתכנון ועד תמיכה שוטפת.",
+  ...pageShare("/"),
 };
 
 const benefits = [
@@ -30,16 +32,50 @@ const projectFields = [
 export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.hebrewName,
-    alternateName: site.name,
-    telephone: `+${site.whatsappE164}`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "הבנאים 9",
-      addressLocality: "אשדוד",
-      addressCountry: "IL",
-    },
+    "@graph": [
+      {
+        "@type": ["Organization", "LocalBusiness"],
+        "@id": `${site.url}/#organization`,
+        name: site.hebrewName,
+        alternateName: site.name,
+        url: site.url,
+        logo: absoluteUrl("/logo.png"),
+        image: absoluteUrl("/og-image.jpg"),
+        email: site.email,
+        telephone: `+${site.whatsappE164}`,
+        identifier: { "@type": "PropertyValue", propertyID: "IL-CORP", value: site.regNo },
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "הבנאים 9",
+          addressLocality: "אשדוד",
+          addressCountry: "IL",
+        },
+        geo: { "@type": "GeoCoordinates", latitude: 31.8044, longitude: 34.6553 },
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          opens: "09:00",
+          closes: "16:00",
+        },
+        sameAs: [site.instagramHref],
+        areaServed: [
+          { "@type": "Country", name: "Israel" },
+          { "@type": "City", name: "Ashdod" },
+        ],
+        makesOffer: domains.map((domain) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: domain.title, url: absoluteUrl(`/solutions/${domain.slug}`) },
+        })),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        url: site.url,
+        name: site.hebrewName,
+        inLanguage: "he-IL",
+        publisher: { "@id": `${site.url}/#organization` },
+      },
+    ],
   };
 
   return (
@@ -133,7 +169,7 @@ export default function HomePage() {
       <section id="projects" className="wrap band">
         <h2 className="yso-title">פרויקטים נבחרים</h2>
         <p className="mt-3 max-w-2xl text-lg leading-8 text-ink/70">
-          פרויקטים יעלו לכאן אחרי אישור פרסום.
+          צילומי מרחבי למידה נמצאים בעמוד התחום. כרטיס פרויקט לפי תחום יתווסף עם תיאור מאושר.
         </p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {projectFields.map((field) => (
@@ -150,18 +186,24 @@ export default function HomePage() {
 
       <section id="learning" className="wrap band">
         <div className="overflow-hidden rounded-[2rem] border border-edge bg-white shadow-card md:grid md:grid-cols-5">
-          <div className="relative min-h-48 bg-chip-sky md:col-span-2" aria-hidden="true">
-            <span className="float absolute start-[18%] top-[22%] h-16 w-16 rounded-full bg-chip-mint" />
-            <span className="drift-x absolute end-[16%] bottom-[18%] h-14 w-14 rounded-full border-4 border-white" />
+          <div className="relative min-h-56 md:col-span-2">
+            <Image
+              src="/learning-spaces/pastel-arches.jpg"
+              alt="מרחב למידה חכם עם קשתות פסטל"
+              width={1051}
+              height={1400}
+              unoptimized
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </div>
           <div className="p-6 sm:p-10 md:col-span-3">
             <h2 className="yso-title">מרחבי למידה חכמים</h2>
             <p className="mt-4 text-lg leading-8 text-ink/70">
-              מתכננים ומקימים מרחבי למידה חכמים. הפירוט והגלריה נמצאים באתר מרחבי הלמידה.
+              תכנון והקמה של מרחבי למידה חכמים לבתי ספר: גבס, מסכי מגע, תשתיות ואמנות. הצילומים והשאלות נמצאים בעמוד התחום.
             </p>
-            <a href={site.learningSpacesHref} className="btn btn-green mt-6">
-              לאתר מרחבי הלמידה
-            </a>
+            <Link href={site.learningSpacesPath} className="btn btn-green mt-6">
+              למרחבי הלמידה
+            </Link>
           </div>
         </div>
       </section>

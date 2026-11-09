@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { HomeSearch } from "@/components/home-search";
 import { machines } from "@/data/printers";
-import { site } from "@/data/site";
+import { pageShare, site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "מרכז המדריכים",
   description: "חיפוש דגם, הוצאת מונה או החלפת טונר, בלי הרשמה ובלי טופס.",
+  ...pageShare("/guides"),
 };
 
 export default function GuidesPage() {

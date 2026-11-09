@@ -3,10 +3,12 @@ import { ContactDetails } from "@/components/contact-details";
 import { RichText } from "@/components/rich-text";
 import { WhatsAppLink, WhatsAppMark } from "@/components/whatsapp-link";
 import { getDomain } from "@/data/domains";
+import { pageShare } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "יצירת קשר",
   description: "יצירת קשר עם יאיר סמארט אופיס. וואטסאפ, כתובת ושעות פעילות. בלי טופס.",
+  ...pageShare("/contact"),
 };
 
 export default async function ContactPage({

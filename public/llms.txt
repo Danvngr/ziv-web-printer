@@ -1,0 +1,61 @@
+# יאיר סמארט אופיס בע״מ (YAIR SMART OFFICE LTD)
+
+> Company site for Israeli schools and businesses: computing, networks, computer rooms, classroom technology, paging, security cameras, smart learning spaces, and printers. Printer guides are public. There is no account, no form, and no analytics.
+
+## Company
+
+- Legal name: יאיר סמארט אופיס בע״מ
+- English name: YAIR SMART OFFICE LTD
+- Company number (ח.פ.): 516121720
+- Address: הבנאים 9, אשדוד, Israel
+- Hours: Sunday–Thursday 09:00-16:00 Israel time
+- Phone / WhatsApp: +972-58-555-4901 (https://wa.me/972585554901)
+- Email: office@smartcopy.co.il
+- Privacy and accessibility contact: זיו סרויה
+- Instagram: https://instagram.com/yair_smart_office
+- Website: https://www.yso.co.il
+
+## Services
+
+1. IT for schools and businesses — annual service, equipment, and software. https://www.yso.co.il/solutions/it
+2. Networks — pedagogical and administrative cabling, cabinets, and fault finding. https://www.yso.co.il/solutions/networks
+3. Computer rooms — infrastructure through to the workstation. https://www.yso.co.il/solutions/computer-rooms
+4. Classroom technology — display, audio, and teacher connections. https://www.yso.co.il/solutions/classrooms
+5. Paging and bells — public address and zone schedules. https://www.yso.co.il/solutions/paging
+6. Security cameras and NVR — planning and installation. Access details stay with the client. https://www.yso.co.il/solutions/security
+7. Smart learning spaces — turnkey classrooms and shared spaces for elementary schools: planning, drywall niches, power and data, touch screens, computers, and wall art. https://www.yso.co.il/solutions/learning-spaces
+8. Printers and copiers — supply, service, and open guides for meter reading and toner replacement. https://www.yso.co.il/solutions/printers
+
+## Smart learning spaces
+
+Based in Ashdod and working across Israel, mainly with elementary schools, municipalities, parent committees, and donors. A single station is typically 3–5 working days. A classroom or shared space is typically two weeks to a month, scheduled in holidays or after the school day. Projects include a one-year warranty and phone or WhatsApp support, and can start as one station. The team also supplies curriculum content packages and supports teacher-made content, including the Ministry of Education Ofek Hadash environment. Installation photos and a before/after comparison are on the learning-spaces page.
+
+## Printer guides
+
+https://www.yso.co.il/guides — search a model, then open the meter or toner guide. No signup. A finished meter reading is sent on WhatsApp with the institution name and the machine number.
+
+## Policies
+
+- Hosted on Vercel. No marketing cookies, no analytics product, and no cookie banner.
+- Accessibility settings stay in the browser (localStorage). The splash “already seen” flag stays in sessionStorage. Neither is sent to the server.
+- Fonts are served by this site.
+- The accessibility statement aims toward Israeli Standard 5568 and WCAG 2.0 AA. It does not claim a completed audit.
+- Privacy: https://www.yso.co.il/privacy
+- Terms: https://www.yso.co.il/terms
+- Accessibility statement: https://www.yso.co.il/accessibility
+
+## Pages
+
+- https://www.yso.co.il/
+- https://www.yso.co.il/about
+- https://www.yso.co.il/contact
+- https://www.yso.co.il/projects
+- https://www.yso.co.il/guides
+- https://www.yso.co.il/solutions/learning-spaces
+- https://www.yso.co.il/solutions/it
+- https://www.yso.co.il/solutions/networks
+- https://www.yso.co.il/solutions/computer-rooms
+- https://www.yso.co.il/solutions/classrooms
+- https://www.yso.co.il/solutions/paging
+- https://www.yso.co.il/solutions/security
+- https://www.yso.co.il/solutions/printers

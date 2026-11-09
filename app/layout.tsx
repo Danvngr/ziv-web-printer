@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Heebo, Rubik } from "next/font/google";
 import { SiteShell } from "@/components/site-shell";
 import { Splash } from "@/components/splash";
-import { site } from "@/data/site";
+import { ogImage, site } from "@/data/site";
 import "./globals.css";
 
 const heebo = Heebo({
@@ -19,12 +19,8 @@ const rubik = Rubik({
 
 const splashBoot = `(function(){try{var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;var seen=sessionStorage.getItem("yair-splash")==="1";var raw=localStorage.getItem("a11y-prefs");var stop=!!(raw&&JSON.parse(raw).motion===true);if(reduce||seen||stop)document.documentElement.classList.add("splash-skip");}catch(e){document.documentElement.classList.add("splash-skip");}})();`;
 
-const metadataBase = new URL(
-  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://127.0.0.1:43123",
-);
-
 export const metadata: Metadata = {
-  metadataBase,
+  metadataBase: new URL(site.url),
   title: {
     default: site.hebrewName,
     template: `%s | ${site.name}`,
@@ -38,6 +34,11 @@ export const metadata: Metadata = {
     title: site.hebrewName,
     description:
       "מחשוב, תקשורת, אבטחה, מרחבי למידה ומדפסות למוסדות חינוך ולעסקים.",
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.jpg"],
   },
 };
 

@@ -25,9 +25,9 @@ export function SiteFooter() {
           <Link href="/projects" className="flex min-h-11 items-center font-medium hover:text-accent">
             פרויקטים
           </Link>
-          <a href={site.learningSpacesHref} className="flex min-h-11 items-center font-medium hover:text-accent">
+          <Link href={site.learningSpacesPath} className="flex min-h-11 items-center font-medium hover:text-accent">
             מרחבי למידה
-          </a>
+          </Link>
           <Link href="/guides" className="flex min-h-11 items-center font-medium hover:text-accent">
             מרכז שירות
           </Link>

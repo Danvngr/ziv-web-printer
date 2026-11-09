@@ -5,7 +5,7 @@ import { MachineName } from "@/components/machine-name";
 import { WhatsAppLink, WhatsAppMark } from "@/components/whatsapp-link";
 import { ZoomImage } from "@/components/zoom-image";
 import { getMachine, guideLabel, isGuideKind, machineGuideLinks, machines, readyGuide } from "@/data/printers";
-import { counterWhatsappText } from "@/data/site";
+import { counterWhatsappText, pageShare } from "@/data/site";
 
 type GuidePageProps = {
   params: Promise<{ id: string; guideId: string }>;
@@ -22,7 +22,10 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
   const machine = getMachine(machines, id);
   if (!machine || !isGuideKind(guideId)) return { title: "המדריך לא נמצא" };
   const label = guideLabel(guideId);
-  return { title: `${label.title} — ${machine.brand} ${machine.model}` };
+  return {
+    title: `${label.title} — ${machine.brand} ${machine.model}`,
+    ...pageShare(`/printers/${machine.id}/${guideId}`),
+  };
 }
 
 export default async function GuidePage({ params }: GuidePageProps) {

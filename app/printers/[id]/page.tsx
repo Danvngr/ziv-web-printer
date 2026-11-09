@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MachineName } from "@/components/machine-name";
 import { ZoomImage } from "@/components/zoom-image";
 import { getMachine, guideLabel, machineGuideLinks, machines, placeholderImage } from "@/data/printers";
+import { pageShare } from "@/data/site";
 
 type MachinePageProps = {
   params: Promise<{ id: string }>;
@@ -17,7 +18,10 @@ export async function generateMetadata({ params }: MachinePageProps): Promise<Me
   const { id } = await params;
   const machine = getMachine(machines, id);
   if (!machine) return { title: "הדגם לא נמצא" };
-  return { title: `${machine.brand} ${machine.model}` };
+  return {
+    title: `${machine.brand} ${machine.model}`,
+    ...pageShare(`/printers/${machine.id}`),
+  };
 }
 
 export default async function MachinePage({ params }: MachinePageProps) {
