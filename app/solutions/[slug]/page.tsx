@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { DomainCard } from "@/components/domain-card";
 import { DomainIcon } from "@/components/domain-icon";
 import { RichText } from "@/components/rich-text";
+import { LearningSpacesPage } from "@/components/learning-spaces";
 import { domains, getDomain, workProcess } from "@/data/domains";
-import { site } from "@/data/site";
+import { pageShare } from "@/data/site";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: domain.title,
     description: domain.hero,
+    ...pageShare(`/solutions/${domain.slug}`),
   };
 }
 
@@ -28,6 +30,9 @@ export default async function DomainPage({ params }: PageProps) {
   const domain = getDomain(slug);
   if (!domain) notFound();
   const related = domain.related.map((item) => getDomain(item)).filter((item) => item !== undefined);
+  if (domain.slug === "learning-spaces") {
+    return <LearningSpacesPage domain={domain} related={related} />;
+  }
 
   return (
     <article className="wrap pb-16 pt-8 md:pt-14">
@@ -68,11 +73,6 @@ export default async function DomainPage({ params }: PageProps) {
           <Link href="/guides" className="btn btn-blue mt-6">
             למרכז המדריכים
           </Link>
-        ) : null}
-        {domain.slug === "learning-spaces" ? (
-          <a href={site.learningSpacesHref} className="btn btn-blue mt-6">
-            לאתר מרחבי הלמידה
-          </a>
         ) : null}
       </section>
 

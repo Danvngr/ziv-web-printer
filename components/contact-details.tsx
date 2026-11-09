@@ -12,6 +12,20 @@ export function ContactDetails() {
         </dd>
       </div>
       <div>
+        <dt className="text-sm font-medium text-muted">ח.פ.</dt>
+        <dd className="font-bold text-ink">
+          <bdi dir="ltr">{site.regNo}</bdi>
+        </dd>
+      </div>
+      <div>
+        <dt className="text-sm font-medium text-muted">דוא״ל</dt>
+        <dd>
+          <a href={`mailto:${site.email}`} className="font-bold text-ink">
+            <bdi dir="ltr">{site.email}</bdi>
+          </a>
+        </dd>
+      </div>
+      <div>
         <dt className="text-sm font-medium text-muted">וואטסאפ</dt>
         <dd>
           <a href={`tel:${phone}`} className="font-bold text-ink">

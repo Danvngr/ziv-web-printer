@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageShare } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "פרויקטים",
-  description: "פרויקטים של יאיר סמארט אופיס. יפורסמו כאן אחרי אישור.",
+  description: "פרויקטים של יאיר סמארט אופיס. צילומי מרחבי הלמידה נמצאים בעמוד התחום.",
+  ...pageShare("/projects"),
 };
 
 const fields = [
@@ -19,7 +21,7 @@ export default function ProjectsPage() {
       <header className="max-w-3xl">
         <h1 className="yso-title">פרויקטים</h1>
         <p className="mt-4 text-lg leading-8 text-ink/70">
-          פרויקט יעלה לכאן אחרי אישור פרסום, עם צילומים שאפשר להציג.
+          צילומי התקנה של מרחבי למידה נמצאים ב<Link href="/solutions/learning-spaces" className="font-bold text-accent">עמוד מרחבי הלמידה</Link>. כרטיס פרויקט לפי תחום יתווסף כשיהיה תיאור מאושר.
         </p>
       </header>
 

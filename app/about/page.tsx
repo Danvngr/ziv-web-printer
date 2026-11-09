@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ContactDetails } from "@/components/contact-details";
-import { site } from "@/data/site";
+import { pageShare, site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "אודות",
   description: "יאיר סמארט אופיס מלווה מוסדות חינוך ועסקים במחשוב, בתקשורת ובשירות. מהתכנון ועד התמיכה השוטפת.",
+  ...pageShare("/about"),
 };
 
 export default function AboutPage() {
@@ -18,15 +19,15 @@ export default function AboutPage() {
             {site.hebrewName} (<bdi dir="ltr">{site.name}</bdi>) מלווה מוסדות חינוך ועסקים: מחשוב, תקשורת, כיתות, אבטחה, מרחבי למידה, מדפסות ושירות.
           </p>
           <p>מתחילים בתכנון, ממשיכים בהקמה, ונשארים לשירות לפי ההתקשרות. כתובת אחת לכל המערכות.</p>
-          <p>אתר מרחבי הלמידה נשאר בכתובת שלו. מרכז המדריכים למדפסות נמצא כאן, פתוח בלי הרשמה.</p>
+          <p>מרחבי הלמידה החכמים מתוארים בעמוד התחום, עם צילומים מהשטח. מרכז המדריכים למדפסות נמצא כאן, פתוח בלי הרשמה.</p>
         </div>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link href="/contact" className="btn btn-green">
             דברו איתנו
           </Link>
-          <a href={site.learningSpacesHref} className="btn btn-blue">
-            לאתר מרחבי הלמידה
-          </a>
+          <Link href={site.learningSpacesPath} className="btn btn-blue">
+            למרחבי הלמידה
+          </Link>
         </div>
         <div className="mt-10 border-t border-edge pt-6">
           <h2 className="text-2xl font-bold text-ink">פרטי קשר</h2>

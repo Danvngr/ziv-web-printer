@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { a11yDataAttrs, parseA11yPrefs } from "../lib/a11y-prefs.ts";
@@ -16,7 +16,8 @@ import {
   readyGuide,
 } from "../data/printers.ts";
 import { domains, getDomain } from "../data/domains.ts";
-import { counterWhatsappText, site, whatsappHref } from "../data/site.ts";
+import { learningCompare, learningPhotos } from "../data/learning-spaces.ts";
+import { absoluteUrl, counterWhatsappText, learningSpacesWhatsappText, site, whatsappHref } from "../data/site.ts";
 import { shouldSkipSplash } from "../lib/splash-skip.ts";
 
 assert.equal(normalizeSearch(" SP-100 "), "sp100");
@@ -106,6 +107,10 @@ const layout = readFileSync(join(root, "app", "layout.tsx"), "utf8");
 assert.ok(layout.includes('sessionStorage.getItem("yair-splash")'));
 assert.ok(layout.includes("prefers-reduced-motion"));
 assert.ok(layout.includes("Rubik"));
+assert.equal(layout.includes("VERCEL_URL"), false);
+assert.ok(layout.includes("ogImage"));
+assert.ok(readFileSync(join(root, "data", "site.ts"), "utf8").includes("og-image.jpg"));
+assert.ok(layout.includes("metadataBase"));
 const guide = readFileSync(join(root, "app", "printers", "[id]", "[guideId]", "page.tsx"), "utf8");
 assert.ok(guide.includes("wa-action"));
 assert.ok(guide.includes("פתיחת וואטסאפ לשליחת מונה"));
@@ -122,8 +127,60 @@ for (const domain of domains) {
 }
 assert.equal(site.address, "הבנאים 9 אשדוד");
 assert.equal(site.hours, "ימים א׳–ה׳ 09:00–16:00");
+assert.equal(site.hours.includes("17:00"), false);
 assert.equal(site.instagram, "yair_smart_office");
-assert.equal(site.learningSpacesHref, "https://www.yso.co.il/");
+assert.equal(site.learningSpacesPath, "/solutions/learning-spaces");
+assert.equal(site.regNo, "516121720");
+assert.equal(site.email, "office@smartcopy.co.il");
+assert.equal(site.contactPerson, "זיו סרויה");
 assert.equal(site.whatsappDisplay, "058-555-4901");
+assert.equal(absoluteUrl("/"), "https://www.yso.co.il");
+assert.equal(absoluteUrl("/guides"), "https://www.yso.co.il/guides");
+assert.equal(absoluteUrl(site.learningSpacesPath), "https://www.yso.co.il/solutions/learning-spaces");
+assert.ok(learningSpacesWhatsappText.includes("מרחבי הלמידה"));
+
+for (const photo of [...learningPhotos, learningCompare.before, learningCompare.after]) {
+  assert.equal(existsSync(join(root, "public", photo.src.slice(1))), true, photo.src);
+  assert.ok(photo.alt.length > 8, photo.src);
+  assert.ok(photo.width > 0 && photo.height > 0);
+}
+assert.equal(existsSync(join(root, "public", "og-image.jpg")), true);
+
+const sitemap = readFileSync(join(root, "app", "sitemap.ts"), "utf8");
+assert.ok(sitemap.includes("absoluteUrl"));
+assert.equal(sitemap.includes('url: path'), false);
+const robots = readFileSync(join(root, "app", "robots.ts"), "utf8");
+assert.ok(robots.includes("sitemap"));
+const nextConfig = readFileSync(join(root, "next.config.ts"), "utf8");
+assert.ok(nextConfig.includes("Permissions-Policy"));
+assert.ok(nextConfig.includes("camera=()"));
+assert.ok(nextConfig.includes("Content-Security-Policy"));
+assert.ok(nextConfig.includes("Cross-Origin-Opener-Policy"));
+
+const llms = readFileSync(join(root, "public", "llms.txt"), "utf8");
+assert.ok(llms.includes("https://www.yso.co.il/solutions/learning-spaces"));
+assert.ok(llms.includes("09:00-16:00"));
+assert.equal(llms.includes("17:00"), false);
+assert.equal(llms.includes("5.0"), false);
+assert.equal(llms.includes("40+"), false);
+assert.equal(llms.includes("Clarity"), false);
+
+function filesUnder(dir: string): string[] {
+  return readdirSync(dir).flatMap((name) => {
+    const path = join(dir, name);
+    if (name === "node_modules" || name === ".next") return [];
+    return statSync(path).isDirectory() ? filesUnder(path) : [path];
+  });
+}
+for (const dir of ["app", "components", "data"]) {
+  for (const file of filesUnder(join(root, dir))) {
+    if (!/\.(ts|tsx)$/.test(file)) continue;
+    if (file.endsWith(`${join("data", "site.ts")}`)) continue;
+    const text = readFileSync(file, "utf8");
+    assert.equal(text.includes("yso.co.il"), false, file);
+    assert.equal(text.includes("לאתר מרחבי הלמידה"), false, file);
+    assert.equal(text.includes("learningSpacesHref"), false, file);
+  }
+}
 
 console.log("printer checks passed");
