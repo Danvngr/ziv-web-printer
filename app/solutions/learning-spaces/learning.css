@@ -199,17 +199,6 @@
     background-position: 200% 0;
   }
 }
-@keyframes ls-gradient-drift {
-  0% {
-    background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
-  }
-  50% {
-    background-position: 100% 50%, 0% 50%, 100% 0%, 0% 100%;
-  }
-  100% {
-    background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
-  }
-}
 @keyframes ls-accordion-down {
   from {
     height: 0;
@@ -310,23 +299,8 @@ html.ls-fonts {
   font-family: var(--ls-font-heebo), "Heebo", ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01" on;
   -webkit-font-smoothing: antialiased;
-}
-.ls-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -20;
-  pointer-events: none;
-  background-color: var(--ls-background);
-  background-image:
-    radial-gradient(60% 55% at 12% 8%, color-mix(in oklab, var(--ls-bg-mint) 85%, transparent) 0%, transparent 70%),
-    radial-gradient(55% 50% at 88% 18%, color-mix(in oklab, var(--ls-bg-sky) 85%, transparent) 0%, transparent 70%),
-    radial-gradient(65% 60% at 18% 92%, color-mix(in oklab, var(--ls-bg-peach) 80%, transparent) 0%, transparent 72%),
-    radial-gradient(60% 55% at 92% 82%, color-mix(in oklab, var(--ls-bg-pink) 80%, transparent) 0%, transparent 72%);
-  background-size: 180% 180%, 180% 180%, 180% 180%, 180% 180%;
-  background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0%;
-  background-repeat: no-repeat;
-  animation: ls-gradient-drift 28s ease-in-out infinite;
+  /* The site body already paints this wash. A second fixed animated layer
+     dropped desktop scroll to ~10fps (long tasks every frame). */
 }
 .ls-page :where(h1, h2, h3) {
   font-family: var(--ls-font-rubik), var(--ls-font-heebo), "Heebo", sans-serif;
@@ -344,15 +318,7 @@ html.ls-fonts {
   color: var(--ls-foreground);
 }
 
-@media (max-width: 640px) {
-  .ls-page::before {
-    position: absolute;
-    animation: none;
-  }
-}
-
 html.ls-reduced-motion .ls-page,
-html.ls-reduced-motion .ls-page::before,
 html.ls-reduced-motion .ls-page *,
 html.ls-reduced-motion .ls-page *::before,
 html.ls-reduced-motion .ls-page *::after,
@@ -371,7 +337,6 @@ html.ls-reduced-motion .a11y-panel * {
 
 @media (prefers-reduced-motion: reduce) {
   .ls-page,
-  .ls-page::before,
   .ls-page *,
   .ls-page *::before,
   .ls-page *::after,
