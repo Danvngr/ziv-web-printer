@@ -1,0 +1,477 @@
+/*
+ * Accessibility mode layer (IS 5568 / WCAG 2.0 AA).
+ * All modes are driven by data-ls-a11y-* attributes and custom properties set
+ * on <html> by the accessibility widget. No inline per-element styles.
+ *
+ * Colors here are deliberately fixed hex, not design tokens — this layer
+ * must guarantee its own contrast ratios independent of the site's theme
+ * (including when grayscale/invert modes are active), so it cannot read
+ * from --color-* tokens the way the rest of the app does.
+ */
+
+:root {
+  --ls-a11y-scale: 1;
+  --z-a11y-trigger: 2147483000;
+  --z-a11y-panel: 2147483001;
+}
+
+html.ls-text-scale {
+  font-size: calc(100% * var(--ls-a11y-scale));
+}
+
+/* ---- Skip link ---- */
+.a11y-skip-link {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: -100%;
+  z-index: var(--z-a11y-panel);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: #17403a;
+  color: #fdfcf0;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.a11y-skip-link:focus {
+  top: 0;
+}
+
+/* ---- Always-on visible focus (never outline:none without replacement) ---- */
+.ls-page :focus-visible,
+.a11y-panel :focus-visible,
+.a11y-trigger:focus-visible,
+.a11y-float :focus-visible {
+  outline: 3px solid #17403a;
+  outline-offset: 2px;
+}/* 10. הדגשת מוקד */
+[data-ls-a11y-focus="on"] :focus-visible,
+html[data-ls-a11y-focus="on"] .ls-page :focus,
+html[data-ls-a11y-focus="on"] .a11y-panel :focus,
+html[data-ls-a11y-focus="on"] .a11y-overlay :focus,
+html[data-ls-a11y-focus="on"] .a11y-float :focus,
+html[data-ls-a11y-focus="on"] .a11y-ambient :focus,
+html[data-ls-a11y-focus="on"] .a11y-trigger :focus {
+  outline: 4px solid #b45309 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 3px #fdfcf0;
+}/* 2. ניגודיות גבוהה */
+[data-ls-a11y-contrast="high"] body,
+html[data-ls-a11y-contrast="high"] .ls-page, html[data-ls-a11y-contrast="high"] .ls-page *,
+html[data-ls-a11y-contrast="high"] .a11y-panel, html[data-ls-a11y-contrast="high"] .a11y-panel *,
+html[data-ls-a11y-contrast="high"] .a11y-overlay, html[data-ls-a11y-contrast="high"] .a11y-overlay *,
+html[data-ls-a11y-contrast="high"] .a11y-float, html[data-ls-a11y-contrast="high"] .a11y-float *,
+html[data-ls-a11y-contrast="high"] .a11y-ambient, html[data-ls-a11y-contrast="high"] .a11y-ambient *,
+html[data-ls-a11y-contrast="high"] .a11y-trigger, html[data-ls-a11y-contrast="high"] .a11y-trigger * {
+  background-color: #000 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}html[data-ls-a11y-contrast="high"] .ls-page a,
+html[data-ls-a11y-contrast="high"] .a11y-panel a,
+html[data-ls-a11y-contrast="high"] .a11y-overlay a,
+html[data-ls-a11y-contrast="high"] .a11y-float a,
+html[data-ls-a11y-contrast="high"] .a11y-ambient a,
+html[data-ls-a11y-contrast="high"] .a11y-trigger a,
+html[data-ls-a11y-contrast="high"] .ls-page a *,
+html[data-ls-a11y-contrast="high"] .a11y-panel a *,
+html[data-ls-a11y-contrast="high"] .a11y-overlay a *,
+html[data-ls-a11y-contrast="high"] .a11y-float a *,
+html[data-ls-a11y-contrast="high"] .a11y-ambient a *,
+html[data-ls-a11y-contrast="high"] .a11y-trigger a * {
+  color: #ffe873 !important;
+}html[data-ls-a11y-contrast="high"] .ls-page img,
+html[data-ls-a11y-contrast="high"] .a11y-panel img,
+html[data-ls-a11y-contrast="high"] .a11y-overlay img,
+html[data-ls-a11y-contrast="high"] .a11y-float img,
+html[data-ls-a11y-contrast="high"] .a11y-ambient img,
+html[data-ls-a11y-contrast="high"] .a11y-trigger img,
+html[data-ls-a11y-contrast="high"] .ls-page svg,
+html[data-ls-a11y-contrast="high"] .a11y-panel svg,
+html[data-ls-a11y-contrast="high"] .a11y-overlay svg,
+html[data-ls-a11y-contrast="high"] .a11y-float svg,
+html[data-ls-a11y-contrast="high"] .a11y-ambient svg,
+html[data-ls-a11y-contrast="high"] .a11y-trigger svg {
+  filter: grayscale(1) contrast(1.2);
+}/* 3-4. ניגודיות הפוכה / גווני אפור
+   The colour filters must NEVER target <body>. Any non-`none` filter makes the
+   element the containing block for its position:fixed descendants,
+so filtering
+   <body> strands every floating control at the bottom of the document instead
+   of pinning it to the viewport — including the accessibility trigger and its
+   own panel,
+in exactly the modes the visitor just turned on.
+
+   Instead we filter .a11y-filter-root (the page-content wrapper in __root.tsx)
+   and each floating control individually. A filter on an element does not break
+   that element's own fixed positioning,
+only its descendants',
+so the controls
+   stay pinned. The a11y trigger and panel are deliberately left unfiltered —
+   they carry their own guaranteed-contrast palette. */
+
+[data-ls-a11y-contrast="invert"] .a11y-filter-root,
+html[data-ls-a11y-contrast="invert"] .ls-page .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .a11y-panel .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .a11y-overlay .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .a11y-float .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .a11y-ambient .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .a11y-trigger .a11y-ambient,
+html[data-ls-a11y-contrast="invert"] .ls-page .a11y-float,
+html[data-ls-a11y-contrast="invert"] .a11y-panel .a11y-float,
+html[data-ls-a11y-contrast="invert"] .a11y-overlay .a11y-float,
+html[data-ls-a11y-contrast="invert"] .a11y-float .a11y-float,
+html[data-ls-a11y-contrast="invert"] .a11y-ambient .a11y-float,
+html[data-ls-a11y-contrast="invert"] .a11y-trigger .a11y-float {
+  filter: invert(1) hue-rotate(180deg);
+}html[data-ls-a11y-contrast="invert"] .ls-page img,
+html[data-ls-a11y-contrast="invert"] .a11y-panel img,
+html[data-ls-a11y-contrast="invert"] .a11y-overlay img,
+html[data-ls-a11y-contrast="invert"] .a11y-float img,
+html[data-ls-a11y-contrast="invert"] .a11y-ambient img,
+html[data-ls-a11y-contrast="invert"] .a11y-trigger img,
+html[data-ls-a11y-contrast="invert"] .ls-page video,
+html[data-ls-a11y-contrast="invert"] .a11y-panel video,
+html[data-ls-a11y-contrast="invert"] .a11y-overlay video,
+html[data-ls-a11y-contrast="invert"] .a11y-float video,
+html[data-ls-a11y-contrast="invert"] .a11y-ambient video,
+html[data-ls-a11y-contrast="invert"] .a11y-trigger video {
+  filter: invert(1) hue-rotate(180deg);
+}html[data-ls-a11y-grayscale="on"] .ls-page .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .a11y-panel .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .a11y-overlay .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .a11y-float .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .a11y-ambient .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .a11y-trigger .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"] .ls-page .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .a11y-panel .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .a11y-overlay .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .a11y-float .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .a11y-ambient .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .a11y-trigger .a11y-ambient,
+html[data-ls-a11y-grayscale="on"] .ls-page .a11y-float,
+html[data-ls-a11y-grayscale="on"] .a11y-panel .a11y-float,
+html[data-ls-a11y-grayscale="on"] .a11y-overlay .a11y-float,
+html[data-ls-a11y-grayscale="on"] .a11y-float .a11y-float,
+html[data-ls-a11y-grayscale="on"] .a11y-ambient .a11y-float,
+html[data-ls-a11y-grayscale="on"] .a11y-trigger .a11y-float {
+  filter: grayscale(1);
+}html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .ls-page .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-panel .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-overlay .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-float .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-ambient .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-trigger .a11y-filter-root,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .ls-page .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-panel .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-overlay .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-float .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-ambient .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-trigger .a11y-ambient,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .ls-page .a11y-float,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-panel .a11y-float,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-overlay .a11y-float,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-float .a11y-float,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-ambient .a11y-float,
+html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .a11y-trigger .a11y-float {
+  filter: grayscale(1) invert(1) hue-rotate(180deg);
+}/* body's background propagates to the page canvas,
+which is painted OUTSIDE
+   the filtered wrapper — so it has to be restated per mode by hand,
+or the
+   text flips while the background stays light. Values are the site's base
+   rgb(250,
+252,
+253) pushed through each chain; the decorative gradient wash is
+   dropped because it would otherwise stay in full colour. */
+[data-ls-a11y-contrast="invert"] body {
+  background-image: none;
+  background-color: #050302;
+}html[data-ls-a11y-grayscale="on"] .ls-page {
+  background-image: none;
+  background-color: #fcfcfc;
+}html[data-ls-a11y-grayscale="on"][data-ls-a11y-contrast="invert"] .ls-page {
+  background-image: none;
+  background-color: #030303;
+}/* 5. הדגשת קישורים */
+[data-ls-a11y-links="on"] a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  color: #0b3d91 !important;
+  font-weight: 700;
+}/* 6. גופן קריא */
+[data-ls-a11y-font="readable"] body,
+html[data-ls-a11y-font="readable"] .ls-page, html[data-ls-a11y-font="readable"] .ls-page *,
+html[data-ls-a11y-font="readable"] .a11y-panel, html[data-ls-a11y-font="readable"] .a11y-panel *,
+html[data-ls-a11y-font="readable"] .a11y-overlay, html[data-ls-a11y-font="readable"] .a11y-overlay *,
+html[data-ls-a11y-font="readable"] .a11y-float, html[data-ls-a11y-font="readable"] .a11y-float *,
+html[data-ls-a11y-font="readable"] .a11y-ambient, html[data-ls-a11y-font="readable"] .a11y-ambient *,
+html[data-ls-a11y-font="readable"] .a11y-trigger, html[data-ls-a11y-font="readable"] .a11y-trigger * {
+  font-family: Arial, "Assistant", ui-sans-serif, system-ui, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: normal;
+}/* 7. ריווח טקסט מוגדל (WCAG 1.4.12) */
+[data-ls-a11y-spacing="on"] body,
+html[data-ls-a11y-spacing="on"] .ls-page, html[data-ls-a11y-spacing="on"] .ls-page *,
+html[data-ls-a11y-spacing="on"] .a11y-panel, html[data-ls-a11y-spacing="on"] .a11y-panel *,
+html[data-ls-a11y-spacing="on"] .a11y-overlay, html[data-ls-a11y-spacing="on"] .a11y-overlay *,
+html[data-ls-a11y-spacing="on"] .a11y-float, html[data-ls-a11y-spacing="on"] .a11y-float *,
+html[data-ls-a11y-spacing="on"] .a11y-ambient, html[data-ls-a11y-spacing="on"] .a11y-ambient *,
+html[data-ls-a11y-spacing="on"] .a11y-trigger, html[data-ls-a11y-spacing="on"] .a11y-trigger * {
+  line-height: 1.8 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}html[data-ls-a11y-spacing="on"] .ls-page p,
+html[data-ls-a11y-spacing="on"] .a11y-panel p,
+html[data-ls-a11y-spacing="on"] .a11y-overlay p,
+html[data-ls-a11y-spacing="on"] .a11y-float p,
+html[data-ls-a11y-spacing="on"] .a11y-ambient p,
+html[data-ls-a11y-spacing="on"] .a11y-trigger p {
+  margin-block-end: 2em !important;
+}/* 8. עצירת אנימציות */
+[data-ls-a11y-motion="off"] *,
+html[data-ls-a11y-motion="off"] .ls-page::before, html[data-ls-a11y-motion="off"] .ls-page *::before,
+html[data-ls-a11y-motion="off"] .a11y-panel::before, html[data-ls-a11y-motion="off"] .a11y-panel *::before,
+html[data-ls-a11y-motion="off"] .a11y-overlay::before, html[data-ls-a11y-motion="off"] .a11y-overlay *::before,
+html[data-ls-a11y-motion="off"] .a11y-float::before, html[data-ls-a11y-motion="off"] .a11y-float *::before,
+html[data-ls-a11y-motion="off"] .a11y-ambient::before, html[data-ls-a11y-motion="off"] .a11y-ambient *::before,
+html[data-ls-a11y-motion="off"] .a11y-trigger::before, html[data-ls-a11y-motion="off"] .a11y-trigger *::before,
+html[data-ls-a11y-motion="off"] .ls-page::after, html[data-ls-a11y-motion="off"] .ls-page *::after,
+html[data-ls-a11y-motion="off"] .a11y-panel::after, html[data-ls-a11y-motion="off"] .a11y-panel *::after,
+html[data-ls-a11y-motion="off"] .a11y-overlay::after, html[data-ls-a11y-motion="off"] .a11y-overlay *::after,
+html[data-ls-a11y-motion="off"] .a11y-float::after, html[data-ls-a11y-motion="off"] .a11y-float *::after,
+html[data-ls-a11y-motion="off"] .a11y-ambient::after, html[data-ls-a11y-motion="off"] .a11y-ambient *::after,
+html[data-ls-a11y-motion="off"] .a11y-trigger::after, html[data-ls-a11y-motion="off"] .a11y-trigger *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}/* 9. סמן גדול */
+[data-ls-a11y-cursor="big"],
+html[data-ls-a11y-cursor="big"] .ls-page, html[data-ls-a11y-cursor="big"] .ls-page *,
+html[data-ls-a11y-cursor="big"] .a11y-panel, html[data-ls-a11y-cursor="big"] .a11y-panel *,
+html[data-ls-a11y-cursor="big"] .a11y-overlay, html[data-ls-a11y-cursor="big"] .a11y-overlay *,
+html[data-ls-a11y-cursor="big"] .a11y-float, html[data-ls-a11y-cursor="big"] .a11y-float *,
+html[data-ls-a11y-cursor="big"] .a11y-ambient, html[data-ls-a11y-cursor="big"] .a11y-ambient *,
+html[data-ls-a11y-cursor="big"] .a11y-trigger, html[data-ls-a11y-cursor="big"] .a11y-trigger * {
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 10-6 1 3.5 7-3 1.4L10 14l-5 4z' fill='%23000' stroke='%23fff' stroke-width='1.4'/%3E%3C/svg%3E")
+      0 0,
+    auto !important;
+}
+
+/* Layout resilience at 200% text */
+.ls-page {
+  overflow-wrap: break-word;
+}html[data-ls-a11y-scale-up="on"] .ls-page {
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+}html[data-ls-a11y-scale-up="on"] .ls-page [class*="flex"],
+html[data-ls-a11y-scale-up="on"] .a11y-panel [class*="flex"],
+html[data-ls-a11y-scale-up="on"] .a11y-overlay [class*="flex"],
+html[data-ls-a11y-scale-up="on"] .a11y-float [class*="flex"],
+html[data-ls-a11y-scale-up="on"] .a11y-ambient [class*="flex"],
+html[data-ls-a11y-scale-up="on"] .a11y-trigger [class*="flex"] {
+  flex-wrap: wrap;
+}html[data-ls-a11y-scale-up="on"] .ls-page [class*="flex"] > *,
+html[data-ls-a11y-scale-up="on"] .a11y-panel [class*="flex"] > *,
+html[data-ls-a11y-scale-up="on"] .a11y-overlay [class*="flex"] > *,
+html[data-ls-a11y-scale-up="on"] .a11y-float [class*="flex"] > *,
+html[data-ls-a11y-scale-up="on"] .a11y-ambient [class*="flex"] > *,
+html[data-ls-a11y-scale-up="on"] .a11y-trigger [class*="flex"] > * {
+  min-width: 0;
+}html[data-ls-a11y-scale-up="on"] .ls-page *:not(.a11y-panel):not(.a11y-overlay),
+html[data-ls-a11y-scale-up="on"] .a11y-panel *:not(.a11y-panel):not(.a11y-overlay),
+html[data-ls-a11y-scale-up="on"] .a11y-overlay *:not(.a11y-panel):not(.a11y-overlay),
+html[data-ls-a11y-scale-up="on"] .a11y-float *:not(.a11y-panel):not(.a11y-overlay),
+html[data-ls-a11y-scale-up="on"] .a11y-ambient *:not(.a11y-panel):not(.a11y-overlay),
+html[data-ls-a11y-scale-up="on"] .a11y-trigger *:not(.a11y-panel):not(.a11y-overlay) {
+  white-space: normal !important;
+  max-height: none !important;
+}html[data-ls-a11y-scale-up="on"] .ls-page section,
+html[data-ls-a11y-scale-up="on"] .a11y-panel section,
+html[data-ls-a11y-scale-up="on"] .a11y-overlay section,
+html[data-ls-a11y-scale-up="on"] .a11y-float section,
+html[data-ls-a11y-scale-up="on"] .a11y-ambient section,
+html[data-ls-a11y-scale-up="on"] .a11y-trigger section,
+html[data-ls-a11y-scale-up="on"] .ls-page header,
+html[data-ls-a11y-scale-up="on"] .a11y-panel header,
+html[data-ls-a11y-scale-up="on"] .a11y-overlay header,
+html[data-ls-a11y-scale-up="on"] .a11y-float header,
+html[data-ls-a11y-scale-up="on"] .a11y-ambient header,
+html[data-ls-a11y-scale-up="on"] .a11y-trigger header,
+html[data-ls-a11y-scale-up="on"] .ls-page footer,
+html[data-ls-a11y-scale-up="on"] .a11y-panel footer,
+html[data-ls-a11y-scale-up="on"] .a11y-overlay footer,
+html[data-ls-a11y-scale-up="on"] .a11y-float footer,
+html[data-ls-a11y-scale-up="on"] .a11y-ambient footer,
+html[data-ls-a11y-scale-up="on"] .a11y-trigger footer {
+  overflow: visible !important;
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* ---- Widget chrome ----
+   Positioning only. The trigger's own size/colour come from the site's
+   utility classes so it mirrors the WhatsApp fab (fixed bottom-5 left-5)
+   in the opposite corner with identical offsets. There is no sticky mobile
+   CTA bar in this project, so no breakpoint-specific bottom bump. */
+.a11y-trigger {
+  position: fixed;
+  /* --consent-h is set by <CookieConsent /> while the cookie banner is up, so
+     the trigger rides above it and stays reachable. 0px otherwise. */
+  bottom: calc(1.25rem + env(safe-area-inset-bottom) + var(--consent-h, 0px));
+  z-index: var(--z-a11y-trigger);
+}
+.a11y-trigger[data-corner="bottom-left"] {
+  left: 1.25rem;
+}
+.a11y-trigger[data-corner="bottom-right"] {
+  right: 1.25rem;
+}
+
+.a11y-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-a11y-panel);
+  background: rgb(0 0 0 / 45%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  direction: ltr; /* anchor the panel to the same corner as the trigger */
+}
+
+.a11y-panel {
+  width: min(23rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  margin-block-start: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #ffffff;
+  color: #14251d;
+  border: 2px solid #14251d;
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.a11y-panel h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.a11y-panel-head {
+  position: sticky;
+  top: -1.25rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: -1.25rem -1.25rem 0;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-bottom: 1px solid #14251d33;
+}
+
+.a11y-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.a11y-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 3.5rem;
+  padding: 0.5rem;
+  border: 2px solid #14251d;
+  border-radius: 0.625rem;
+  background: #ffffff;
+  color: #14251d;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+}
+.a11y-opt[aria-pressed="true"] {
+  background: #14251d;
+  color: #ffffff;
+}
+.a11y-opt[aria-pressed="true"]::after {
+  content: "פעיל";
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.a11y-scale-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}html[data-ls-a11y-scale-up="on"] .ls-page .a11y-grid,
+html[data-ls-a11y-scale-up="on"] .a11y-panel .a11y-grid,
+html[data-ls-a11y-scale-up="on"] .a11y-overlay .a11y-grid,
+html[data-ls-a11y-scale-up="on"] .a11y-float .a11y-grid,
+html[data-ls-a11y-scale-up="on"] .a11y-ambient .a11y-grid,
+html[data-ls-a11y-scale-up="on"] .a11y-trigger .a11y-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.a11y-scale-row button {
+  min-width: 3rem;
+  min-height: 3rem;
+  border: 2px solid #14251d;
+  border-radius: 0.625rem;
+  background: #ffffff;
+  color: #14251d;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.a11y-scale-row button:disabled {
+  opacity: 0.5;
+}
+
+.a11y-reset {
+  width: 100%;
+  margin-top: 0.75rem;
+  min-height: 3rem;
+  border-radius: 0.625rem;
+  border: 2px solid #7f1d1d;
+  background: #7f1d1d;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.a11y-statement-link {
+  display: block;
+  margin-top: 0.75rem;
+  text-align: center;
+  color: #0b3d91;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.a11y-close {
+  min-width: 3rem;
+  min-height: 3rem;
+  border: 2px solid #14251d;
+  border-radius: 0.625rem;
+  background: #ffffff;
+  color: #14251d;
+  font-weight: 800;
+}
+
+@media (max-width: 480px) {
+  .a11y-panel {
+    width: 100%;
+  }
+}

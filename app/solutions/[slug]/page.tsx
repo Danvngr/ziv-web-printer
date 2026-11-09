@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 import { DomainCard } from "@/components/domain-card";
 import { DomainIcon } from "@/components/domain-icon";
 import { RichText } from "@/components/rich-text";
-import { LearningSpacesPage } from "@/components/learning-spaces";
 import { domains, getDomain, workProcess } from "@/data/domains";
 import { pageShare } from "@/data/site";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return domains.map((domain) => ({ slug: domain.slug }));
+  return domains
+    .filter((domain) => domain.slug !== "learning-spaces")
+    .map((domain) => ({ slug: domain.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -30,9 +31,6 @@ export default async function DomainPage({ params }: PageProps) {
   const domain = getDomain(slug);
   if (!domain) notFound();
   const related = domain.related.map((item) => getDomain(item)).filter((item) => item !== undefined);
-  if (domain.slug === "learning-spaces") {
-    return <LearningSpacesPage domain={domain} related={related} />;
-  }
 
   return (
     <article className="wrap pb-16 pt-8 md:pt-14">
