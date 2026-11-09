@@ -63,7 +63,7 @@ export function LearningLanding() {
         {/* Hero */}
         <section
           id="top"
-          className="ls:relative ls:mx-auto ls:max-w-7xl ls:px-4 ls:md:px-12 ls:lg:px-16 ls:pt-6 ls:md:pt-16 ls:pb-12 ls:md:pb-20"
+          className="ls:relative ls:mx-auto ls:max-w-7xl ls:scroll-mt-24 ls:px-4 ls:md:px-12 ls:lg:px-16 ls:pt-6 ls:md:pt-16 ls:pb-12 ls:md:pb-20"
         >
           <FloatingShapes />
           <div className="ls:relative ls:grid ls:lg:grid-cols-12 ls:gap-8 ls:lg:gap-8 ls:items-center">

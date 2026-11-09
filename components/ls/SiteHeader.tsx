@@ -7,10 +7,10 @@ import { buildWhatsAppUrl, WHATSAPP_MESSAGES } from "@/components/ls/whatsapp";
 import { site } from "@/data/site";
 const yairLogoUrl = "/learning-spaces/yair-logo.png";
 
-/** Sticky site header. Shared by the landing page and every inner page. */
+/** Page bar under the site nav. It stays in flow so the two bars do not stack over the hero. */
 export function SiteHeader() {
   return (
-    <header className="ls:sticky ls:top-0 ls:z-40 ls:backdrop-blur-xl ls:bg-background/80 ls:border-b ls:border-border">
+    <header className="ls:relative ls:z-20 ls:backdrop-blur-xl ls:bg-background/80 ls:border-b ls:border-border">
       <div className="ls:mx-auto ls:max-w-7xl ls:px-4 ls:md:px-12 ls:lg:px-16 ls:py-4 ls:grid ls:grid-cols-[minmax(0,1fr)_auto] ls:items-center ls:gap-4">
         <div className="ls:flex ls:min-w-0 ls:items-center ls:gap-3">
           <Link href={`${site.learningSpacesPath}#top`} className="ls:shrink-0">

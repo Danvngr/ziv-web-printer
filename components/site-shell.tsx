@@ -7,7 +7,14 @@ import { WhatsAppButton } from "@/components/whatsapp-link";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  if (pathname === "/solutions/learning-spaces") return children;
+  if (pathname === "/solutions/learning-spaces") {
+    return (
+      <>
+        <SiteHeader pathname={pathname} />
+        {children}
+      </>
+    );
+  }
 
   return (
     <>
